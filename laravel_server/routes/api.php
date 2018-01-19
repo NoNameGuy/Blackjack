@@ -36,3 +36,4 @@ Route::patch('games/{id}/endgame/{winner}', 'GameControllerAPI@endgame');
 
 Route::post('login', 'LoginControllerAPI@login');
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
+Route::post('register', 'UserControllerAPI@store');

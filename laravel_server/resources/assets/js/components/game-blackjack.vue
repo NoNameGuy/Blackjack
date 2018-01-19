@@ -37,6 +37,13 @@
 
             }
         },
+
+        sockets: {
+            authenticated(user){
+                this.user = user;
+                console.log(this.user);
+            },
+        },
         computed: {
             ownPlayerNumber(){
                 if (this.game.player1SocketID == this.$parent.socketId) {

@@ -94,11 +94,25 @@ io.on('connection', function (socket) {
     	socket.emit('my_lobby_games', my_games);
     });
 
-
+    socket.on('authentication', function (token){
+        let config = {
+            headers: {
+                'Authorization': 'Bearer ' + token}
+            };
+            axios.get(api_url+'/api/user', config).then(response =>{
+                this.user = response.data;
+                socket.emit('authenticated', this.user);
+            }).catch(error => { 
+                console.log("You are not logged in");
+                socket.emit('not_authenticated');
+                console.log(error.message);
+            });
+    });
 
 
     socket.on('start_game', function (data){
         if( this.user === undefined || this.user === null){
+            console.log("start_game -> user = undefined = null"); // de onde venho?
             console.log("Unauthorized");
             return;
         }
