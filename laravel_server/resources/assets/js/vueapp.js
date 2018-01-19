@@ -22,13 +22,15 @@ const user = Vue.component('user', require('./components/user.vue'));
 const department = Vue.component('department', require('./components/departmentList.vue'));
 const singleplayer_game = Vue.component('singlegame', require('./components/singleplayer_tictactoe.vue'));
 const multiplayerGame = Vue.component('multiplayergame', require('./components/multiplayer_tictactoe.vue'));
+const blackjack = Vue.component('blackjack', require('./components/blackjack.vue'));
 
 const routes = [
   { path: '/', redirect: '/users' },
   { path: '/users', component: user },
   { path: '/departments', component: department },
   { path: '/singletictactoe', component: singleplayer_game },
-  { path: '/multitictactoe', component: multiplayerGame }
+  { path: '/multitictactoe', component: multiplayerGame },
+  { path: '/blackjack', component: blackjack }
 ];
 
 const router = new VueRouter({
@@ -43,4 +45,3 @@ const app = new Vue({
     departments: [],
   }
 }).$mount('#app');
-
