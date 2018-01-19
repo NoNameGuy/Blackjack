@@ -14,7 +14,7 @@ class BlackJackGame {
       this.gameID = game.id;
       this.playerTurn = 0;
       this.currentCard = 0;
-      this.boardGame = [];
+      this.boardGame;
     }
 
     startGame() {
@@ -32,9 +32,13 @@ class BlackJackGame {
       // inicializar a board de jogo
       this.boardGame[5, this.numPlayers+1];
 
-      // dar a primeira carta a cada jogador
-        // em cada array do jogador a primeira posicao é a primeira carta, voltada para cima
-        // cartas distribuidas a começar pelo ultimo player joinado
+      // dá as cartas todas sem face 
+      for (let j = 1; j <= this.numPlayers; j++)  // players
+        for (let k = 1; k <= 4; k++)  // cartas
+          this.boardGame[j][k] = "semFace";
+      
+
+      // vira as primeiras cartas para cima
       for (let i = this.numPlayers; i>0; i--) {
         this.boardGame[1][i] = this.arrayBaralho[i];
         this.currentCard = i;
@@ -74,14 +78,14 @@ class BlackJackGame {
     }
 
     join(playerID){
-      if (this.hasPLayer(playerID)) {
+      if (this.hasPlayer(playerID)) {
         return;
       }
         this.numPlayers++;
         this.arrayPlayers.push(playerID);
     }
 
-    hasPlayer(playerdID){
+    hasPlayer(playerID){
       for (let i = 0; i<this.numPlayers; i++) {
         if (this.arrayPlayers[i] === playerID)
           return true;

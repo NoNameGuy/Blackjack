@@ -7,11 +7,20 @@
         <div class="game-zone-content">
             <div class="alert" :class="alerttype">
                 <strong>{{ message }} &nbsp;&nbsp;&nbsp;&nbsp;<a v-show="game.gameEnded" v-on:click.prevent="closeGame">Close Game</a></strong>
+
             </div>
+<!--
+            <div>
+                    <template v-if= "user.id == game.gameOwner">
+    -->                  <p><button class="btn btn-xs btn-success" v-show="!game.gameStarted" v-on:click.prevent="startGame(game)">Start Game</button></p>
+          <!--        </template>
+            </div> -->
+
+
             <div class="board">
 							<!-- v-for num players -->
 								<!-- v-for cartas -->
-                <div v-for="(piece, index) of game.arrayBaralho" >
+                <div v-for="(piece, index) of game.boardGame" >
                     <img v-bind:src="pieceImageURL(piece)" v-on:click="clickPiece(index)">
                 </div>
             </div>
@@ -22,7 +31,7 @@
 
 <script type="text/javascript">
 	export default {
-        props: ['game'],
+        props: ['game', 'user'],
         data: function(){
 			return {
 
@@ -109,6 +118,9 @@
                         }
                     }
                 }
+            },
+            startGame(game) {
+                this.$socket.emit('start_game', {gameID : game.gameID});
             }
         }
     }

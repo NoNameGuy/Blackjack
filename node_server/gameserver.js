@@ -94,4 +94,23 @@ io.on('connection', function (socket) {
     	socket.emit('my_lobby_games', my_games);
     });
 
+
+
+
+    socket.on('start_game', function (data){
+        if( this.user === undefined || this.user === null){
+            console.log("Unauthorized");
+            return;
+        }
+        // axios.patch(api_url+'/api/games/'+data.gameID+'/start', {game_id: data.gameID}).then(response => {
+            let gameID = data.gameID;
+            games.startGame(gameID);
+            io.to(data.gameID).emit('my_active_games_changed');
+            console.log('game started');
+            io.emit('lobby_changed');
+        // }).catch(error => {
+        //     console.log(error);
+        // });        
+		});
+
 });
