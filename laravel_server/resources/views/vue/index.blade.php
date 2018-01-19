@@ -4,9 +4,8 @@
 
 @section('content')
     <router-link to="/users">Users</router-link> -
-    <router-link to="/departments">Departments</router-link> -
     <router-link to="/singletictactoe">SinglePlayer TicTacToe</router-link> -
-    <router-link to="/multitictactoe">Multiplayer TicTacToe</router-link> - 
+    <router-link to="/multitictactoe">Multiplayer TicTacToe</router-link> -
     <router-link to="/blackjack">BlackJack</router-link>
 
     <router-view></router-view>

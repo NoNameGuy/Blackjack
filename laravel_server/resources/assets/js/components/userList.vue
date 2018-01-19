@@ -5,7 +5,6 @@
 	            <th>Name</th>
 	            <th>Email</th>
 	            <th>Age</th>
-	            <th>Department</th>
 	            <th>Actions</th>
 	        </tr>
 	    </thead>
@@ -14,7 +13,6 @@
 	            <td>{{ user.name }}</td>
 	            <td>{{ user.email }}</td>
 	            <td>{{ user.age }}</td>
-	            <td>{{ user.department }}</td>
 	            <td>
 					<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,1)">P1</a>
 					<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,2)">P2</a>
@@ -31,7 +29,7 @@
 	module.exports={
 		props: ['users'],
 		data: function(){
-			return { 
+			return {
 				editingUser: null
 			}
 		},
@@ -39,7 +37,7 @@
             editUser: function(user){
                 this.editingUser = user;
                 this.$emit('edit-click', user);
-            },		
+            },
             deleteUser: function(user){
                 this.editingUser = null;
                 this.$emit('delete-click', user);
@@ -48,7 +46,7 @@
 				this.$root.$data['player'+player] = user;
 				this.$emit('message', user.name+' selected as Player'+player);
 			}
-        },		
+        },
 	}
 </script>
 
