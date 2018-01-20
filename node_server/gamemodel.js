@@ -12,7 +12,7 @@ class BlackJackGame {
       this.gameEnded = false;
       this.gameStarted = false;
       this.gameID = game.id;
-      this.playerTurn = 0;
+      this.gameTurn = 1;
       this.currentCard = 0;
       this.boardGame;
     }
@@ -21,16 +21,23 @@ class BlackJackGame {
       //incializar arrayBaralho
       // randomize arrayBaralho
       this.inicializarArrayBaralho();
-      console.log("arrayBaralho");
-      console.log(this.arrayBaralho);
+      // console.log("arrayBaralho");
+      // console.log(this.arrayBaralho);
 
       //Zerar pontuacoes
       this.zerarPontuacoes();
-      console.log("arrayPontuacao");
-      console.log(this.arrayPontuacao);
+      // console.log("arrayPontuacao");
+      // console.log(this.arrayPontuacao);
 
-      // inicializar a board de jogo
-      this.boardGame[5, this.numPlayers+1];
+      // inicialize boardGame
+      this.boardGame = new Array(this.numPlayers+1);
+
+      // console.log("boardGame");
+      // console.log(this.boardGame.length);
+      for (var i = 0; i < this.numPlayers+1; i++) {
+        this.boardGame[i] = new Array(4);
+      }
+      
 
       // dá as cartas todas sem face 
       for (let j = 1; j <= this.numPlayers; j++)  // players
@@ -40,12 +47,12 @@ class BlackJackGame {
 
       // vira as primeiras cartas para cima
       for (let i = this.numPlayers; i>0; i--) {
-        this.boardGame[1][i] = this.arrayBaralho[i];
-        this.currentCard = i;
+        this.boardGame[1][i] = this.arrayBaralho[this.currentCard];
+        this.currentCard++;
       }
 
 
-
+      this.gameTurn = 2;
       this.gameStarted = true;
     }
 
@@ -56,10 +63,10 @@ class BlackJackGame {
     }
 
     inicializarArrayBaralho() {
-      let baralho = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13,
-                    c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13,
-                    o1, o2, o3, o4, o5, o6, o7, o8, o9, o10, o11, o12, o13,
-                    e1, e2, e3, e4, e5, e6, e7, e8, e9, e10, e11, e12, e13
+      let baralho = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "p13",
+                     "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13",
+                     "o1", "o2", "o3", "o4", "o5", "o6", "o7", "o8", "o9", "o10", "o11", "o12", "o13",
+                     "e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e10", "e11", "e12", "e13"
                     ];
       this.arrayBaralho = this.shuffleArray(baralho);
     }
@@ -93,19 +100,18 @@ class BlackJackGame {
     }
 
     // função para as pontuações!!
-    removeFirstCharString(){ // receber a string da carta
-
-      var s ="";
-
-      while(s.charAt(0) === 'c' || s.charAt(0) === 'e' || s.charAt(0) === 'p' || s.charAt(0) === 'o' ){
-         s = s.substr(1);
+    removeFirstCharString(card){ // receber a string da carta
+      while(card.charAt(0) === 'c' || card.charAt(0) === 'e' || card.charAt(0) === 'p' || card.charAt(0) === 'o' ){
+         card = card.substr(1);
       }
+
+      return card;
 
     }
 
 
 
-    play(playerID, index){ // index = posicao da carta pedida
+    play(playerID, card){ // index = posicao da carta pedida
       if (!this.gameStarted) {
         return;
       }
@@ -114,11 +120,53 @@ class BlackJackGame {
         return;
       }
 
-      //
+      if(card != "semFace") {
+        return;
+      }
+
+      if(this.gameTurn > 3) { // jogo já terminou
+        this.checkHighScore();
+
+        this.winner = maiorPontuacao;
+        return;
+      }
 
 
+
+      this.incrementaPontuacao(card);
+      this.gameTurn++;
     }
 
+    incrementaPontuacao(card) {
+      let pont = 0;
+
+      let sCard = this.removeFirstCharString(card);
+
+      switch(sCard) {
+        case 1:
+          pont = 11;
+          break;
+        case 2:
+        case 3:
+        case 4:
+        case 5:
+        case 6:
+        case 7:
+        case 8:
+        case 9:
+        case 10:
+          pont = sCard; // a pontuação vai ser igual ao valor da sCard
+          break;
+        case 11:
+        case 12:
+        case 13:
+          pont = 10;
+          break;
+
+      }
+
+        this.arrayPontuacao[playerID] += pont;
+    }
 }
 /*
 class TicTacToeGame {

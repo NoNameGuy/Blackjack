@@ -17,11 +17,9 @@
             </div> -->
 
 
-            <div class="board">
-							<!-- v-for num players -->
-								<!-- v-for cartas -->
-                <div v-for="(piece, index) of game.boardGame" >
-                    <img v-bind:src="pieceImageURL(piece)" v-on:click="clickPiece(index)">
+            <div class="line" v-for="(line, card) in game.boardGame" >
+                <div v-for="(piece, player) in line" >
+                    <img v-bind:src="pieceImageURL(piece)" v-on:click="clickPiece(game,card)">
                 </div>
             </div>
             <hr>
@@ -115,7 +113,8 @@
             closeGame (){
                 this.$parent.close(this.game);
             },
-            clickPiece(index){
+            clickPiece(game, card){
+                /*
                 if (!this.game.gameEnded) {
                     if (this.game.playerTurn != this.ownPlayerNumber) {
                         alert("It's not your turn to play");
@@ -125,6 +124,8 @@
                         }
                     }
                 }
+*/
+                this.$socket.emit('play', {gameID: game.gameID, card});
             },
             startGame(game) {
                 this.$socket.emit('start_game', {gameID : game.gameID});

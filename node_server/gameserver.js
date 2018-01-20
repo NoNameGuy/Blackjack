@@ -65,13 +65,17 @@ io.on('connection', function (socket) {
 		if (game.player1SocketID == socket.id) {
 			numPlayer = 1;
 		} else if (game.player2SocketID == socket.id) {
-			numPlayer = 2;
-		} 
+            numPlayer = 2;
+        } else if (game.player3SocketID == socket.id) {
+            numPlayer = 3;
+        } else if (game.player4SocketID == socket.id) {
+            numPlayer = 4;
+        } 
 		if (numPlayer === 0) {
 			socket.emit('invalid_play', {'type': 'Invalid_Player', 'game': game});
 			return;
 		}
-		if (game.play(numPlayer, data.index)) {
+		if (game.play(numPlayer, data.card)) {
 			io.to(game.gameID).emit('game_changed', game);
 		} else {
 			socket.emit('invalid_play', {'type': 'Invalid_Play', 'game': game});
@@ -110,12 +114,12 @@ io.on('connection', function (socket) {
     });
 
 
-    socket.on('start_game', function (data){
+    socket.on('start_game', function (data){ /*
         if( this.user === undefined || this.user === null){
             console.log("start_game -> user = undefined = null"); // de onde venho?
             console.log("Unauthorized");
             return;
-        }
+        }*/
         // axios.patch(api_url+'/api/games/'+data.gameID+'/start', {game_id: data.gameID}).then(response => {
             let gameID = data.gameID;
             games.startGame(gameID);

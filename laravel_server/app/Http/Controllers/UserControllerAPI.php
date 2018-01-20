@@ -39,8 +39,10 @@ class UserControllerAPI extends Controller
         $user = new User();
         $user->fill($request->all());
         $user->password = Hash::make($user->password);
+        //$token = Request::create( 'oauth/token', 'POST');
         $user->save();
         return response()->json(new UserResource($user), 201);
+        //return \Route::dispatch($token);
     }
 
     public function update(Request $request, $id)
@@ -61,6 +63,7 @@ class UserControllerAPI extends Controller
         $user->delete();
         return response()->json(null, 204);
     }
+
     public function emailAvailable(Request $request)
     {
         $totalEmail = 1;

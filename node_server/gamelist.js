@@ -68,6 +68,18 @@ class GameList {
 		}
 		return games;
     }
+    
+
+
+    startGame(gameID) {
+
+        let game = this.gameByID(gameID);
+        if (game===null) {
+            return null;
+        }
+        game.startGame();
+        return game;
+}
 }
 
 module.exports = GameList;
