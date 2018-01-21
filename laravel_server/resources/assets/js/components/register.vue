@@ -60,7 +60,11 @@ export default {
     							password : this.user.password,
     							name : this.user.name,
                   nickname : this.user.nickname
-    						}).then(response => {
+    						},
+                         { headers: {
+                             'Content-Type': 'application/json',
+                         }
+                        }).then(response => {
                   // enviar email de autenticação
                   console.log(response);
                   this.$router.push('/');

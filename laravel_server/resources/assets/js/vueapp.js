@@ -26,6 +26,9 @@ const login = Vue.component('login', require('./components/login.vue'));
 const logout = Vue.component('logout', require('./components/logout.vue'));
 const register = Vue.component('register', require('./components/register.vue'));
 
+const adminLogin = Vue.component('adminLogin', require('./components/adminLogin.vue'));
+const adminMasterPage = Vue.component('adminMasterPage', require('./components/adminMasterPage.vue'));
+
 const routes = [
   { path: '/', redirect: '/users' },
   { path: '/users', component: user },
@@ -35,6 +38,8 @@ const routes = [
   { path: '/login', component: login },
   { path: '/logout', component: logout },
   { path: '/register', component: register },
+  { path: '/adminLogin', component: adminLogin },
+  { path: '/adminMasterPage', component: adminMasterPage },
 ];
 
 const router = new VueRouter({

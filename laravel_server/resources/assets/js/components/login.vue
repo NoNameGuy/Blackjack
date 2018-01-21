@@ -4,12 +4,12 @@
       <div class="text-left">
           <div class="form-group">
               <label for="email">Email</label>
-              <input value="luisa82@example.net" type="email" class="form-control" id="email" v-model="user.email">
+              <input type="email" class="form-control" id="email" v-model="user.email">
           </div>
 
           <div class="form-group">
               <label for="password">Password</label>
-              <input value="secret" type="password" class="form-control" id="password" v-model="user.password">
+              <input type="password" class="form-control" id="password" v-model="user.password">
           </div>
       </div>
 

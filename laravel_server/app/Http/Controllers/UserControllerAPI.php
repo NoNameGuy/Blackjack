@@ -30,19 +30,19 @@ class UserControllerAPI extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'nickname' => 'required|unique:users,email',
-                'password' => 'min:3'
-            ]);
+        $data = [
+            'name' => $request->name,
+            'nickname' => $request->nickname,
+            'email' => $request->email,
+            'password' => $request->password
+        ];
         $user = new User();
-        $user->fill($request->all());
+        $user->fill($data);
         $user->password = Hash::make($user->password);
-        //$token = Request::create( 'oauth/token', 'POST');
         $user->save();
-        return response()->json(new UserResource($user), 201);
-        //return \Route::dispatch($token);
+        return response()->json(['message' => 'registration success'], 200);
+
+        //return response()->json(new UserResource($user), 201);
     }
 
     public function update(Request $request, $id)
