@@ -2,15 +2,16 @@
     <div class="form-group">
         <h1>Welcome Admin</h1>
         <div class="form-group">
-            <v-btn class="btn btn-primary" @click.prevent="usersList">Users</v-btn> -
-            <v-btn class="btn btn-primary" @click.prevent="imageList">Image</v-btn> -
-            <v-btn class="btn btn-primary" @click.prevent="statistics">Statistics</v-btn> -
-            <v-btn class="btn btn-primary" @click.prevent="getUsersBla">defesa</v-btn>
+            <a class="btn btn-primary" @click.prevent="usersList">Users</a> -
+            <!--<a class="btn btn-primary" @click.prevent="imageList">Image</a> -
+            <a class="btn btn-primary" @click.prevent="statistics">Statistics</a>
+        -->
         </div>
         <div v-if="userList">
-            <users-list :page="page" :users="users" @block-click="blockUser" @unlock-click="unlockUser" @delete-click="deleteUser">Users List</users-list>
+            <users-list :users="users" @block-click="blockUser" @unlock-click="unlockUser" @delete-click="deleteUser">Users List</users-list>
             <div class="text-center">
                 <nav>
+                <!--
                     <ul class="pagination">
                         <li v-if="pagination.current_page > 1">
                             <a href="#" aria-label="Previous"
@@ -30,19 +31,21 @@
                             </a>
                         </li>
                     </ul>
+                    -->
                 </nav>
             </div>
         </div>
+        <!--
         <div v-if="imagesList">
             <images-list :images="images">Images List</images-list>
         </div>
+        -->
     </div>
 </template>
 <script type="text/javascript">
-/*
-    import UsersList from './usersList.vue';
-    import ImagesList from './imagesList.vue';
-*/
+    import AdminUsersList from './adminUsersList.vue';
+    //import ImagesList from './imagesList.vue';
+
     export default {
         data: function(){
             return {
@@ -55,7 +58,7 @@
                 departments: [],
                 userList: false,
                 imagesList: false,
-                page: 1,
+                page : 1,
                 pagination: {},
             }
         },
@@ -78,12 +81,10 @@
                 this.getUsers();
             },
 
-            getUsers: function(page){
-                axios.get('api/users?page='+ page)
+            getUsers: function(){
+                axios.get('api/users')
                     .then(response=>{
                         this.users = response.data.data;
-                        this.pagination = response.data.meta;
-                        console.log(this.pagination);
                         console.log(this.users);
                     });
             },
@@ -119,10 +120,9 @@
             },
         },
         components: {
-            /*
-            'users-list': UsersList,
-            'images-list': ImagesList,
-*/
+            'users-list': AdminUsersList,
+            //'images-list': ImagesList,
+
         },
         computed: {
             isActived: function () {
@@ -150,8 +150,8 @@
         },
 
         mounted() {
-            this.getUsers(this.pagination.current_page);
-            this.getImages();
+            this.getUsers();
+            //this.getImages();
         }
 
     }

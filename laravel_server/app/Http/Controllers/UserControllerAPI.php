@@ -16,11 +16,9 @@ class UserControllerAPI extends Controller
 {
     public function getUsers(Request $request)
     {
-        if ($request->has('page')) {
-            return UserResource::collection(User::paginate(5));
-        } else {
-            return UserResource::collection(User::all());
-        }
+        
+        return UserResource::collection(User::all());
+        
     }
 
     public function getUser($id)
@@ -54,6 +52,26 @@ class UserControllerAPI extends Controller
             ]);
         $user = User::findOrFail($id);
         $user->update($request->all());
+        return new UserResource($user);
+    }
+
+    public function blockUser($id) {
+        $user = User::findOrFail($id);
+        $user->blocked = 1;
+        $data = [
+            'blocked' => $user->blocked
+        ];
+        $user->update($data);   
+        return new UserResource($user);
+    }
+
+    public function unblockUser($id) {
+        $user = User::findOrFail($id);
+        $user->blocked = 0;
+        $data = [
+            'blocked' => $user->blocked
+        ];
+        $user->update($data);   
         return new UserResource($user);
     }
 

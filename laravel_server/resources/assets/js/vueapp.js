@@ -28,6 +28,7 @@ const register = Vue.component('register', require('./components/register.vue'))
 
 const adminLogin = Vue.component('adminLogin', require('./components/adminLogin.vue'));
 const adminMasterPage = Vue.component('adminMasterPage', require('./components/adminMasterPage.vue'));
+const adminUserDetails = Vue.component('adminUserDetails', require('./components/adminUserDetails.vue'));
 
 const routes = [
   { path: '/', redirect: '/users' },
@@ -40,6 +41,7 @@ const routes = [
   { path: '/register', component: register },
   { path: '/adminLogin', component: adminLogin },
   { path: '/adminMasterPage', component: adminMasterPage },
+  { path: '/adminUserDetails', component: adminUserDetails },
 ];
 
 const router = new VueRouter({

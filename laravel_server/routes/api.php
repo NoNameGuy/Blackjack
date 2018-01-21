@@ -24,6 +24,11 @@ Route::post('users', 'UserControllerAPI@store');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@delete');
 
+Route::put('user/blocked/{$id}', 'UserControllerAPI@blockUser');
+Route::put('user/unblocked/{$id}', 'UserControllerAPI@unblockUser');
+
+
+
 Route::get('games', 'GameControllerAPI@index');
 Route::get('games/lobby', 'GameControllerAPI@lobby');
 Route::get('games/status/{status}', 'GameControllerAPI@gamesStatus');

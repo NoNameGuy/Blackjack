@@ -1479,7 +1479,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(108);
+module.exports = __webpack_require__(111);
 
 
 /***/ }),
@@ -1521,8 +1521,9 @@ var register = Vue.component('register', __webpack_require__(97));
 
 var adminLogin = Vue.component('adminLogin', __webpack_require__(100));
 var adminMasterPage = Vue.component('adminMasterPage', __webpack_require__(103));
+var adminUserDetails = Vue.component('adminUserDetails', __webpack_require__(120));
 
-var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }];
+var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }, { path: '/adminUserDetails', component: adminUserDetails }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   routes: routes
@@ -49330,7 +49331,7 @@ var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(106)
 /* template */
-var __vue_template__ = __webpack_require__(107)
+var __vue_template__ = __webpack_require__(110)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -49415,6 +49416,12 @@ exports.push([module.i, "\np[data-v-45379eda] {\n    font-size: 2em;\n    text-a
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue__);
+//
+//
+//
+//
 //
 //
 //
@@ -49456,10 +49463,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
-/*
-    import UsersList from './usersList.vue';
-    import ImagesList from './imagesList.vue';
-*/
+
+//import ImagesList from './imagesList.vue';
+
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
@@ -49496,13 +49502,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.getUsers();
         },
 
-        getUsers: function getUsers(page) {
+        getUsers: function getUsers() {
             var _this2 = this;
 
-            axios.get('api/users?page=' + page).then(function (response) {
+            axios.get('api/users').then(function (response) {
                 _this2.users = response.data.data;
-                _this2.pagination = response.data.meta;
-                console.log(_this2.pagination);
                 console.log(_this2.users);
             });
         },
@@ -49539,10 +49543,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     components: {
-        /*
-        'users-list': UsersList,
-        'images-list': ImagesList,
-        */
+        'users-list': __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue___default.a
+        //'images-list': ImagesList,
+
     },
     computed: {
         isActived: function isActived() {
@@ -49570,13 +49573,247 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     mounted: function mounted() {
-        this.getUsers(this.pagination.current_page);
-        this.getImages();
+        this.getUsers();
+        //this.getImages();
     }
 });
 
 /***/ }),
 /* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(108)
+/* template */
+var __vue_template__ = __webpack_require__(109)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/adminUsersList.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4bfa2a98", Component.options)
+  } else {
+    hotAPI.reload("data-v-4bfa2a98", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 108 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['users'],
+    data: function data() {
+        return {
+            currentPassword: null,
+            changePasswordAdmin: false
+        };
+    },
+    methods: {
+        blockUser: function blockUser(user) {
+            axios.put('api/user/blocked/' + user.id).then(console.log(this.users));
+            this.$emit('block-click', user);
+        },
+
+        unlockUser: function unlockUser(user) {
+            axios.put('api/user/unblocked/' + user.id).then(console.log(this.users));
+            this.$emit('unlock-click', user);
+        },
+
+        deleteUser: function deleteUser(user) {
+            this.$emit('delete-click', user);
+        },
+        changePassword: function changePassword() {
+            this.changePasswordAdmin = true;
+        },
+        clear: function clear() {
+            this.changePasswordAdmin = false;
+        },
+        userDetails: function userDetails(user) {
+            this.$router.push('/adminUserDetails');
+        }
+    },
+    components: {}
+});
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table table-striped" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c(
+      "tbody",
+      _vm._l(_vm.users, function(user) {
+        return _c("tr", { key: user.id }, [
+          _c("td", [_vm._v(_vm._s(user.name))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(user.email))]),
+          _vm._v(" "),
+          _c("td", [_vm._v(_vm._s(user.nickname))]),
+          _vm._v(" "),
+          user.admin !== 1
+            ? _c("td", [
+                user.blocked == 0
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-xs btn-warning",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.blockUser(user)
+                          }
+                        }
+                      },
+                      [_vm._v("Block User")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                user.blocked == 1
+                  ? _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-xs btn-success",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.unlockUser(user)
+                          }
+                        }
+                      },
+                      [_vm._v("Unlock User")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-xs btn-danger",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.deleteUser(user)
+                      }
+                    }
+                  },
+                  [_vm._v("Delete User")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-xs btn-primary",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.userDetails(user)
+                      }
+                    }
+                  },
+                  [_vm._v("Details")]
+                )
+              ])
+            : _vm._e()
+        ])
+      })
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _vm._v("blocked\n    "),
+      _c("tr", [
+        _c("th", [_c("strong", [_vm._v("Name")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Email")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Nickname")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Actions")])])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4bfa2a98", module.exports)
+  }
+}
+
+/***/ }),
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49586,68 +49823,22 @@ var render = function() {
   return _c("div", { staticClass: "form-group" }, [
     _c("h1", [_vm._v("Welcome Admin")]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "form-group" },
-      [
-        _c(
-          "v-btn",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.usersList($event)
-              }
+    _c("div", { staticClass: "form-group" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.usersList($event)
             }
-          },
-          [_vm._v("Users")]
-        ),
-        _vm._v(" -\n        "),
-        _c(
-          "v-btn",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.imageList($event)
-              }
-            }
-          },
-          [_vm._v("Image")]
-        ),
-        _vm._v(" -\n        "),
-        _c(
-          "v-btn",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.statistics($event)
-              }
-            }
-          },
-          [_vm._v("Statistics")]
-        ),
-        _vm._v(" -\n        "),
-        _c(
-          "v-btn",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.getUsersBla($event)
-              }
-            }
-          },
-          [_vm._v("defesa")]
-        )
-      ],
-      1
-    ),
+          }
+        },
+        [_vm._v("Users")]
+      ),
+      _vm._v(" -\n        ")
+    ]),
     _vm._v(" "),
     _vm.userList
       ? _c(
@@ -49656,7 +49847,7 @@ var render = function() {
             _c(
               "users-list",
               {
-                attrs: { page: _vm.page, users: _vm.users },
+                attrs: { users: _vm.users },
                 on: {
                   "block-click": _vm.blockUser,
                   "unlock-click": _vm.unlockUser,
@@ -49666,105 +49857,21 @@ var render = function() {
               [_vm._v("Users List")]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "text-center" }, [
-              _c("nav", [
-                _c(
-                  "ul",
-                  { staticClass: "pagination" },
-                  [
-                    _vm.pagination.current_page > 1
-                      ? _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "#", "aria-label": "Previous" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.changePage(
-                                    _vm.pagination.current_page - 1
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("span", { attrs: { "aria-hidden": "true" } }, [
-                                _vm._v("«")
-                              ])
-                            ]
-                          )
-                        ])
-                      : _vm._e(),
-                    _vm._v(" "),
-                    _vm._l(_vm.pagesNumber, function(page) {
-                      return _c(
-                        "li",
-                        { class: [page == _vm.isActived ? "active" : ""] },
-                        [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "#" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.changePage(page)
-                                }
-                              }
-                            },
-                            [_vm._v("@" + _vm._s(page))]
-                          )
-                        ]
-                      )
-                    }),
-                    _vm._v(" "),
-                    _vm.pagination.current_page < _vm.pagination.last_page
-                      ? _c("li", [
-                          _c(
-                            "a",
-                            {
-                              attrs: { href: "#", "aria-label": "Next" },
-                              on: {
-                                click: function($event) {
-                                  $event.preventDefault()
-                                  _vm.changePage(
-                                    _vm.pagination.current_page + 1
-                                  )
-                                }
-                              }
-                            },
-                            [
-                              _c("span", { attrs: { "aria-hidden": "true" } }, [
-                                _vm._v("»")
-                              ])
-                            ]
-                          )
-                        ])
-                      : _vm._e()
-                  ],
-                  2
-                )
-              ])
-            ])
-          ],
-          1
-        )
-      : _vm._e(),
-    _vm._v(" "),
-    _vm.imagesList
-      ? _c(
-          "div",
-          [
-            _c("images-list", { attrs: { images: _vm.images } }, [
-              _vm._v("Images List")
-            ])
+            _vm._m(0)
           ],
           1
         )
       : _vm._e()
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [_c("nav")])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -49775,10 +49882,186 @@ if (false) {
 }
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(121)
+/* template */
+var __vue_template__ = __webpack_require__(122)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/adminUserDetails.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1edb91e5", Component.options)
+  } else {
+    hotAPI.reload("data-v-1edb91e5", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['user'],
+    data: function data() {
+        return {
+            currentUser: null
+        };
+    },
+    methods: {
+
+        getCurrentUser: function getCurrentUser(user) {
+            var _this = this;
+
+            axios.get('api/users/' + user.id).then(function (response) {
+                _this.currentUser = response.data.data;
+                console.log(_this.currentUser);
+            });
+        }
+
+    },
+    components: {},
+
+    mounted: function mounted() {
+        this.getCurrentUser(user);
+    }
+});
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("table", { staticClass: "table table-striped" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("tbody", [
+      _c("tr", [
+        _c("td", [_vm._v(_vm._s(_vm.user.name))]),
+        _vm._v(" "),
+        _c("td", [_vm._v(_vm._s(_vm.user.email))]),
+        _vm._v(" "),
+        _c("td", [_vm._v(_vm._s(_vm.user.nickname))]),
+        _vm._v(" "),
+        _c("td", [_vm._v(_vm._s(_vm.user.created_at))]),
+        _vm._v(" "),
+        _c("td", [_vm._v(_vm._s(_vm.user.blocked))]),
+        _vm._v(" "),
+        _c("td", [_vm._v(_vm._s(_vm.user.admin))])
+      ])
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _vm._v("blocked\n    "),
+      _c("tr", [
+        _c("th", [_c("strong", [_vm._v("Name")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Email")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Nickname")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("CreatedAt")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Blocked")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Admin")])])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1edb91e5", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
