@@ -5,20 +5,18 @@
             <th><strong>Name</strong></th>
             <th><strong>Email</strong></th>
             <th><strong>Nickname</strong></th>
-            <th><strong>CreatedAt</strong></th>
             <th><strong>Blocked</strong></th>
             <th><strong>Admin</strong></th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr v-bind:src="getUser(user)">
             <td>{{ user.name }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.nickname }}</td>
-            <td>{{ user.created_at }}</td>
             <td>{{ user.blocked }}</td>
             <td>{{ user.admin }}</td>
-            
+
         </tr>
         </tbody>
     </table>
@@ -27,22 +25,25 @@
 <script type="text/javascript">
 
     export default {
-        props: ['user'],
+
         data: function(){
             return {
-                currentUser:null,
+              user: null,
+              aux : true,
             }
         },
         methods: {
-        
-            getCurrentUser:function(user) {
-                axios.get('api/users/' + user.id)
-                    .then(response=>{
-                        this.currentUser = response.data.data;
-                        console.log(this.currentUser);
-                    });
 
-            }
+          getUser: function(){
+            if (this.aux){
+              axios.get('api/users/' + this.$route.params.id)
+                  .then(response => {
+                      this.user = response.data.data;
+                      console.log(this.user);
+                      this.aux = false;
+                  });
+                }
+          },
 
         },
         components: {
@@ -50,7 +51,7 @@
         },
 
         mounted() {
-            this.getCurrentUser(user);
+          this.getUser();
         },
     }
 </script>

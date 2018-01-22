@@ -80,7 +80,6 @@
                     });
                 this.getUsers();
             },
-
             getUsers: function(){
                 axios.get('api/users')
                     .then(response=>{
@@ -114,9 +113,6 @@
 
             statistics: function() {
                 this.$router.push('/statistics');
-            },
-            getUsersBla: function () {
-                this.$router.push('/defesa');
             },
         },
         components: {

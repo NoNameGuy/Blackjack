@@ -22,9 +22,15 @@
         </tr>
         </tbody>
     </table>
+<!--
+    <div v-if="details">
+        <user-details :details="details">User Details</user-details>
+    </div>
+-->
 </template>
 
 <script type="text/javascript">
+    import UserDetails from './adminUserDetails.vue';
 
     export default {
         props: ['users'],
@@ -32,10 +38,12 @@
             return {
                 currentPassword: null,
                 changePasswordAdmin: false,
+                user: [],
+                details : false,
             }
         },
         methods: {
-            blockUser: function(user){  
+            blockUser: function(user){
                 axios.put('api/user/blocked/' + user.id)
                     .then(
                         console.log(this.users),
@@ -61,11 +69,17 @@
                 this.changePasswordAdmin = false;
             },
             userDetails: function (user) {
-                this.$router.push('/adminUserDetails');
-            },
+              axios.get('api/users/' + user.id)
+              .then(response => {
+                console.log("userDetails UsersList");
+                this.user = response.data.data;
+                console.log(this.user.id);
+                this.$router.push('adminUserDetails/' + this.user.id);
+              });
+            }
         },
         components: {
-
+          'user-details' : UserDetails,
         },
     }
 </script>

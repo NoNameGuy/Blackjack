@@ -41,7 +41,7 @@ const routes = [
   { path: '/register', component: register },
   { path: '/adminLogin', component: adminLogin },
   { path: '/adminMasterPage', component: adminMasterPage },
-  { path: '/adminUserDetails', component: adminUserDetails },
+  { path: '/adminUserDetails/:id', component: adminUserDetails },
 ];
 
 const router = new VueRouter({

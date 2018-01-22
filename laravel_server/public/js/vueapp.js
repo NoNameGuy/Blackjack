@@ -1521,7 +1521,7 @@ var adminLogin = Vue.component('adminLogin', __webpack_require__(100));
 var adminMasterPage = Vue.component('adminMasterPage', __webpack_require__(103));
 var adminUserDetails = Vue.component('adminUserDetails', __webpack_require__(111));
 
-var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }, { path: '/adminUserDetails', component: adminUserDetails }];
+var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }, { path: '/adminUserDetails/:id', component: adminUserDetails }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   routes: routes
@@ -49735,7 +49735,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
             this.getUsers();
         },
-
         getUsers: function getUsers() {
             var _this2 = this;
 
@@ -49771,9 +49770,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         statistics: function statistics() {
             this.$router.push('/statistics');
-        },
-        getUsersBla: function getUsersBla() {
-            this.$router.push('/defesa');
         }
     },
     components: {
@@ -49865,6 +49861,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUserDetails_vue__ = __webpack_require__(111);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUserDetails_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__adminUserDetails_vue__);
 //
 //
 //
@@ -49891,6 +49889,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -49898,7 +49902,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             currentPassword: null,
-            changePasswordAdmin: false
+            changePasswordAdmin: false,
+            user: [],
+            details: false
         };
     },
     methods: {
@@ -49922,10 +49928,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.changePasswordAdmin = false;
         },
         userDetails: function userDetails(user) {
-            this.$router.push('/adminUserDetails');
+            var _this = this;
+
+            axios.get('api/users/' + user.id).then(function (response) {
+                console.log("userDetails UsersList");
+                _this.user = response.data.data;
+                console.log(_this.user.id);
+                _this.$router.push('adminUserDetails/' + _this.user.id);
+            });
         }
     },
-    components: {}
+    components: {
+        'user-details': __WEBPACK_IMPORTED_MODULE_0__adminUserDetails_vue___default.a
+    }
 });
 
 /***/ }),
@@ -50023,7 +50038,7 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _vm._v("blocked\n    "),
+      _vm._v("blocked\n        "),
       _c("tr", [
         _c("th", [_c("strong", [_vm._v("Name")])]),
         _vm._v(" "),
@@ -50191,34 +50206,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['user'],
-    data: function data() {
-        return {
-            currentUser: null
-        };
-    },
-    methods: {
 
-        getCurrentUser: function getCurrentUser(user) {
-            var _this = this;
+  data: function data() {
+    return {
+      user: null,
+      aux: true
+    };
+  },
+  methods: {
 
-            axios.get('api/users/' + user.id).then(function (response) {
-                _this.currentUser = response.data.data;
-                console.log(_this.currentUser);
-            });
-        }
+    getUser: function getUser() {
+      var _this = this;
 
-    },
-    components: {},
-
-    mounted: function mounted() {
-        this.getCurrentUser(user);
+      if (this.aux) {
+        axios.get('api/users/' + this.$route.params.id).then(function (response) {
+          _this.user = response.data.data;
+          console.log(_this.user);
+          _this.aux = false;
+        });
+      }
     }
+
+  },
+  components: {},
+
+  mounted: function mounted() {
+    this.getUser();
+  }
 });
 
 /***/ }),
@@ -50233,14 +50250,12 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("tbody", [
-      _c("tr", [
+      _c("tr", { attrs: { src: _vm.getUser(_vm.user) } }, [
         _c("td", [_vm._v(_vm._s(_vm.user.name))]),
         _vm._v(" "),
         _c("td", [_vm._v(_vm._s(_vm.user.email))]),
         _vm._v(" "),
         _c("td", [_vm._v(_vm._s(_vm.user.nickname))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.user.created_at))]),
         _vm._v(" "),
         _c("td", [_vm._v(_vm._s(_vm.user.blocked))]),
         _vm._v(" "),
@@ -50262,8 +50277,6 @@ var staticRenderFns = [
         _c("th", [_c("strong", [_vm._v("Email")])]),
         _vm._v(" "),
         _c("th", [_c("strong", [_vm._v("Nickname")])]),
-        _vm._v(" "),
-        _c("th", [_c("strong", [_vm._v("CreatedAt")])]),
         _vm._v(" "),
         _c("th", [_c("strong", [_vm._v("Blocked")])]),
         _vm._v(" "),
