@@ -16,9 +16,9 @@ class UserControllerAPI extends Controller
 {
     public function getUsers(Request $request)
     {
-        
+
         return UserResource::collection(User::all());
-        
+
     }
 
     public function getUser($id)
@@ -61,7 +61,7 @@ class UserControllerAPI extends Controller
         $data = [
             'blocked' => $user->blocked
         ];
-        $user->update($data);   
+        $user->update($data);
         return new UserResource($user);
     }
 
@@ -71,7 +71,7 @@ class UserControllerAPI extends Controller
         $data = [
             'blocked' => $user->blocked
         ];
-        $user->update($data);   
+        $user->update($data);
         return new UserResource($user);
     }
 
@@ -92,4 +92,22 @@ class UserControllerAPI extends Controller
         }
         return response()->json($totalEmail == 0);
     }
-}
+
+    public function resetPWAdmin(Request $request)
+    {
+
+      $admin = DB::table('users')->where('admin', '=', '1');
+
+      $request->old_password = Hash::make($request->old_password);
+
+      if ($request->old_password === $admin->password) {
+        if ($request->password === $request->confirm_password) {
+          $admin->password = Hash::make($request->confirm_password);
+          $admin->save();
+          return response()->json(['message'=>'OK!'], 200);
+        }
+      }else {
+        return response()->json(['message'=>'ERROR: CHECK FIELDS'], 401);
+      }
+    }
+  }

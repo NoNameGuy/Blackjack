@@ -16,7 +16,6 @@
             <td>{{ user.nickname }}</td>
             <td>{{ user.blocked }}</td>
             <td>{{ user.admin }}</td>
-
         </tr>
         </tbody>
     </table>

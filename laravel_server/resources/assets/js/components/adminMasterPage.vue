@@ -3,6 +3,7 @@
         <h1>Welcome Admin</h1>
         <div class="form-group">
             <a class="btn btn-primary" @click.prevent="usersList">Users</a> -
+            <a class="btn btn-primary" @click.prevent="resetPWAdmin">Reset Admin Password</a> -
             <!--<a class="btn btn-primary" @click.prevent="imageList">Image</a> -
             <a class="btn btn-primary" @click.prevent="statistics">Statistics</a>
         -->
@@ -113,6 +114,10 @@
 
             statistics: function() {
                 this.$router.push('/statistics');
+            },
+
+            resetPWAdmin: function () {
+              this.$router.push('/resetPWAdmin');
             },
         },
         components: {

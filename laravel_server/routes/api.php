@@ -26,6 +26,7 @@ Route::delete('users/{id}', 'UserControllerAPI@delete');
 
 Route::put('user/blocked/{$id}', 'UserControllerAPI@blockUser');
 Route::put('user/unblocked/{$id}', 'UserControllerAPI@unblockUser');
+Route::put('admin/resetPWAdmin', 'UserControllerAPI@resetPWAdmin');
 
 
 
@@ -43,4 +44,3 @@ Route::post('login', 'LoginControllerAPI@login');
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
 Route::post('register', 'UserControllerAPI@store');
 Route::post('adminLogin', 'LoginControllerAPI@adminlogin');
-
