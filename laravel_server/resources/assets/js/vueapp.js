@@ -15,6 +15,7 @@ import VueSocketio from 'vue-socket.io';
 
 Vue.use(VueRouter);
 
+
 //Vue.use(VueSocketio, 'http://192.168.10.10:8080');
 Vue.use(VueSocketio, 'http://192.168.10.10:8080');
 

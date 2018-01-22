@@ -8,6 +8,7 @@
             <a class="btn btn-primary" @click.prevent="statistics">Statistics</a>
         -->
         </div>
+        
         <div v-if="userList">
             <users-list :users="users" @block-click="blockUser" @unlock-click="unlockUser" @delete-click="deleteUser">Users List</users-list>
             <div class="text-center">
