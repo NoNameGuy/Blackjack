@@ -65,6 +65,7 @@ class InitialStructure extends Migration
             $table->increments('id');
             $table->enum('status', ['pending', 'active', 'terminated', 'canceled'])->default('pending');
             $table->integer('total_players')->default(1);
+            $table->string('winner')->references('id')->on('users');
             $table->integer('created_by')->unsigned();
             $table->foreign('created_by')->references('id')->on('users');
             $table->integer('deck_used')->unsigned();

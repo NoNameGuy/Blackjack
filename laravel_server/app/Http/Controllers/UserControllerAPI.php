@@ -96,13 +96,12 @@ class UserControllerAPI extends Controller
     public function resetPWAdmin(Request $request)
     {
 
-      $admin = DB::table('users')->where('admin', '=', '1');
+      $admin = DB::table('users')->where('admin', '=', '1')->where('nickname', '=', 'admin');
 
       $request->old_password = Hash::make($request->old_password);
-
-      if ($request->old_password === $admin->password) {
-        if ($request->password === $request->confirm_password) {
-          $admin->password = Hash::make($request->confirm_password);
+      if ($request->old_password == $admin->password) { // hash = => pass =
+        if ($request->password == $request->confirm_password) {
+          $admin->password = Hash::make($request->password);
           $admin->save();
           return response()->json(['message'=>'OK!'], 200);
         }

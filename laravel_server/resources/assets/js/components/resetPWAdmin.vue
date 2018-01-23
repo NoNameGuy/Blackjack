@@ -3,17 +3,17 @@
     <div class="text-left">
         <div class="form-group">
             <label for="password">Old PW:</label>
-            <input type="password" class="form-control" id="old_password" v-model="old_password">
+            <input type="password" class="form-control" id="old_password" v-model="admin.old_password">
         </div>
 
         <div class="form-group">
             <label for="password">New PW:</label>
-            <input type="password" class="form-control" id="password" v-model="password">
+            <input type="password" class="form-control" id="password" v-model="admin.password">
         </div>
 
         <div class="form-group">
             <label for="confirm_password">Confirm PW:</label>
-            <input type="password" class="form-control" id="confirm_password" v-model="confirm_password">
+            <input type="password" class="form-control" id="confirm_password" v-model="admin.confirm_password">
         </div>
 
         <div class="text-center">
@@ -28,21 +28,27 @@
 
     export default {
 
-        data: function(){
-            return {
-              old_password:null,
-              api_password : null,
-              password:null,
-              confirm_password:null,
-            }
-        },
+        data() {
+    return {
+      admin : {
+        old_password: null,
+        password : null,
+        confirm_password : null,
+      },
+    };
+  },
         methods: {
 
           updatePW: function () {
-            axios.put('/admin/resetPWAdmin', {
-              'old_password': this.old_password,
-              'password': this.password,
-              'confirm_password': this.confirm_password
+
+            console.log(this.admin.old_password);
+            console.log(this.admin.password);
+            console.log(this.admin.confirm_password);
+
+            axios.put('/api/admin/resetPasswordAdmin', {
+              old_password: this.admin.old_password,
+              password: this.admin.password,
+              confirm_password: this.admin.confirm_password
 
             }).then(response => {
               console.log(response);
