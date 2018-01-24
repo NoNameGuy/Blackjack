@@ -26,7 +26,7 @@ Route::delete('users/{id}', 'UserControllerAPI@delete');
 
 Route::put('user/blocked/{$id}', 'UserControllerAPI@blockUser');
 Route::put('user/unblocked/{$id}', 'UserControllerAPI@unblockUser');
-Route::put('admin/resetPWAdmin', 'UserControllerAPI@resetPWAdmin');
+Route::patch('admin/resetPassAdmin/{$email}', 'UserControllerAPI@resetPass');
 
 
 

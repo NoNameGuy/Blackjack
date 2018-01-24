@@ -53,6 +53,7 @@ export default {
       //registerError: false
     };
   },
+  
   methods: {
     register: function() {
     	axios.post('/api/register', {

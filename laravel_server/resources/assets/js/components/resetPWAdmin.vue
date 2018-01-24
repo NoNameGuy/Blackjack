@@ -2,6 +2,10 @@
   <form>
     <div class="text-left">
         <div class="form-group">
+            <label for="email">Email: </label>
+            <input type="email" class="form-control" id="email" v-model="email">
+        </div>
+        <div class="form-group">
             <label for="password">Old PW:</label>
             <input type="password" class="form-control" id="old_password" v-model="old_password">
         </div>
@@ -30,31 +34,36 @@
 
         data: function(){
             return {
+              email : null,
               old_password:null,
-              api_password : null,
               password:null,
               confirm_password:null,
+              updatePWError:null,
             }
         },
         methods: {
 
           updatePW: function () {
-            axios.put('/admin/resetPWAdmin', {
-              'old_password': this.old_password,
-              'password': this.password,
-              'confirm_password': this.confirm_password
-
+            console.log(this.email);
+            axios.patch('/api/admin/resetPassAdmin/' + this.email, {
+              old_password: this.old_password,
+              password: this.password,
+              confirm_password: this.confirm_password
             }).then(response => {
               console.log(response);
-              this.$router.push('/AdminUsersList');
+              this.$router.push('/adminMasterPage');
 
-            }).catch(updatePWError =>{
+            }).catch(updatePWError => {
+              // this.email = null,
+              // this.old_password= null,
+              // this.password= null,
+              // this.confirm_password= null
 
               console.log(updatePWError);
-              this.$router.push('/resetPWAdmin');
+              this.$router.push('/adminPassword');
 
 
-            })
+            });
 
           }
 

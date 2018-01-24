@@ -118,7 +118,7 @@
             },
 
             resetPWAdmin: function () {
-              this.$router.push('/resetPWAdmin');
+              this.$router.push('/adminPassword');
             },
         },
         components: {

@@ -30,7 +30,7 @@ const register = Vue.component('register', require('./components/register.vue'))
 const adminLogin = Vue.component('adminLogin', require('./components/adminLogin.vue'));
 const adminMasterPage = Vue.component('adminMasterPage', require('./components/adminMasterPage.vue'));
 const adminUserDetails = Vue.component('adminUserDetails', require('./components/adminUserDetails.vue'));
-const resetPWAdmin = Vue.component('resetPWAdmin', require('./components/resetPWAdmin.vue'));
+const adminPassword = Vue.component('resetPWAdmin', require('./components/resetPWAdmin.vue'));
 
 const routes = [
   { path: '/', redirect: '/users' },
@@ -44,7 +44,7 @@ const routes = [
   { path: '/adminLogin', component: adminLogin },
   { path: '/adminMasterPage', component: adminMasterPage },
   { path: '/adminUserDetails/:id', component: adminUserDetails },
-  { path: '/resetPWAdmin', component: resetPWAdmin },
+  { path: '/adminPassword', component: adminPassword },
 ];
 
 const router = new VueRouter({
