@@ -1,27 +1,36 @@
 <template>
-	<table class="table table-striped">
-	    <thead>
-	        <tr>
-	            <th>Name</th>
-	            <th>Email</th>
-	            <th>Age</th>
-	            <th>Actions</th>
-	        </tr>
-	    </thead>
-	    <tbody>
-	        <tr v-for="user in users"  :key="user.id" :class="{activerow: editingUser === user}">
-	            <td>{{ user.name }}</td>
-	            <td>{{ user.email }}</td>
-	            <td>{{ user.age }}</td>
-	            <td>
-					<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,1)">P1</a>
-					<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,2)">P2</a>
-	                <a class="btn btn-xs btn-primary" v-on:click.prevent="editUser(user)">Edit</a>
-	                <a class="btn btn-xs btn-danger" v-on:click.prevent="deleteUser(user)">Delete</a>
-	            </td>
-	        </tr>
-	    </tbody>
-	</table>
+	<div class="jumbotron">
+		<table class="table table-striped">
+		    <thead>
+		        <tr>
+		            <th>Name</th>
+		            <th>Email</th>
+		            <th>Nickname</th>
+		            <th>Actions</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr v-for="user in users"  :key="user.id" :class="{activerow: editingUser === user}">
+		            <td>{{ user.name }}</td>
+		            <td>{{ user.email }}</td>
+		            <td>{{ user.nickname }}</td>
+		            <td>
+		            	<!--
+						<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,1)">P1</a>
+						<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,2)">P2</a>
+						-->
+		                <a class="btn btn-xs btn-primary" v-on:click.prevent="editUser(user)">Edit</a>
+		                <!--
+		                <a class="btn btn-xs btn-danger" v-on:click.prevent="deleteUser(user)">Delete</a>
+		                -->
+		            </td>
+		        </tr>
+		    </tbody>
+		</table>
+
+		
+
+	</div>
 </template>
 
 <script type="text/javascript">
@@ -31,12 +40,15 @@
 		data: function(){
 			return {
 				editingUser: null
-			}
+			};
 		},
         methods: {
             editUser: function(user){
+            	this.$router.push('/userEdit');
+            /*
                 this.editingUser = user;
                 this.$emit('edit-click', user);
+            */
             },
             deleteUser: function(user){
                 this.editingUser = null;
