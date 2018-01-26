@@ -14,14 +14,16 @@
                     <template v-if= "user.id == game.gameOwner">
     -->                  <p><button class="btn btn-xs btn-success" v-show="!game.gameStarted" v-on:click.prevent="startGame(game)">Start Game</button></p>
           <!--        </template>
-            </div> -->
+					</div> -->
+<div class="board">
+	<div class="line" v-for="(line, player) in game.boardGame" >
+			<div v-for="(piece, card) in line" >
+					<img class="img" v-bind:src="pieceImageURL(piece)" v-on:click="clickPiece(game,card)">
+			</div>
+	</div>
+</div>
 
 
-            <div class="line" v-for="(line, card) in game.boardGame" >
-                <div v-for="(piece, player) in line" >
-                    <img v-bind:src="pieceImageURL(piece)" v-on:click="clickPiece(game,card)">
-                </div>
-            </div>
             <hr>
         </div>
     </div>
@@ -135,6 +137,11 @@
 </script>
 
 <style scoped>
+/*
+.img{
+	height: 100px;
+	width: 75px;
+} */
 .gameseparator{
     border-style: solid;
     border-width: 2px 0 0 0;

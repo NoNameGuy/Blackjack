@@ -48283,7 +48283,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.gameseparator[data-v-24c2b89a]{\n    border-style: solid;\n    border-width: 2px 0 0 0;\n    border-color: black;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*\n.img{\n\theight: 100px;\n\twidth: 75px;\n} */\n.gameseparator[data-v-24c2b89a]{\n    border-style: solid;\n    border-width: 2px 0 0 0;\n    border-color: black;\n}\n", ""]);
 
 // exports
 
@@ -48294,6 +48294,8 @@ exports.push([module.i, "\n.gameseparator[data-v-24c2b89a]{\n    border-style: s
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -48439,67 +48441,68 @@ var render = function() {
       _c("br")
     ]),
     _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "game-zone-content" },
-      [
-        _c("div", { staticClass: "alert", class: _vm.alerttype }, [
-          _c("strong", [
-            _vm._v(_vm._s(_vm.message) + "     "),
-            _c(
-              "a",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.game.gameEnded,
-                    expression: "game.gameEnded"
-                  }
-                ],
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.closeGame($event)
-                  }
-                }
-              },
-              [_vm._v("Close Game")]
-            )
-          ])
-        ]),
-        _vm._v(" "),
-        _c("p", [
+    _c("div", { staticClass: "game-zone-content" }, [
+      _c("div", { staticClass: "alert", class: _vm.alerttype }, [
+        _c("strong", [
+          _vm._v(_vm._s(_vm.message) + "     "),
           _c(
-            "button",
+            "a",
             {
               directives: [
                 {
                   name: "show",
                   rawName: "v-show",
-                  value: !_vm.game.gameStarted,
-                  expression: "!game.gameStarted"
+                  value: _vm.game.gameEnded,
+                  expression: "game.gameEnded"
                 }
               ],
-              staticClass: "btn btn-xs btn-success",
               on: {
                 click: function($event) {
                   $event.preventDefault()
-                  _vm.startGame(_vm.game)
+                  _vm.closeGame($event)
                 }
               }
             },
-            [_vm._v("Start Game")]
+            [_vm._v("Close Game")]
           )
-        ]),
-        _vm._v(" "),
-        _vm._l(_vm.game.boardGame, function(line, card) {
+        ])
+      ]),
+      _vm._v(" "),
+      _c("p", [
+        _c(
+          "button",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: !_vm.game.gameStarted,
+                expression: "!game.gameStarted"
+              }
+            ],
+            staticClass: "btn btn-xs btn-success",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                _vm.startGame(_vm.game)
+              }
+            }
+          },
+          [_vm._v("Start Game")]
+        )
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "board" },
+        _vm._l(_vm.game.boardGame, function(line, player) {
           return _c(
             "div",
             { staticClass: "line" },
-            _vm._l(line, function(piece, player) {
+            _vm._l(line, function(piece, card) {
               return _c("div", [
                 _c("img", {
+                  staticClass: "img",
                   attrs: { src: _vm.pieceImageURL(piece) },
                   on: {
                     click: function($event) {
@@ -48510,12 +48513,11 @@ var render = function() {
               ])
             })
           )
-        }),
-        _vm._v(" "),
-        _c("hr")
-      ],
-      2
-    )
+        })
+      ),
+      _vm._v(" "),
+      _c("hr")
+    ])
   ])
 }
 var staticRenderFns = []
