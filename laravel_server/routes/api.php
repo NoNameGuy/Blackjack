@@ -37,7 +37,8 @@ Route::get('games/{id}', 'GameControllerAPI@getGame');
 Route::post('games', 'GameControllerAPI@store');
 Route::patch('games/{id}/join-start', 'GameControllerAPI@joinAndStart');
 Route::patch('games/{id}/endgame/{winner}', 'GameControllerAPI@endgame');
-
+Route::get('games/user', 'GameControllerAPI@getUserGames');
+Route::get('games/victories', 'GameControllerAPI@getVictoriesDraws');
 
 
 Route::post('login', 'LoginControllerAPI@login');

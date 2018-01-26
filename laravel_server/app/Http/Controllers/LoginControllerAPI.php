@@ -7,12 +7,23 @@ use Illuminate\Http\Request;
 define('YOUR_SERVER_URL', 'http://blackjack.test');
 // Check "oauth_clients" table for next 2 values:
 define('CLIENT_ID', '2');
-define('CLIENT_SECRET','C9dKTQICGwYrZR2fhdaKnIst3NShGnY9k8BUAaCu');
+define('CLIENT_SECRET','mwi8yOL0m8xUkxPfDi0lFpqKpY9px7wW9mquJZWZ');
 
 class LoginControllerAPI extends Controller
 {
 	public function login(Request $request)
 	{
+        /*
+		$user = User::where('email', $request->email);
+        if($user == null){
+            return response()->json(['msg'=>'Utilizador/email não existe.'], 400);
+        }
+
+        if($user->blocked == 1){
+            return response()->json(['msg'=>'Utilizador bloqueado.'], 400);
+        }
+
+*/
 		$http = new \GuzzleHttp\Client;
 		$response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
 		'form_params' => [
@@ -34,6 +45,22 @@ class LoginControllerAPI extends Controller
 
 	public function adminlogin(Request $request)
     {
+        /*
+    	$user = User::where('email', $request->email)->first();
+        if($user == null){
+            return response()->json(['msg'=>'Utilizador/email não existe.'], 400);
+        }
+
+        if ($user->admin != 1) {
+            return response()->json(['msg'=>'Utilizador não autorizado.'], 400);
+        }
+
+        if($user->blocked == 1) {
+            return response()->json(['msg'=>'Utilizador não activo.'], 400);
+        }
+*/
+
+
         $http = new \GuzzleHttp\Client;
         $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
         'form_params' => [

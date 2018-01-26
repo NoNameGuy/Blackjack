@@ -80,4 +80,24 @@ class GameControllerAPI extends Controller
         $game->save();
         return new GameResource($game);
     }
+
+    public function getUserGames($id) { //user id
+        return DB::table('game_user')->where('user_id', $id)->count();
+    }
+
+    public function getVictoriesDraws($id) { //user id
+        if (DB::table('game_user')->count() == 0) {
+            return response()->json('winsDraws' : 0);
+        }
+        
+        $user = User::findOrFail($id);
+        return DB::table('game_user')->where('winner', $user->nickname)->count();
+    }
+
+    public function getDraws($id) { //user id
+        $user = User::findOrFail($id);
+
+
+        return $response;
+    }
 }

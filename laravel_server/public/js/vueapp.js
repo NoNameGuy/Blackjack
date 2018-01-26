@@ -1481,9 +1481,9 @@ module.exports = Component.exports
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(110)
+var __vue_script__ = __webpack_require__(113)
 /* template */
-var __vue_template__ = __webpack_require__(111)
+var __vue_template__ = __webpack_require__(114)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -1527,7 +1527,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(16);
-module.exports = __webpack_require__(117);
+module.exports = __webpack_require__(123);
 
 
 /***/ }),
@@ -1566,13 +1566,16 @@ var blackjack = Vue.component('blackjack', __webpack_require__(81));
 var login = Vue.component('login', __webpack_require__(91));
 var logout = Vue.component('logout', __webpack_require__(13));
 var register = Vue.component('register', __webpack_require__(98));
+var userAccount = Vue.component('userAccount', __webpack_require__(132));
 
-var adminLogin = Vue.component('adminLogin', __webpack_require__(101));
-var adminMasterPage = Vue.component('adminMasterPage', __webpack_require__(104));
+var adminStatistics = Vue.component('statistics', __webpack_require__(101));
+var adminLogin = Vue.component('adminLogin', __webpack_require__(104));
+var adminMasterPage = Vue.component('adminMasterPage', __webpack_require__(107));
 var adminUserDetails = Vue.component('adminUserDetails', __webpack_require__(14));
-var adminPassword = Vue.component('resetPWAdmin', __webpack_require__(114));
+var adminPassword = Vue.component('resetPWAdmin', __webpack_require__(117));
+var playerStatistics = Vue.component('playerStatistics', __webpack_require__(120));
 
-var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }, { path: '/adminUserDetails/:id', component: adminUserDetails }, { path: '/adminPassword', component: adminPassword }];
+var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }, { path: '/adminUserDetails/:id', component: adminUserDetails }, { path: '/adminPassword', component: adminPassword }, { path: '/playerStatistics', component: playerStatistics }, { path: '/adminStatistics', component: adminStatistics }, { path: '/userAccount', component: userAccount }];
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
   routes: routes
@@ -49146,6 +49149,237 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
+Component.options.__file = "resources/assets/js/components/statistics.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-76d6ec20", Component.options)
+  } else {
+    hotAPI.reload("data-v-76d6ec20", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    data: function data() {
+        return {
+            games: [],
+            totalGames: 0,
+            winner: [],
+            players_per_game: 0,
+            totalPlayers: 0,
+            players: {}
+        };
+    },
+    methods: {
+        getGames: function getGames() {
+            var _this = this;
+
+            axios.get('api/games').then(function (response) {
+                _this.games = response.data.data;
+                _this.totalGames = _this.games.length;
+                _this.average();
+                _this.getPlayers();
+            });
+        },
+        average: function average() {
+            if (this.games.length == 0) {
+                this.players_per_game = 0;
+            } else {
+                for (var i = 0; i < this.games.length; i++) {
+                    this.totalPlayers += parseInt(this.games[i].totalPlayers);
+                }
+                this.players_per_game = this.totalPlayers / this.games.length;
+            }
+        },
+        getPlayers: function getPlayers() {
+            var _this2 = this;
+
+            axios.get('api/users').then(function (response) {
+                if (response.data.data.length != 0) {
+                    _this2.players = response.data.data;
+                    console.log(_this2.players);
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
+
+        home: function home() {
+            this.$router.push('/adminMasterPage');
+        }
+
+    },
+
+    components: {},
+
+    mounted: function mounted() {
+        this.getGames();
+    }
+});
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("table", { staticClass: "table table-striped" }, [
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-xs btn-warning",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.home()
+            }
+          }
+        },
+        [_vm._v(" Home")]
+      ),
+      _vm._v(" "),
+      _c("thead", [
+        _c("h1", [_vm._v("Games Finished")]),
+        _vm._v(" "),
+        _c("h2", [_vm._v(" Total of Games = " + _vm._s(_vm.totalGames))]),
+        _vm._v(" "),
+        _c("h2", [
+          _vm._v(" Average Players Per Game = " + _vm._s(_vm.players_per_game))
+        ]),
+        _vm._v(" "),
+        _c("h2", [_vm._v(" Total of Players = " + _vm._s(_vm.totalPlayers))]),
+        _vm._v(" "),
+        _vm._m(0)
+      ]),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.games, function(game) {
+          return _c("tr", { key: game.id }, [
+            _c("td", [_vm._v(_vm._s(game.status))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(game.total_players))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(game.created_by))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(game.winner))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(game.created_at.date))])
+          ])
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_c("strong", [_vm._v("Status")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Total Players")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Created by")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Winner")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Created at")])])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-76d6ec20", module.exports)
+  }
+}
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(105)
+/* template */
+var __vue_template__ = __webpack_require__(106)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
 Component.options.__file = "resources/assets/js/components/adminLogin.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
 
@@ -49169,16 +49403,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 102 */
+/* 105 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__logout_vue__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__logout_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__logout_vue__);
-//
-//
-//
 //
 //
 //
@@ -49207,10 +49438,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             user: {
-                email: "",
-                password: ""
+                email: null,
+                password: null
             },
-            error: false
+            error: null
         };
     },
 
@@ -49218,21 +49449,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         login: function login() {
             var _this = this;
 
-            if (this.user.email === 'admin@mail.dad') {
-                axios.post('api/login', this.user, {
-                    headers: {
-                        'Content-Type': 'application/json'
-                    } }).then(function (response) {
-                    console.log(_this.user);
+            //if(this.user.email == 'admin@mail.dad') {
+            axios.post('/api/adminLogin', this.user, { headers: { 'Content-Type': 'application/json' }
+            }).then(function (response) {
+                console.log('Response: ');
+                console.log(response);
+                var token = response.data.data.access_token;
+                // guardar na localStorage o token
+                localStorage.setItem('token', JSON.stringify(token));
 
-                    _this.$router.push('/adminMasterPage');
-                }).catch(function (error) {
-                    console.log(error);
-                    _this.error = true;
-                });
-            } else {
-                this.error = true;
-            }
+                _this.$router.push('/adminMasterPage');
+            }).catch(function (error) {
+                console.log(error);
+            });
+            //}
         },
         cancel: function cancel() {
             this.$router.push('/login');
@@ -49245,7 +49475,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 103 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49255,107 +49485,112 @@ var render = function() {
   return _c("div", { staticClass: "jumbotron login" }, [
     _c("h2", [_vm._v("Welcome Admin")]),
     _vm._v(" "),
-    _vm.error
-      ? _c("div", { staticClass: "alert alert-danger" }, [
-          _vm._v(
-            "\n        Something went wrong. Please check your email and password.\n    "
+    _c(
+      "form",
+      {
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            _vm.login(_vm.user)
+          }
+        }
+      },
+      [
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Email")]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.email,
+                expression: "user.email"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "text",
+              name: "email",
+              id: "inputEmail",
+              placeholder: "Your Email"
+            },
+            domProps: { value: _vm.user.email },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.user, "email", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c("label", { attrs: { for: "inputPassword" } }, [
+            _vm._v("Password")
+          ]),
+          _vm._v(" "),
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.password,
+                expression: "user.password"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: {
+              type: "password",
+              name: "password",
+              id: "inputPassword",
+              placeholder: "Your Password"
+            },
+            domProps: { value: _vm.user.password },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.$set(_vm.user, "password", $event.target.value)
+              }
+            }
+          })
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "form-group" }, [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-primary",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.login($event)
+                }
+              }
+            },
+            [_vm._v("Submit")]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-success",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.cancel($event)
+                }
+              }
+            },
+            [_vm._v("Turn back")]
           )
         ])
-      : _vm._e(),
-    _vm._v(" "),
-    _c("form", [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Email")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.user.email,
-              expression: "user.email"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "email",
-            id: "inputEmail",
-            placeholder: "Your Email"
-          },
-          domProps: { value: _vm.user.email },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.user, "email", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "inputPassword" } }, [_vm._v("Password")]),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.user.password,
-              expression: "user.password"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: {
-            type: "password",
-            name: "password",
-            id: "inputPassword",
-            placeholder: "Your Password"
-          },
-          domProps: { value: _vm.user.password },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.user, "password", $event.target.value)
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-primary",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.login($event)
-              }
-            }
-          },
-          [_vm._v("Submit")]
-        ),
-        _vm._v(" "),
-        _c(
-          "a",
-          {
-            staticClass: "btn btn-success",
-            on: {
-              click: function($event) {
-                $event.preventDefault()
-                _vm.cancel($event)
-              }
-            }
-          },
-          [_vm._v("Turn back")]
-        )
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = []
@@ -49369,19 +49604,19 @@ if (false) {
 }
 
 /***/ }),
-/* 104 */
+/* 107 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(105)
+  __webpack_require__(108)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(107)
+var __vue_script__ = __webpack_require__(110)
 /* template */
-var __vue_template__ = __webpack_require__(113)
+var __vue_template__ = __webpack_require__(116)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -49421,13 +49656,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 105 */
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(106);
+var content = __webpack_require__(109);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -49447,7 +49682,7 @@ if(false) {
 }
 
 /***/ }),
-/* 106 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)(undefined);
@@ -49461,13 +49696,15 @@ exports.push([module.i, "\np[data-v-45379eda] {\n    font-size: 2em;\n    text-a
 
 
 /***/ }),
-/* 107 */
+/* 110 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue__ = __webpack_require__(108);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue__ = __webpack_require__(111);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue__);
+//
+//
 //
 //
 //
@@ -49587,7 +49824,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
 
         statistics: function statistics() {
-            this.$router.push('/statistics');
+            this.$router.push('/adminStatistics');
+        },
+
+        playerStatistics: function playerStatistics() {
+            this.$router.push('/playerStatistics');
         },
 
         resetPWAdmin: function resetPWAdmin() {
@@ -49631,15 +49872,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 108 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(109)
+var __vue_script__ = __webpack_require__(112)
 /* template */
-var __vue_template__ = __webpack_require__(112)
+var __vue_template__ = __webpack_require__(115)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -49679,7 +49920,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 109 */
+/* 112 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49768,7 +50009,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 110 */
+/* 113 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -49830,7 +50071,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 111 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -49886,7 +50127,7 @@ if (false) {
 }
 
 /***/ }),
-/* 112 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50003,7 +50244,7 @@ if (false) {
 }
 
 /***/ }),
-/* 113 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50041,7 +50282,34 @@ var render = function() {
         },
         [_vm._v("Reset Admin Password")]
       ),
-      _vm._v(" -\n        ")
+      _vm._v(" -\n        "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.statistics($event)
+            }
+          }
+        },
+        [_vm._v("Statistics")]
+      ),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn-primary",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.playerStatistics($event)
+            }
+          }
+        },
+        [_vm._v("Players Statistics")]
+      )
     ]),
     _vm._v(" "),
     _vm.userList
@@ -50086,15 +50354,15 @@ if (false) {
 }
 
 /***/ }),
-/* 114 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(115)
+var __vue_script__ = __webpack_require__(118)
 /* template */
-var __vue_template__ = __webpack_require__(116)
+var __vue_template__ = __webpack_require__(119)
 /* template functional */
   var __vue_template_functional__ = false
 /* styles */
@@ -50134,7 +50402,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 115 */
+/* 118 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -50213,7 +50481,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 116 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50357,10 +50625,499 @@ if (false) {
 }
 
 /***/ }),
-/* 117 */
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(121)
+/* template */
+var __vue_template__ = __webpack_require__(122)
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/playerStatistics.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3b7175a1", Component.options)
+  } else {
+    hotAPI.reload("data-v-3b7175a1", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 121 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+var _methods;
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+
+    data: function data() {
+        return {
+            players: {},
+            totalPlayers: 0,
+            total_games_played: 0,
+            players_by_points: {},
+            players_by_game: {},
+            byAvg: [{
+                nickname: null,
+                avg: null
+            }],
+            players_by_avg: {},
+            isUserLogged: false,
+            logged_user: {},
+            user_games: 0,
+            totalVictoriesDraws: 0,
+            totalLoses: 0
+        };
+    },
+    methods: (_methods = {
+        getPlayers: function getPlayers() {
+            var _this = this;
+
+            axios.get('api/users').then(function (response) {
+                if (response.data.data.length != 0) {
+                    _this.players = response.data.data;
+                    _this.totalPlayers = _this.players.length;
+                    _this.totalGames();
+                    _this.orderByPoints();
+                    _this.orderByGames();
+                    _this.orderByAVG();
+                    _this.getLoggedUser();
+                    //this.getUserVictories();
+                    // console.log(this.players);
+                    console.log("hi im here");
+                    _this.totalLoses = parseInt(_this.logged_user.total_games_played) - _this.totalVictoriesDraws;
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }, // end function
+
+        totalGames: function totalGames() {
+            for (var i = 0; i < this.players.length; i++) {
+                this.total_games_played += parseInt(this.players[i].total_games_played);
+            }
+        }, // end function
+
+        home: function home() {
+            this.$router.push('/adminMasterPage');
+        }, // end function
+
+        orderByPoints: function orderByPoints() {
+            var byPoints = this.players.slice(0);
+            byPoints.sort(function (a, b) {
+                return b.total_points - a.total_points;
+            });
+            this.players_by_points = byPoints.slice(0, 5);
+        }, // end function
+
+        orderByGames: function orderByGames() {
+            var byGames = this.players.slice(0);
+            byGames.sort(function (a, b) {
+                return b.total_games_played - a.total_games_played;
+            });
+            this.players_by_game = byGames.slice(0, 5);
+        }, // end function
+
+        orderByAVG: function orderByAVG() {
+            var byGames = this.players.slice(0);
+
+            byGames.sort(function (a, b) {
+                return b.total_games_played - a.total_games_played;
+            });
+            this.players_by_game = byGames.slice(0, 5);
+        } }, _defineProperty(_methods, 'orderByAVG', function orderByAVG() {
+        var currentAvg = 0;
+
+        for (var i = 0; i < this.players.length; i++) {
+            if (this.players[i].total_games_played != 0) {
+                currentAvg = this.players[i].total_points / this.players[i].total_games_played;
+            } else {
+                currentAvg = 0;
+            }
+            this.byAvg.push({ avg: currentAvg, nickname: this.players[i].nickname });
+        }
+
+        var byAvgAux = this.byAvg.slice(0);
+
+        byAvgAux.sort(function (a, b) {
+            return b.avg - a.avg;
+        });
+        this.players_by_avg = byAvgAux.slice(0, 5);
+    }), _defineProperty(_methods, 'getLoggedUser', function getLoggedUser() {
+        var _this2 = this;
+
+        var token = JSON.parse(localStorage.getItem('token'));
+        console.log("get Logged User");
+        axios.get('/api/user', {
+            headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }
+        }).then(function (response) {
+            _this2.logged_user = response.data;
+            //console.log (this.logged_user.id);
+            _this2.isUserLogged = true;
+        }).catch(function (error) {
+            // não está autenticado
+            _this2.isUserLogged = false;
+            console.log(error);
+        });
+    }), _defineProperty(_methods, 'getUserVictories', function getUserVictories() {
+        var _this3 = this;
+
+        axios.get('/api/games/victories', this.logged_user.id).then(function (response) {
+            _this3.totalVictoriesDraws = parseInt(response.data);
+            console.log(_this3.totalVictoriesDraws);
+        });
+    }), _methods),
+
+    components: {},
+
+    mounted: function mounted() {
+
+        this.getPlayers();
+    },
+    created: function created() {
+        this.getLoggedUser();
+    }
+});
+
+/***/ }),
+/* 122 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("h1", [_vm._v("Games Finished")]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Total Players: " + _vm._s(_vm.totalPlayers))]),
+    _vm._v(" "),
+    _c("h2", [_vm._v("Total Games Played: " + _vm._s(_vm.total_games_played))]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "btn btn-xs btn-warning",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            _vm.home()
+          }
+        }
+      },
+      [_vm._v(" Home")]
+    ),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.players_by_points, function(player) {
+          return _c("tr", { key: player.id }, [
+            _c("td", [_vm._v(_vm._s(player.nickname))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(player.total_points))])
+          ])
+        })
+      )
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.players_by_game, function(player) {
+          return _c("tr", { key: player.id }, [
+            _c("td", [_vm._v(_vm._s(player.nickname))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(player.total_games_played))])
+          ])
+        })
+      )
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(2),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.players_by_avg, function(player) {
+          return _c("tr", { key: player.id }, [
+            _c("td", [_vm._v(_vm._s(player.nickname))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(player.avg))])
+          ])
+        })
+      )
+    ]),
+    _vm._v(" "),
+    _vm.isUserLogged
+      ? _c("div", [
+          _c("table", { staticClass: "table table-striped" }, [
+            _c("thead", [
+              _c("h2", [
+                _vm._v(
+                  "As minhas estatisticas !!! " +
+                    _vm._s(_vm.logged_user.nickname) +
+                    " !!!"
+                )
+              ]),
+              _vm._v(" "),
+              _vm._m(3)
+            ]),
+            _vm._v(" "),
+            _c("tbody", [
+              _c("tr", [
+                _c("td", [_vm._v(_vm._s(_vm.logged_user.total_games_played))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.logged_user.total_points))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.totalVictoriesDraws))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(_vm.totalLoses))])
+              ])
+            ])
+          ])
+        ])
+      : _vm._e()
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("h2", [_vm._v("TOP 5 Mais Pontos")]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("th", [_c("strong", [_vm._v("Nickname")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Total Points")])])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("h2", [_vm._v("TOP 5 Mais Jogos")]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("th", [_c("strong", [_vm._v("Nickname")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Total Games")])])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("h2", [_vm._v("TOP 5 Melhor média")]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("th", [_c("strong", [_vm._v("Nickname")])]),
+        _vm._v(" "),
+        _c("th", [_c("strong", [_vm._v("Points Per Game")])])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_c("strong", [_vm._v("Total Games")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Total Points")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Total Draws/Victories")])]),
+      _vm._v(" "),
+      _c("th", [_c("strong", [_vm._v("Total Loses")])])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3b7175a1", module.exports)
+  }
+}
+
+/***/ }),
+/* 123 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 124 */,
+/* 125 */,
+/* 126 */,
+/* 127 */,
+/* 128 */,
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = null
+/* template */
+var __vue_template__ = null
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/userAccount.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+module.exports = Component.exports
+
 
 /***/ })
 /******/ ]);
