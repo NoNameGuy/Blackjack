@@ -4,8 +4,10 @@
         <div class="form-group">
             <a class="btn btn-primary" @click.prevent="usersList">Users</a> -
             <a class="btn btn-primary" @click.prevent="resetPWAdmin">Reset Admin Password</a> -
-            <!--<a class="btn btn-primary" @click.prevent="imageList">Image</a> -
             <a class="btn btn-primary" @click.prevent="statistics">Statistics</a>
+            <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a>
+            <!--<a class="btn btn-primary" @click.prevent="imageList">Image</a> -
+            
         -->
         </div>
         
@@ -114,11 +116,15 @@
             },
 
             statistics: function() {
-                this.$router.push('/statistics');
+                this.$router.push('/adminStatistics');
+            },
+
+            playerStatistics: function() {
+                this.$router.push('/playerStatistics');
             },
 
             resetPWAdmin: function () {
-              this.$router.push('/resetPWAdmin');
+              this.$router.push('/adminPassword');
             },
         },
         components: {

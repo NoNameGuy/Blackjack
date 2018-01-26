@@ -26,11 +26,15 @@ const blackjack = Vue.component('blackjack', require('./components/blackjack.vue
 const login = Vue.component('login', require('./components/login.vue'));
 const logout = Vue.component('logout', require('./components/logout.vue'));
 const register = Vue.component('register', require('./components/register.vue'));
+const userAccount = Vue.component('userAccount', require('./components/userAccount.vue'));
 
+const adminStatistics = Vue.component('statistics', require('./components/statistics.vue'));
 const adminLogin = Vue.component('adminLogin', require('./components/adminLogin.vue'));
 const adminMasterPage = Vue.component('adminMasterPage', require('./components/adminMasterPage.vue'));
 const adminUserDetails = Vue.component('adminUserDetails', require('./components/adminUserDetails.vue'));
-const resetPWAdmin = Vue.component('resetPWAdmin', require('./components/resetPWAdmin.vue'));
+const adminPassword = Vue.component('resetPWAdmin', require('./components/resetPWAdmin.vue'));
+const playerStatistics = Vue.component('playerStatistics', require('./components/playerStatistics.vue'));
+
 
 const routes = [
   { path: '/', redirect: '/users' },
@@ -44,7 +48,10 @@ const routes = [
   { path: '/adminLogin', component: adminLogin },
   { path: '/adminMasterPage', component: adminMasterPage },
   { path: '/adminUserDetails/:id', component: adminUserDetails },
-  { path: '/resetPWAdmin', component: resetPWAdmin },
+  { path: '/adminPassword', component: adminPassword },
+  { path: '/playerStatistics', component: playerStatistics },
+  { path: '/adminStatistics', component: adminStatistics },
+  { path: '/userAccount', component: userAccount },
 ];
 
 const router = new VueRouter({

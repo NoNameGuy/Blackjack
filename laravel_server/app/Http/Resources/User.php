@@ -22,6 +22,8 @@ class User extends Resource
             'admin' => $this->admin,
             'blocked' => $this->blocked,
             'password' => $this->password,
+            'total_points' => $this->total_points,
+            'total_games_played' => $this->total_games_played,
         ];
     }
 }

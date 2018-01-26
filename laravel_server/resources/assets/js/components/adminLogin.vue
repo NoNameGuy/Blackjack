@@ -1,10 +1,7 @@
 <template>
     <div class="jumbotron login">
         <h2>Welcome Admin</h2>
-        <div class="alert alert-danger"  v-if="error">
-            Something went wrong. Please check your email and password.
-        </div>
-        <form>
+        <form @submit.prevent="login(user)">
             <div class="form-group">
                 <label for="inputEmail">Email</label>
                 <input type="text" class="form-control" v-model="user.email" name="email" id="inputEmail" placeholder="Your Email"/>
@@ -25,35 +22,35 @@
 
     import Logout from './logout.vue';
 
-    export default{
+    export default {
         data() {
             return {
                 user: {
-                    email: "",
-                    password: ""
+                    email: null,
+                    password: null,
                 },
-                error: false,
+                error : null,
             }
         },
         methods: {
             login: function () {
-                if(this.user.email === 'admin@mail.dad') {
-                    axios.post('api/login', this.user, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        } })
+                //if(this.user.email == 'admin@mail.dad') {
+                    axios.post('/api/adminLogin', this.user, 
+                        { headers: {'Content-Type' : 'application/json'}
+         })
                         .then(response => {
-                            console.log(this.user);
+                            console.log('Response: ');
+                            console.log(response);
+                            let token = response.data.data.access_token;
+                            // guardar na localStorage o token
+                            localStorage.setItem('token', JSON.stringify(token));
 
                             this.$router.push('/adminMasterPage');
                         }).catch(error=> {
-                        console.log(error);
-                        this.error = true;
+                            console.log(error);
 
                     });
-                } else {
-                    this.error = true;
-                }
+                //}
 
             },
             cancel: function () {

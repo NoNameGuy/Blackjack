@@ -93,22 +93,17 @@ class UserControllerAPI extends Controller
         return response()->json($totalEmail == 0);
     }
 
-    public function resetPWAdmin(Request $request)
+    public function resetPass(Request $request, $email)
     {
 
-      $admin = DB::table('users')->where('admin', '=', '1');
+        $user = User::findOrFail($email);
 
-      $request->old_password = Hash::make($request->old_password);
-
-      if ($request->old_password === $admin->password) {
-        if ($request->password === $request->confirm_password) {
-          $admin->password = Hash::make($request->confirm_password);
-          $admin->save();
-          return response()->json(['message'=>'OK!'], 200);
+        if (Hash::check($request->password, $user->password)) {
+            $user->password = Hash::make($request->password);
+            return response()->json(['message' => 'Current Password is correct'], 200);
         }
-      }else {
-        return response()->json(['message'=>'ERROR: CHECK FIELDS'], 401);
         
-      }
+        return response()->json(['message' => 'Current Password is NOT correct'], 422);
+
     }
   }
