@@ -23,6 +23,20 @@
 	</div>
 </div>
 
+<br><br>
+<br><br>
+<br><br>
+<br><br>
+
+<div class="optButtons" style="text-align:center;">
+	<p>
+		<button class="btn btn-xs btn-success">Hit Me!</button>
+		<button class="btn btn-xs btn-primary">Bet</button>
+		<button class="btn btn-xs btn-danger">Give UP!</button>
+	</p>
+</div>
+
+<br><br>
 
             <hr>
         </div>
@@ -137,11 +151,7 @@
 </script>
 
 <style scoped>
-/*
-.img{
-	height: 100px;
-	width: 75px;
-} */
+
 .gameseparator{
     border-style: solid;
     border-width: 2px 0 0 0;

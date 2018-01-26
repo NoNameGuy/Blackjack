@@ -38,6 +38,17 @@ class BlackJackGame {
         this.boardGame[i] = new Array(5);
       }
 
+      for (let j = 0; j <= this.numPlayers; j++){
+        this.boardGame[j][0] = 'Player' + j;
+        for (let k = 0; k <= 4; k++){
+            this.boardGame[0][0] = "semFace";
+            this.boardGame[0][k] = 'Carta' + k;
+        }  // cartas
+      }  // players
+
+//k - linhas
+//j - Colunas
+
 
       // dá as cartas todas sem face
       for (let j = 1; j <= this.numPlayers; j++)  // players
@@ -47,7 +58,7 @@ class BlackJackGame {
 
       // vira as primeiras cartas para cima
       for (let i = this.numPlayers; i>0; i--) {
-        this.boardGame[1][i] = this.arrayBaralho[this.currentCard];
+        this.boardGame[i][1] = this.arrayBaralho[this.currentCard];
         this.currentCard++;
       }
 
