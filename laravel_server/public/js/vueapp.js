@@ -48414,15 +48414,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     methods: {
-        pieceImageURL: function pieceImageURL(pieceNumber) {
-            var imgSrc = String(pieceNumber);
-            return 'img/' + imgSrc + '.png';
-        },
-        closeGame: function closeGame() {
-            this.$parent.close(this.game);
-        },
-        clickPiece: function clickPiece(game, card) {
-            /*
+        hitMe: function hitMe(game, card) {
+
             if (!this.game.gameEnded) {
                 if (this.game.playerTurn != this.ownPlayerNumber) {
                     alert("It's not your turn to play");
@@ -48432,8 +48425,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }
                 }
             }
-            */
+
             this.$socket.emit('play', { gameID: game.gameID, card: card });
+        },
+        pieceImageURL: function pieceImageURL(pieceNumber) {
+            var imgSrc = String(pieceNumber);
+            return 'img/' + imgSrc + '.png';
+        },
+        closeGame: function closeGame() {
+            this.$parent.close(this.game);
         },
         startGame: function startGame(game) {
             this.$socket.emit('start_game', { gameID: game.gameID });
@@ -48520,12 +48520,7 @@ var render = function() {
               return _c("div", [
                 _c("img", {
                   staticClass: "img",
-                  attrs: { src: _vm.pieceImageURL(piece) },
-                  on: {
-                    click: function($event) {
-                      _vm.clickPiece(_vm.game, card)
-                    }
-                  }
+                  attrs: { src: _vm.pieceImageURL(piece) }
                 })
               ])
             })
@@ -48545,7 +48540,55 @@ var render = function() {
       _c("br"),
       _c("br"),
       _vm._v(" "),
-      _vm._m(0),
+      _c(
+        "div",
+        { staticClass: "optButtons", staticStyle: { "text-align": "center" } },
+        [
+          _c("p", [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-success",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.hitMe(_vm.game)
+                  }
+                }
+              },
+              [_vm._v("Hit Me!")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.placeBet(_vm.game)
+                  }
+                }
+              },
+              [_vm._v("Bet")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-xs btn-danger",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.giveUp(_vm.game)
+                  }
+                }
+              },
+              [_vm._v("Give UP!")]
+            )
+          ])
+        ]
+      ),
       _vm._v(" "),
       _c("br"),
       _c("br"),
@@ -48554,32 +48597,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "optButtons", staticStyle: { "text-align": "center" } },
-      [
-        _c("p", [
-          _c("button", { staticClass: "btn btn-xs btn-success" }, [
-            _vm._v("Hit Me!")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-xs btn-primary" }, [
-            _vm._v("Bet")
-          ]),
-          _vm._v(" "),
-          _c("button", { staticClass: "btn btn-xs btn-danger" }, [
-            _vm._v("Give UP!")
-          ])
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

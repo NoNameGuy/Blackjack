@@ -18,7 +18,7 @@
 <div class="board">
 	<div class="line" v-for="(line, player) in game.boardGame" >
 			<div v-for="(piece, card) in line" >
-					<img class="img" v-bind:src="pieceImageURL(piece)" v-on:click="clickPiece(game,card)">
+					<img class="img" v-bind:src="pieceImageURL(piece)">
 			</div>
 	</div>
 </div>
@@ -30,9 +30,9 @@
 
 <div class="optButtons" style="text-align:center;">
 	<p>
-		<button class="btn btn-xs btn-success">Hit Me!</button>
-		<button class="btn btn-xs btn-primary">Bet</button>
-		<button class="btn btn-xs btn-danger">Give UP!</button>
+		<button class="btn btn-xs btn-success" v-on:click.prevent="hitMe(game)">Hit Me!</button>
+		<button class="btn btn-xs btn-primary" v-on:click.prevent="placeBet(game)">Bet</button>
+		<button class="btn btn-xs btn-danger" v-on:click.prevent="giveUp(game)">Give UP!</button>
 	</p>
 </div>
 
@@ -122,26 +122,27 @@
             }
         },
         methods: {
+					hitMe(game, card){
+						
+						if (!this.game.gameEnded) {
+								if (this.game.playerTurn != this.ownPlayerNumber) {
+										alert("It's not your turn to play");
+								} else {
+										if (this.game.board[index] == 0) {
+												this.$parent.play(this.game, index);
+										}
+								}
+						}
+
+						this.$socket.emit('play', {gameID: game.gameID, card});
+					},
+
             pieceImageURL (pieceNumber) {
                 var imgSrc = String(pieceNumber);
                 return 'img/' + imgSrc + '.png';
             },
             closeGame (){
                 this.$parent.close(this.game);
-            },
-            clickPiece(game, card){
-                /*
-                if (!this.game.gameEnded) {
-                    if (this.game.playerTurn != this.ownPlayerNumber) {
-                        alert("It's not your turn to play");
-                    } else {
-                        if (this.game.board[index] == 0) {
-                            this.$parent.play(this.game, index);
-                        }
-                    }
-                }
-*/
-                this.$socket.emit('play', {gameID: game.gameID, card});
             },
             startGame(game) {
                 this.$socket.emit('start_game', {gameID : game.gameID});
