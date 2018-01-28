@@ -52,9 +52,9 @@ export default {
 
 
 
-        console.log("adter getUser")
+        console.log("after getUser")
         // saber se o user é admin ou não e redicioná-lo para a vista correta
-
+/*
         axios.get('/api/user', { 
                     headers: {'Content-Type' : 'application/json',
                           'Authorization' : 'Bearer ' + token }
@@ -66,7 +66,7 @@ export default {
               });
               //console.log(this.newUser.id);
       
-            
+            /*
           setTimeout(function(){ 
             console.log("when timeout");
             console.log(this.newUser); // ESTÁ UNDEFINED
@@ -82,6 +82,9 @@ export default {
                 this.$router.push('/');
               }
           }, 4000); 
+*/
+
+                this.$router.push('/');
 
       }).catch(loginError => {
         // Something went wrong!

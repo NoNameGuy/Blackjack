@@ -48653,36 +48653,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         // user já se encontra logado e com a sessão guardada
 
 
-        console.log("adter getUser");
+        console.log("after getUser");
         // saber se o user é admin ou não e redicioná-lo para a vista correta
+        /*
+                axios.get('/api/user', { 
+                            headers: {'Content-Type' : 'application/json',
+                                  'Authorization' : 'Bearer ' + token }
+                      }).then(response => {
+                            this.newUser = response.data;
+                            //console.log (this.newUser.id); NÃO ESTÁ UNDEFINED 
+                      }).catch(error => {
+                        console.log(error);
+                      });
+                      //console.log(this.newUser.id);
+              
+                    /*
+                  setTimeout(function(){ 
+                    console.log("when timeout");
+                    console.log(this.newUser); // ESTÁ UNDEFINED
+        
+                      if(this.newUser.admin == 1) {
+                    console.log("yes admin");
+                    console.log(this.newUser.admin);
+        
+                        this.$router.push('/adminMasterPage');
+                      } else {
+                    console.log("not admin");
+                    console.log(this.newUser.admin);
+                        this.$router.push('/');
+                      }
+                  }, 4000); 
+        */
 
-        axios.get('/api/user', {
-          headers: { 'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + token }
-        }).then(function (response) {
-          _this.newUser = response.data;
-          //console.log (this.newUser.id); NÃO ESTÁ UNDEFINED 
-        }).catch(function (error) {
-          console.log(error);
-        });
-        //console.log(this.newUser.id);
-
-
-        setTimeout(function () {
-          console.log("when timeout");
-          console.log(this.newUser); // ESTÁ UNDEFINED
-
-          if (this.newUser.admin == 1) {
-            console.log("yes admin");
-            console.log(this.newUser.admin);
-
-            this.$router.push('/adminMasterPage');
-          } else {
-            console.log("not admin");
-            console.log(this.newUser.admin);
-            this.$router.push('/');
-          }
-        }, 4000);
+        _this.$router.push('/');
       }).catch(function (loginError) {
         // Something went wrong!
         console.log('Login Error: ' + loginError);
