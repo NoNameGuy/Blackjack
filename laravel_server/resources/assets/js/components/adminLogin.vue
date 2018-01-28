@@ -12,8 +12,8 @@
             </div>
 
             <div class="form-group">
-                <a class="btn btn-primary"  v-on:click.prevent="login">Submit</a>
-                <a class="btn btn-success" v-on:click.prevent="cancel">Turn back</a>
+                <a class="btn btn-primary" v-on:click.prevent="login()">Submit</a>
+                <a class="btn btn-success" v-on:click.prevent="cancel()">Turn back</a>
             </div>
         </form>
     </div>
@@ -35,22 +35,21 @@
         methods: {
             login: function () {
                 //if(this.user.email == 'admin@mail.dad') {
-                    axios.post('/api/adminLogin', this.user, 
-                        { headers: {'Content-Type' : 'application/json'}
-         })
-                        .then(response => {
-                            console.log('Response: ');
-                            console.log(response);
-                            let token = response.data.data.access_token;
+                    axios.post('/api/login', this.user, {
+                            headers: {'Content-Type' : 'application/json'}
+                        }).then(response => {
+                        //     console.log('Response: ');
+                        //     console.log(response);
+                            let token = response.data.access_token;
                             // guardar na localStorage o token
-                            localStorage.setItem('token', JSON.stringify(token));
+                            localStorage.setItem('token', token);
 
                             this.$router.push('/adminMasterPage');
                         }).catch(error=> {
                             console.log(error);
 
                     });
-                //}
+                //} // end if
 
             },
             cancel: function () {

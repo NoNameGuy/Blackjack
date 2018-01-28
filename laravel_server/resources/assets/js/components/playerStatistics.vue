@@ -191,7 +191,7 @@
             },// end function
 
             getLoggedUser: function () {
-                let token = JSON.parse(localStorage.getItem('token'));
+                let token = localStorage.getItem('token');
                 console.log("get Logged User");
                 axios.get('/api/user', { 
                             headers: {'Content-Type' : 'application/json', 'Authorization' : 'Bearer ' + token }

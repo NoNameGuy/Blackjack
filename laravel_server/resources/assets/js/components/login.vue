@@ -1,4 +1,4 @@
-<template v-if=" JSON.parse(localStorage.getItem('token')) == null">
+<template v-if="localStorage.getItem('token') == null">
 
   <form @submit.prevent="login(user)">
       <div class="text-left">
@@ -27,6 +27,7 @@
 export default {
   data() {
     return {
+      newUser : {},
       user : {
         email: null,
         password: null,
@@ -42,14 +43,46 @@ export default {
         headers: {'Content-Type' : 'application/json'}
       }).then(response => {
         // buscar o token do user logado
-        console.log('Response: ');
-        console.log(response);
+        // console.log('Response: ');
+        // console.log(response);
         let token = response.data.access_token;
         // guardar na localStorage o token
-        localStorage.setItem('token', JSON.stringify(token));
+        localStorage.setItem('token', token);
         // user já se encontra logado e com a sessão guardada
-        this.$router.push('/');
-        console.log("after update view");
+
+
+
+        console.log("adter getUser")
+        // saber se o user é admin ou não e redicioná-lo para a vista correta
+
+        axios.get('/api/user', { 
+                    headers: {'Content-Type' : 'application/json',
+                          'Authorization' : 'Bearer ' + token }
+              }).then(response => {
+                    this.newUser = response.data;
+                    //console.log (this.newUser.id); NÃO ESTÁ UNDEFINED 
+              }).catch(error => {
+                console.log(error);
+              });
+              //console.log(this.newUser.id);
+      
+            
+          setTimeout(function(){ 
+            console.log("when timeout");
+            console.log(this.newUser); // ESTÁ UNDEFINED
+
+              if(this.newUser.admin == 1) {
+            console.log("yes admin");
+            console.log(this.newUser.admin);
+
+                this.$router.push('/adminMasterPage');
+              } else {
+            console.log("not admin");
+            console.log(this.newUser.admin);
+                this.$router.push('/');
+              }
+          }, 4000); 
+
       }).catch(loginError => {
         // Something went wrong!
         console.log('Login Error: ' + loginError);

@@ -58,8 +58,8 @@ class LoginControllerAPI extends Controller
         if($user->blocked == 1) {
             return response()->json(['msg'=>'Utilizador não activo.'], 400);
         }
-*/
 
+*/
 
         $http = new \GuzzleHttp\Client;
         $response = $http->post(YOUR_SERVER_URL.'/oauth/token', [
@@ -76,8 +76,7 @@ class LoginControllerAPI extends Controller
         if ($errorCode=='200') {
             return json_decode((string) $response->getBody(), true);
         } else {
-            return response()->json(
-                ['msg'=>'User credentials are invalid'], $errorCode);
+            return response()->json(['msg'=>'User credentials are invalid'], $errorCode);
         }
     }
 

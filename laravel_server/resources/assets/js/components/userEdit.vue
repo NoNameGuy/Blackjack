@@ -16,12 +16,20 @@
 	            placeholder="Email address"/>
 	    </div>
 	    <div class="form-group">
-	        <label for="inputAge">Age</label>
+	        <label for="inputPassword">Password</label>
 	        <input
-	            type="number" class="form-control" v-model="user.age"
-	            name="age" id="inputAge"
-	            placeholder="Age"/>
+	            type="password" class="form-control" v-model="user.password"
+	            name="password" id="inputPassword"
+	            placeholder="Password"/>
 	    </div>
+	    <div class="form-group">
+	        <label for="inputNickname">Nickname</label>
+	        <input
+	            type="text" class="form-control" v-model="user.nickname"
+	            name="nickname" id="inputNickname"
+	            placeholder="Nickname"/>
+	    </div>
+
 
 	    <div class="form-group">
 	        <a class="btn btn-default" v-on:click.prevent="saveUser()">Save</a>
@@ -33,6 +41,11 @@
 <script type="text/javascript">
 	module.exports={
 		props: ['user'],
+		data: function() {
+			return {
+				currentUser : {},
+			};
+		},
 	    methods: {
 	        saveUser: function(){
 	            axios.put('api/users/'+this.user.id, this.user)
@@ -51,7 +64,23 @@
 	                	Object.assign(this.user, response.data.data);
 	                	this.$emit('user-canceled', this.user);
 	                });
-	        }
+	        },
+	        getLoggedUser: function () {
+                let token = JSON.parse(localStorage.getItem('token'));
+                console.log("get Logged User");
+                axios.get('/api/user', { 
+                            headers: {'Content-Type' : 'application/json', 'Authorization' : 'Bearer ' + token }
+                      }).then(response => {
+                            this.logged_user = response.data;
+                            //console.log (this.logged_user.id);
+                            this.isUserLogged = true;
+
+                      }).catch(error => {
+                        // não está autenticado
+                        this.isUserLogged = false;
+                        console.log(error);
+                      });
+            }, // end function
 		}
 	}
 </script>

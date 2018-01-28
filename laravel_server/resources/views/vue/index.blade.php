@@ -9,16 +9,16 @@
     <router-link to="/blackjack">BlackJack</router-link> - 
     <router-link to="/login">Login</router-link> - 
     <router-link to="/logout">Logout</router-link> - 
-    <router-link to="/register">Register</router-link> 
+    <router-link to="/register">Register</router-link> -
     <router-link to="/userAccount">My Account</router-link> 
 
     
     <div>
         Admin Pages: 
     	<router-link to="/adminLogin">Login as Admin Here</router-link>
-    
+    <!--
          - 
-    	<router-link to="/adminMasterPage">Admin Master Page</router-link>
+    	 <router-link to="/adminMasterPage">Admin Master Page</router-link> -->
        
 
     </div>
