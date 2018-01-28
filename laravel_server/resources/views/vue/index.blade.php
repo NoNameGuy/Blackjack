@@ -16,9 +16,9 @@
     <div>
         Admin Pages: 
     	<router-link to="/adminLogin">Login as Admin Here</router-link>
-    
+    <!--
          - 
-    	<router-link to="/adminMasterPage">Admin Master Page</router-link>
+    	 <router-link to="/adminMasterPage">Admin Master Page</router-link> -->
        
 
     </div>

@@ -1,5 +1,5 @@
-<template v-if="JSON.parse(localStorage.getItem('token')) != null">
-    <div class="container">
+<template >
+    <div class="container" v-if="isUserLogged">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <h1>Logout</h1>
@@ -17,35 +17,59 @@
 export default {
     data (){
         return {
-        	// null obj
+        	isUserLogged : false,
+        	logged_user: {},
+        	token : null,
         };
 			},
 				computed: {
 						message(){
 								return "Sure you want logout?";
 						}
-            //this.$forceUpdate();
     },
     methods: {
-			logout() {
-			 let head = {
-					 headers: {
-							 'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('token')),
-							 'Accept': 'application/json',
-					 },
-			 };
-					axios.post('/api/logout', null, head)
-					.then(response => {
-					if(response.status == 200){
-							window.localStorage.clear();
-							console.log("logout sucessfull");	
-					}
-					this.$router.push('/login');
-			}).catch(error => {
+		logout: function() {
+			console.log('LOGOUT');
+			if (isUserLogged) {
+				 let head = {
+						 headers: {
+								 'Authorization': 'Bearer ' + this.token,
+						 },
+				 };
+				axios.post('/api/logout', null, head)
+				.then(response => {
+					window.localStorage.clear();
+					console.log("logout sucessfull");	
+				
+				this.$router.push('/login');
+				}).catch(error => {
 					console.log(error);
-			});
-	}
-}
+				});
+			}
+		},
+		
+		getLoggedUser: function () {
+            this.token = localStorage.getItem('token');
+            //console.log("get Logged User");
+            axios.get('/api/user', { 
+                        headers: {'Content-Type' : 'application/json',
+                        		  'Authorization' : 'Bearer ' + this.token }
+                  }).then(response => {
+                        this.logged_user = response.data;
+                        //console.log (this.logged_user.id);
+                        this.isUserLogged = true;
+                        console.log(this.logged_user);
+
+                  }).catch(error => {
+                    // não está autenticado
+                    this.isUserLogged = false;
+                    console.log(error);
+                  });
+        }, // end function
+	}, 
+	mounted () {
+		this.getLoggedUser();
+	},
 }
 </script>
 

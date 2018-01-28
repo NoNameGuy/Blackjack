@@ -1,6 +1,8 @@
 <template>
-	<div class="jumbotron">
+	<div class="jumbotron" v-if="isUserLogged">
 	    <h2>My Account</h2>
+		<a class="btn btn-danger" v-on:click.prevent="deleteUser()">Delete Account</a>
+
 	    <div class="form-group">
 	        <label for="inputName">Name: {{logged_user.name}} </label>
 	    </div>
@@ -96,8 +98,67 @@
 	        	this.editingUser = true;
 	        },
 
+	        deleteUser: function() {
+
+	            let head = {
+					 headers: {
+							 'Authorization': 'Bearer ' + localStorage.getItem('token'),
+					 		},
+			 		};
+					axios.post('/api/logout', null, head)
+					.then(response => {
+						console.log(response);
+						window.localStorage.clear();
+						//console.log("logout sucessfull");	
+					
+						axios.delete('/api/users/'+this.logged_user.id)
+		                .then(response => {
+		                    this.logged_user = null;
+							console.log("user deleted");	
+		                    
+		                });
+				});
+						
+	            	
+
+
+	        	this.$router.push('/login');
+	        },
+
+	        logoutUser: function() {
+	        	
+	        	let head = {
+					 headers: {
+							 'Authorization': 'Bearer ' + localStorage.getItem('token'),
+					 },
+			 };
+					axios.post('/api/logout', null, head)
+					.then(response => {
+						console.log(response);
+						window.localStorage.clear();
+						console.log("logout sucessfull");	
+					
+					this.$router.push('/login');
+			})
+
+
+	        	/*
+	        	let head = {
+					 headers: {
+							 'Authorization': 'Bearer ' + localStorage.getItem('token'),
+					 			},
+			 		};
+					axios.post('/api/logout', null, head)
+					.then(response => {
+						window.localStorage.clear();
+						
+						
+				});
+				*/
+	        },
+
 	        getLoggedUser: function () {
-                let token = JSON.parse(localStorage.getItem('token'));
+                let token = localStorage.getItem('token');
                 //console.log("get Logged User");
                 axios.get('/api/user', { 
                             headers: {'Content-Type' : 'application/json',
