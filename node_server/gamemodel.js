@@ -52,8 +52,14 @@ class BlackJackGame {
 
       // dá as cartas todas sem face
       for (let j = 1; j <= this.numPlayers; j++)  // players
-        for (let k = 1; k <= 4; k++)  // cartas
+        for (let k = 2; k <= 4; k++)  // cartas
           this.boardGame[j][k] = "Empty";
+
+      for (let j = 1; j <= this.numPlayers; j++) {
+        for (var k = 1; k <= 2; k++) {
+          this.boardGame[j][k] = "semFace";
+        }
+      }
 
 
       // vira as primeiras cartas para cima
@@ -134,8 +140,11 @@ class BlackJackGame {
         return;
       }
       // console.log(this.boardGame[1][index]);
-      if(this.boardGame[playerID][index] != "Empty") {
-        console.log("FODASSE3");
+      if(this.boardGame[playerID][index] != "semFace" && this.boardGame[playerID][index] != "Empty") {
+        return;
+      }
+
+      if (this.arrayPontuacao[playerID-1] >= 22) {
         return;
       }
 
@@ -143,7 +152,7 @@ class BlackJackGame {
       console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
       this.currentCard++;
 
-      if(this.gameTurn > 3) { // jogo já terminou
+      if(this.gameTurn > 4) { // jogo já terminou
         //this.checkHighScore();
         console.log("jogo terminou");
         let maiorPontuacao = 100;
@@ -154,6 +163,8 @@ class BlackJackGame {
 
       this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
       this.gameTurn++;
+
+      return true;
     }
 
     incrementaPontuacao(playerID, card) {

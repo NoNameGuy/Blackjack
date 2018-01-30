@@ -115,21 +115,18 @@ io.on('connection', function (socket) {
     });
 
 
-    socket.on('start_game', function (data){ /*
-        if( this.user === undefined || this.user === null){
-            console.log("start_game -> user = undefined = null"); // de onde venho?
-            console.log("Unauthorized");
-            return;
-        }*/
-        // axios.patch(api_url+'/api/games/'+data.gameID+'/start', {game_id: data.gameID}).then(response => {
-            let gameID = data.gameID;
+    socket.on('start_game', function (data){
+			let gameID = data.gameID;
             games.startGame(gameID);
             io.to(data.gameID).emit('my_active_games_changed');
             console.log('game started');
             io.emit('lobby_changed');
-        // }).catch(error => {
-        //     console.log(error);
-        // });
+		});
+
+		socket.on('place_bet', function(data) {
+
+			
+
 		});
 
 });

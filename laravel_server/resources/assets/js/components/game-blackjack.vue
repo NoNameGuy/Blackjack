@@ -20,12 +20,12 @@
 			<div v-for="(piece, index) in line" >
 					<img class="img" v-bind:src="pieceImageURL(piece)" v-on:click.prevent="hitMe(game, index)">
 			</div>
+			<!-- <button class="btn btn-xs btn-primary" v-on:click.prevent="placeBet(game)">Bet</button> -->
 	</div>
 
 
 	<div class="optButtons" style="text-align:center;">
 		<p>
-			<!-- <button class="btn btn-xs btn-success" v-on:click.prevent="hitMe(game)">Hit Me!</button> -->
 			<button class="btn btn-xs btn-primary" v-on:click.prevent="placeBet(game)">Bet</button>
 			<button class="btn btn-xs btn-danger" v-on:click.prevent="giveUp(game)">Give UP!</button>
 		</p>
