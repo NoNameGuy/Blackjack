@@ -56,6 +56,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('play', function (data){
+			console.log('play', data);
 		let game = games.gameByID(data.gameID);
 		if (game === null) {
 			socket.emit('invalid_play', {'type': 'Invalid_Game', 'game': null});
@@ -70,12 +71,12 @@ io.on('connection', function (socket) {
             numPlayer = 3;
         } else if (game.player4SocketID == socket.id) {
             numPlayer = 4;
-        } 
+        }
 		if (numPlayer === 0) {
 			socket.emit('invalid_play', {'type': 'Invalid_Player', 'game': game});
 			return;
 		}
-		if (game.play(numPlayer, data.card)) {
+		if (game.play(numPlayer, data.index)) {
 			io.to(game.gameID).emit('game_changed', game);
 		} else {
 			socket.emit('invalid_play', {'type': 'Invalid_Play', 'game': game});
@@ -106,7 +107,7 @@ io.on('connection', function (socket) {
             axios.get(api_url+'/api/user', config).then(response =>{
                 this.user = response.data;
                 socket.emit('authenticated', this.user);
-            }).catch(error => { 
+            }).catch(error => {
                 console.log("You are not logged in");
                 socket.emit('not_authenticated');
                 console.log(error.message);
@@ -128,7 +129,7 @@ io.on('connection', function (socket) {
             io.emit('lobby_changed');
         // }).catch(error => {
         //     console.log(error);
-        // });        
+        // });
 		});
 
 });

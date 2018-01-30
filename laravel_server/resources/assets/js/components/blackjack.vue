@@ -26,7 +26,7 @@
 	export default {
         data: function(){
 			return {
-                title: 'Vegas BlackJack',
+                title: 'BlackJack',
                 currentPlayer: 'Player X',
                 lobbyGames: [],
                 activeGames: [],

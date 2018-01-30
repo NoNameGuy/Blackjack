@@ -17,23 +17,20 @@
 					</div> -->
 <div class="board">
 	<div class="line" v-for="(line, player) in game.boardGame" >
-			<div v-for="(piece, card) in line" >
-					<img class="img" v-bind:src="pieceImageURL(piece)">
+			<div v-for="(piece, index) in line" >
+					<img class="img" v-bind:src="pieceImageURL(piece)" v-on:click.prevent="hitMe(game, index)">
 			</div>
 	</div>
-</div>
 
-<br><br>
-<br><br>
-<br><br>
-<br><br>
 
-<div class="optButtons" style="text-align:center;">
-	<p>
-		<button class="btn btn-xs btn-success" v-on:click.prevent="hitMe(game)">Hit Me!</button>
-		<button class="btn btn-xs btn-primary" v-on:click.prevent="placeBet(game)">Bet</button>
-		<button class="btn btn-xs btn-danger" v-on:click.prevent="giveUp(game)">Give UP!</button>
-	</p>
+	<div class="optButtons" style="text-align:center;">
+		<p>
+			<!-- <button class="btn btn-xs btn-success" v-on:click.prevent="hitMe(game)">Hit Me!</button> -->
+			<button class="btn btn-xs btn-primary" v-on:click.prevent="placeBet(game)">Bet</button>
+			<button class="btn btn-xs btn-danger" v-on:click.prevent="giveUp(game)">Give UP!</button>
+		</p>
+	</div>
+
 </div>
 
 <br><br>
@@ -122,19 +119,11 @@
             }
         },
         methods: {
-					hitMe(game, card){
-						
-						if (!this.game.gameEnded) {
-								if (this.game.playerTurn != this.ownPlayerNumber) {
-										alert("It's not your turn to play");
-								} else {
-										if (this.game.board[index] == 0) {
-												this.$parent.play(this.game, index);
-										}
-								}
-						}
-
-						this.$socket.emit('play', {gameID: game.gameID, card});
+					hitMe(game, index){
+							// if (this.game.boardGame[index] == "Empty") {
+							// 		this.$parent.play(this.game, index);
+							// }
+						this.$socket.emit('play', {gameID: game.gameID, index: index});
 					},
 
             pieceImageURL (pieceNumber) {

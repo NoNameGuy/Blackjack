@@ -53,14 +53,17 @@ class BlackJackGame {
       // dá as cartas todas sem face
       for (let j = 1; j <= this.numPlayers; j++)  // players
         for (let k = 1; k <= 4; k++)  // cartas
-          this.boardGame[j][k] = "semFace";
+          this.boardGame[j][k] = "Empty";
 
 
       // vira as primeiras cartas para cima
       for (let i = this.numPlayers; i>0; i--) {
         this.boardGame[i][1] = this.arrayBaralho[this.currentCard];
+        this.incrementaPontuacao(i, this.boardGame[i][1]);
         this.currentCard++;
       }
+
+
 
 
       this.gameTurn = 2;
@@ -122,7 +125,7 @@ class BlackJackGame {
 
 
 
-    play(playerID, card){ // index = posicao da carta pedida
+    play(playerID, index){ // index = posicao da carta pedida
       if (!this.gameStarted) {
         return;
       }
@@ -130,28 +133,33 @@ class BlackJackGame {
       if (this.gameEnded) {
         return;
       }
-
-      if(card != "semFace") {
+      // console.log(this.boardGame[1][index]);
+      if(this.boardGame[playerID][index] != "Empty") {
+        console.log("FODASSE3");
         return;
       }
 
-      if(this.gameTurn > 3) { // jogo já terminou
-        this.checkHighScore();
+      this.boardGame[playerID][index] = this.arrayBaralho[this.currentCard];
+      console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
+      this.currentCard++;
 
+      if(this.gameTurn > 3) { // jogo já terminou
+        //this.checkHighScore();
+        console.log("jogo terminou");
+        let maiorPontuacao = 100;
         this.winner = maiorPontuacao;
         return;
       }
 
 
-
-      this.incrementaPontuacao(card);
+      this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
       this.gameTurn++;
     }
 
-    incrementaPontuacao(card) {
+    incrementaPontuacao(playerID, card) {
       let pont = 0;
 
-      let sCard = this.removeFirstCharString(card);
+      let sCard = parseInt(this.removeFirstCharString(card));
 
       switch(sCard) {
         case 1:
@@ -173,10 +181,12 @@ class BlackJackGame {
         case 13:
           pont = 10;
           break;
-
       }
+        // console.log(playerID-1);
+        // console.log("FDS " + this.arrayPontuacao[playerID-1]);
+        this.arrayPontuacao[playerID-1] += pont;
+        console.log(this.arrayPontuacao);
 
-        this.arrayPontuacao[playerID] += pont;
     }
 }
 module.exports = BlackJackGame;
