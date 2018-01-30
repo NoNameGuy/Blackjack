@@ -46073,12 +46073,6 @@ exports.push([module.i, "\ntr.activerow[data-v-437a4046] {\n  \t\tbackground: #1
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 // Component code (not registered)
 module.exports = {
@@ -46123,8 +46117,10 @@ module.exports = {
         console.log(error);
       });
     } // end function
-  }
-};
+
+
+    // end Methods
+  } };
 
 /***/ }),
 /* 55 */
@@ -48655,37 +48651,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         console.log("after getUser");
         // saber se o user é admin ou não e redicioná-lo para a vista correta
-        /*
-                axios.get('/api/user', { 
-                            headers: {'Content-Type' : 'application/json',
-                                  'Authorization' : 'Bearer ' + token }
-                      }).then(response => {
-                            this.newUser = response.data;
-                            //console.log (this.newUser.id); NÃO ESTÁ UNDEFINED 
-                      }).catch(error => {
-                        console.log(error);
-                      });
-                      //console.log(this.newUser.id);
-              
-                    /*
-                  setTimeout(function(){ 
-                    console.log("when timeout");
-                    console.log(this.newUser); // ESTÁ UNDEFINED
-        
-                      if(this.newUser.admin == 1) {
-                    console.log("yes admin");
-                    console.log(this.newUser.admin);
-        
-                        this.$router.push('/adminMasterPage');
-                      } else {
-                    console.log("not admin");
-                    console.log(this.newUser.admin);
-                        this.$router.push('/');
-                      }
-                  }, 4000); 
-        */
 
-        _this.$router.push('/');
+        axios.get('/api/user', {
+          headers: { 'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token }
+        }).then(function (response) {
+          _this.newUser = response.data;
+          console.log(_this.newUser);
+
+          if (_this.newUser.admin == "1") {
+            _this.$router.push('/adminMasterPage');
+          } else {
+            _this.$router.push('/');
+          }
+        }).catch(function (error) {
+          console.log(error);
+        });
       }).catch(function (loginError) {
         // Something went wrong!
         console.log('Login Error: ' + loginError);
@@ -48851,7 +48832,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -48879,64 +48860,65 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	data: function data() {
-		return {
-			isUserLogged: false,
-			logged_user: {},
-			token: null
-		};
-	},
-
-	computed: {
-		message: function message() {
-			return "Sure you want logout?";
-		}
-	},
-	methods: {
-		logout: function logout() {
-			var _this = this;
-
-			console.log('LOGOUT');
-			if (isUserLogged) {
-				var head = {
-					headers: {
-						'Authorization': 'Bearer ' + this.token
-					}
+		data: function data() {
+				return {
+						isUserLogged: false,
+						logged_user: {},
+						token: null
 				};
-				axios.post('/api/logout', null, head).then(function (response) {
-					window.localStorage.clear();
-					console.log("logout sucessfull");
-
-					_this.$router.push('/login');
-				}).catch(function (error) {
-					console.log(error);
-				});
-			}
 		},
 
-		getLoggedUser: function getLoggedUser() {
-			var _this2 = this;
+		computed: {
+				message: function message() {
+						return "Sure you want logout?";
+				}
+		},
+		methods: {
+				logout: function logout() {
+						var _this = this;
 
-			this.token = localStorage.getItem('token');
-			//console.log("get Logged User");
-			axios.get('/api/user', {
-				headers: { 'Content-Type': 'application/json',
-					'Authorization': 'Bearer ' + this.token }
-			}).then(function (response) {
-				_this2.logged_user = response.data;
-				//console.log (this.logged_user.id);
-				_this2.isUserLogged = true;
-				console.log(_this2.logged_user);
-			}).catch(function (error) {
-				// não está autenticado
-				_this2.isUserLogged = false;
-				console.log(error);
-			});
-		} // end function
-	},
-	mounted: function mounted() {
-		this.getLoggedUser();
-	}
+						// console.log('LOGOUT');
+						if (this.isUserLogged) {
+								var head = {
+										headers: {
+												'Authorization': 'Bearer ' + this.token
+										}
+								};
+								axios.post('/api/logout', null, head).then(function (response) {
+										window.localStorage.clear();
+										console.log("logout sucessfull");
+										_this.$router.push('/login');
+								}).catch(function (error) {
+										console.log(error);
+								});
+
+								this.$router.push('/login');
+						}
+				},
+
+				getLoggedUser: function getLoggedUser() {
+						var _this2 = this;
+
+						this.token = localStorage.getItem('token');
+						//console.log("get Logged User");
+						axios.get('/api/user', {
+								headers: { 'Content-Type': 'application/json',
+										'Authorization': 'Bearer ' + this.token }
+						}).then(function (response) {
+								_this2.logged_user = response.data;
+								//console.log (this.logged_user.id);
+								_this2.isUserLogged = true;
+								console.log(_this2.logged_user);
+						}).catch(function (error) {
+								// não está autenticado
+								_this2.isUserLogged = false;
+								console.log(error);
+						});
+				} // end function
+		},
+		mounted: function mounted() {
+				this.getLoggedUser();
+		}
 });
 
 /***/ }),
@@ -49396,7 +49378,7 @@ exports = module.exports = __webpack_require__(2)(undefined);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -49472,114 +49454,101 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 //
 
 module.exports = {
-		data: function data() {
-				return {
-						logged_user: {},
-						isUserLogged: false,
-						editingUser: false
-				};
+	data: function data() {
+		return {
+			logged_user: {},
+			isUserLogged: false,
+			editingUser: false
+		};
+	},
+	methods: {
+		saveUser: function saveUser() {
+			var _this = this;
+
+			axios.put('api/users/' + this.logged_user.id, this.logged_user).then(function (response) {
+				// Copy object properties from response.data.data to this.user
+				// without creating a new reference
+				Object.assign(_this.logged_user, response.data.data);
+				_this.editingUser = false;
+			});
 		},
-		methods: {
-				saveUser: function saveUser() {
-						var _this = this;
+		cancelEdit: function cancelEdit() {
+			var _this2 = this;
 
-						axios.put('api/users/' + this.logged_user.id, this.logged_user).then(function (response) {
-								// Copy object properties from response.data.data to this.user
-								// without creating a new reference
-								Object.assign(_this.logged_user, response.data.data);
-								_this.editingUser = false;
-						});
-				},
-				cancelEdit: function cancelEdit() {
-						var _this2 = this;
-
-						axios.get('api/users/' + this.logged_user.id).then(function (response) {
-								// Copy object properties from response.data.data to this.user
-								// without creating a new reference
-								Object.assign(_this2.logged_user, response.data.data);
-								_this2.editingUser = false;
-						});
-				},
-
-				editUser: function editUser() {
-						this.editingUser = true;
-				},
-
-				deleteUser: function deleteUser() {
-						var _this3 = this;
-
-						var head = {
-								headers: {
-										'Authorization': 'Bearer ' + localStorage.getItem('token')
-								}
-						};
-						axios.post('/api/logout', null, head).then(function (response) {
-								console.log(response);
-								window.localStorage.clear();
-								//console.log("logout sucessfull");	
-
-								axios.delete('/api/users/' + _this3.logged_user.id).then(function (response) {
-										_this3.logged_user = null;
-										console.log("user deleted");
-								});
-						});
-
-						this.$router.push('/login');
-				},
-
-				logoutUser: function logoutUser() {
-						var _this4 = this;
-
-						var head = {
-								headers: {
-										'Authorization': 'Bearer ' + localStorage.getItem('token')
-								}
-						};
-						axios.post('/api/logout', null, head).then(function (response) {
-								console.log(response);
-								window.localStorage.clear();
-								console.log("logout sucessfull");
-
-								_this4.$router.push('/login');
-						});
-
-						/*
-      let head = {
-      headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('token'),
-      },
-      };
-      axios.post('/api/logout', null, head)
-      .then(response => {
-      window.localStorage.clear();
-      			
-      });
-      */
-				},
-
-				getLoggedUser: function getLoggedUser() {
-						var _this5 = this;
-
-						var token = localStorage.getItem('token');
-						//console.log("get Logged User");
-						axios.get('/api/user', {
-								headers: { 'Content-Type': 'application/json',
-										'Authorization': 'Bearer ' + token }
-						}).then(function (response) {
-								_this5.logged_user = response.data;
-								//console.log (this.logged_user.id);
-								_this5.isUserLogged = true;
-								console.log(_this5.logged_user);
-						}).catch(function (error) {
-								// não está autenticado
-								_this5.isUserLogged = false;
-								console.log(error);
-						});
-				} // end function
+			axios.get('api/users/' + this.logged_user.id).then(function (response) {
+				// Copy object properties from response.data.data to this.user
+				// without creating a new reference
+				Object.assign(_this2.logged_user, response.data.data);
+				_this2.editingUser = false;
+			});
 		},
-		mounted: function mounted() {
-				this.getLoggedUser();
-		}
+
+		editUser: function editUser() {
+			this.editingUser = true;
+		},
+
+		deleteUser: function deleteUser() {
+			var _this3 = this;
+
+			var head = {
+				headers: {
+					'Authorization': 'Bearer ' + localStorage.getItem('token')
+				}
+			};
+			axios.post('/api/logout', null, head).then(function (response) {
+				console.log(response);
+				window.localStorage.clear();
+				//console.log("logout sucessfull");	
+
+				axios.delete('/api/users/' + _this3.logged_user.id).then(function (response) {
+					_this3.logged_user = null;
+					console.log("user deleted");
+				});
+			});
+
+			this.$router.push('/login');
+		},
+
+		logoutUser: function logoutUser() {
+			var _this4 = this;
+
+			var head = {
+				headers: {
+					'Authorization': 'Bearer ' + localStorage.getItem('token')
+				}
+			};
+			axios.post('/api/logout', null, head).then(function (response) {
+				console.log(response);
+				window.localStorage.clear();
+				console.log("logout sucessfull");
+
+				_this4.$router.push('/login');
+			});
+		},
+
+		getLoggedUser: function getLoggedUser() {
+			var _this5 = this;
+
+			var token = localStorage.getItem('token');
+			//console.log("get Logged User");
+			axios.get('/api/user', {
+				headers: { 'Content-Type': 'application/json',
+					'Authorization': 'Bearer ' + token }
+			}).then(function (response) {
+				_this5.logged_user = response.data;
+				//console.log (this.logged_user.id);
+				_this5.isUserLogged = true;
+				console.log(_this5.logged_user);
+			}).catch(function (error) {
+				// não está autenticado
+				_this5.isUserLogged = false;
+				console.log(error);
+			});
+		} // end function
+	},
+	mounted: function mounted() {
+		this.getLoggedUser();
+	}
 };
 
 /***/ }),
@@ -50439,29 +50408,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
-//import ImagesList from './imagesList.vue';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
@@ -50475,8 +50423,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             departments: [],
             userList: false,
             imagesList: false,
-            page: 1,
-            pagination: {}
+            logged_user: {}
         };
     },
     methods: {
@@ -50541,7 +50488,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
         resetPWAdmin: function resetPWAdmin() {
             this.$router.push('/adminPassword');
-        }
+        },
+        getLoggedUser: function getLoggedUser() {
+            var _this4 = this;
+
+            var token = localStorage.getItem('token');
+            //console.log("get Logged User");
+            axios.get('/api/user', {
+                headers: { 'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token }
+            }).then(function (response) {
+                _this4.logged_user = response.data;
+                console.log('logged_user', _this4.logged_user);
+            }).catch(function (error) {
+                // não está autenticado
+                console.log(error);
+            });
+        } // end function
     },
     components: {
         'users-list': __WEBPACK_IMPORTED_MODULE_0__adminUsersList_vue___default.a
@@ -50552,30 +50515,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         isActived: function isActived() {
             return this.pagination.current_page;
         },
-        pagesNumber: function pagesNumber() {
-            if (!this.pagination.to) {
-                return [];
-            }
-            var from = this.pagination.current_page - this.offset;
-            if (from < 1) {
-                from = 1;
-            }
-            var to = from + this.offset * 2;
-            if (to >= this.pagination.last_page) {
-                to = this.pagination.last_page;
-            }
-            var pagesArray = [];
-            while (from <= to) {
-                pagesArray.push(from);
-                from++;
-            }
-            return pagesArray;
+        message: function message() {
+            return "You are not alloew to navigate this page!";
         }
     },
 
     mounted: function mounted() {
         this.getUsers();
         //this.getImages();
+        this.getLoggedUser();
     }
 });
 
@@ -50667,27 +50615,55 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['users'],
     data: function data() {
         return {
+            users: {},
             currentPassword: null,
             changePasswordAdmin: false,
             user: [],
             details: false
         };
     },
+
     methods: {
+        home: function home() {
+            this.$router.push('/adminMasterPage');
+        },
+        getUsers: function getUsers() {
+            var _this = this;
+
+            axios.get('/api/users').then(function (response) {
+                _this.users = response.data.data;
+                console.log(_this.users);
+            });
+        },
         blockUser: function blockUser(user) {
-            axios.put('api/user/blocked/' + user.id).then(console.log(this.users));
+            var _this2 = this;
+
+            console.log('userid', user.id);
+            axios.put('/api/user/blocked/' + user.id).then(function (response) {
+                _this2.getUsers();
+
+                console.log('users', _this2.users);
+            });
             this.$emit('block-click', user);
         },
 
         unlockUser: function unlockUser(user) {
-            axios.put('api/user/unblocked/' + user.id).then(console.log(this.users));
+            var _this3 = this;
+
+            axios.put('/api/user/unblocked/' + user.id).then(function (response) {
+                _this3.getUsers();
+
+                console.log(_this3.users);
+            });
             this.$emit('unlock-click', user);
         },
 
@@ -50701,18 +50677,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.changePasswordAdmin = false;
         },
         userDetails: function userDetails(user) {
-            var _this = this;
+            var _this4 = this;
 
-            axios.get('api/users/' + user.id).then(function (response) {
+            axios.get('/api/users/' + user.id).then(function (response) {
                 console.log("userDetails UsersList");
-                _this.user = response.data.data;
-                console.log(_this.user.id);
-                _this.$router.push('adminUserDetails/' + _this.user.id);
+                _this4.user = response.data.data;
+                console.log(_this4.user.id);
+                _this4.$router.push('adminUserDetails/' + _this4.user.id);
             });
         }
     },
     components: {
         'user-details': __WEBPACK_IMPORTED_MODULE_0__adminUserDetails_vue___default.a
+    },
+    mounted: function mounted() {
+        this.getUsers();
     }
 });
 
@@ -50746,10 +50725,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-
   data: function data() {
     return {
       user: null,
@@ -50768,6 +50749,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
           _this.aux = false;
         });
       }
+    },
+    home: function home() {
+      this.$router.push('/adminMasterPage');
     }
 
   },
@@ -50790,18 +50774,38 @@ var render = function() {
     _vm._m(0),
     _vm._v(" "),
     _c("tbody", [
-      _c("tr", { attrs: { src: _vm.getUser(_vm.user) } }, [
-        _c("td", [_vm._v(_vm._s(_vm.user.name))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.user.email))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.user.nickname))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.user.blocked))]),
-        _vm._v(" "),
-        _c("td", [_vm._v(_vm._s(_vm.user.admin))])
-      ])
-    ])
+      !_vm.aux
+        ? _c("tr", { attrs: { src: _vm.getUser(_vm.user) } }, [
+            _c("td", [_vm._v(_vm._s(_vm.user.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.user.email))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(_vm.user.nickname))]),
+            _vm._v(" "),
+            _vm.user.blocked
+              ? _c("td", [_vm._v(" Sim ")])
+              : _c("td", [_vm._v(" Não ")]),
+            _vm._v(" "),
+            _vm.user.admin
+              ? _c("td", [_vm._v(" Sim ")])
+              : _c("td", [_vm._v(" Não ")])
+          ])
+        : _vm._e()
+    ]),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            _vm.home()
+          }
+        }
+      },
+      [_vm._v("Home")]
+    )
   ])
 }
 var staticRenderFns = [
@@ -50810,7 +50814,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _vm._v("blocked\n    "),
       _c("tr", [
         _c("th", [_c("strong", [_vm._v("Name")])]),
         _vm._v(" "),
@@ -50920,6 +50923,20 @@ var render = function() {
             : _vm._e()
         ])
       })
+    ),
+    _vm._v(" "),
+    _c(
+      "a",
+      {
+        staticClass: "btn btn-primary",
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            _vm.home()
+          }
+        }
+      },
+      [_vm._v("Home")]
     )
   ])
 }
@@ -50929,7 +50946,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("thead", [
-      _vm._v("blocked\n        "),
       _c("tr", [
         _c("th", [_c("strong", [_vm._v("Name")])]),
         _vm._v(" "),
@@ -50960,98 +50976,95 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "form-group" }, [
-    _c("h1", [_vm._v("Welcome Admin")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "form-group" }, [
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.usersList($event)
-            }
-          }
-        },
-        [_vm._v("Users")]
-      ),
-      _vm._v(" -\n        "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.resetPWAdmin($event)
-            }
-          }
-        },
-        [_vm._v("Reset Admin Password")]
-      ),
-      _vm._v(" -\n        "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.statistics($event)
-            }
-          }
-        },
-        [_vm._v("Statistics")]
-      ),
-      _vm._v(" "),
-      _c(
-        "a",
-        {
-          staticClass: "btn btn-primary",
-          on: {
-            click: function($event) {
-              $event.preventDefault()
-              _vm.playerStatistics($event)
-            }
-          }
-        },
-        [_vm._v("Players Statistics")]
-      )
-    ]),
-    _vm._v(" "),
-    _vm.userList
-      ? _c(
-          "div",
-          [
+    !_vm.logged_user.admin
+      ? _c("div", [_c("strong", [_vm._v(_vm._s(_vm.message) + " ")])])
+      : _c("div", [
+          _c("h1", [_vm._v("Welcome Admin")]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
             _c(
-              "users-list",
+              "a",
               {
-                attrs: { users: _vm.users },
+                staticClass: "btn btn-primary",
                 on: {
-                  "block-click": _vm.blockUser,
-                  "unlock-click": _vm.unlockUser,
-                  "delete-click": _vm.deleteUser
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.usersList($event)
+                  }
                 }
               },
-              [_vm._v("Users List")]
+              [_vm._v("Users")]
             ),
-            _vm._v(" "),
-            _vm._m(0)
-          ],
-          1
-        )
-      : _vm._e()
+            _vm._v(" -\n            "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.resetPWAdmin($event)
+                  }
+                }
+              },
+              [_vm._v("Reset Admin Password")]
+            ),
+            _vm._v(" -\n            "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.statistics($event)
+                  }
+                }
+              },
+              [_vm._v("Statistics")]
+            ),
+            _vm._v(" -\n            "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.playerStatistics($event)
+                  }
+                }
+              },
+              [_vm._v("Players Statistics")]
+            )
+          ]),
+          _vm._v(" "),
+          _vm.userList
+            ? _c(
+                "div",
+                [
+                  _c(
+                    "users-list",
+                    {
+                      attrs: { users: _vm.users },
+                      on: {
+                        "block-click": _vm.blockUser,
+                        "unlock-click": _vm.unlockUser,
+                        "delete-click": _vm.deleteUser
+                      }
+                    },
+                    [_vm._v("Users List")]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-center" })
+                ],
+                1
+              )
+            : _vm._e()
+        ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [_c("nav")])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

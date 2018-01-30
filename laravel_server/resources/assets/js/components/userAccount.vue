@@ -142,19 +142,7 @@
 			})
 
 
-	        	/*
-	        	let head = {
-					 headers: {
-							 'Authorization': 'Bearer ' + localStorage.getItem('token'),
-					 			},
-			 		};
-					axios.post('/api/logout', null, head)
-					.then(response => {
-						window.localStorage.clear();
-						
-						
-				});
-				*/
+	        	
 	        },
 
 	        getLoggedUser: function () {
