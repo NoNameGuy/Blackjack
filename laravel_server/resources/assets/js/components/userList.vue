@@ -15,15 +15,9 @@
 		            <td>{{ user.email }}</td>
 		            <td>{{ user.nickname }}</td>
 		            <td>
-		            	<!--
-						<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,1)">P1</a>
-						<a class="btn btn-xs btn-success" v-on:click.prevent="definePlayer(user,2)">P2</a>
-						-->
 		                <a v-if="user.id === logged_user.id" class="btn btn-xs btn-primary" v-on:click.prevent="editUser(user)">Edit</a>
-		                <!--
-		                <a class="btn btn-xs btn-danger" v-on:click.prevent="deleteUser(user)">Delete</a>
-		                -->
 		            </td>
+
 		        </tr>
 		    </tbody>
 		</table>
@@ -72,8 +66,12 @@
                         console.log(error);
                       });
             }, // end function
-        },
+            
+
+		} // end Methods
 	}
+        
+	
 </script>
 
 <style scoped>

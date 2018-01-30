@@ -54,37 +54,22 @@ export default {
 
         console.log("after getUser")
         // saber se o user é admin ou não e redicioná-lo para a vista correta
-/*
+
         axios.get('/api/user', { 
                     headers: {'Content-Type' : 'application/json',
                           'Authorization' : 'Bearer ' + token }
               }).then(response => {
-                    this.newUser = response.data;
-                    //console.log (this.newUser.id); NÃO ESTÁ UNDEFINED 
+                this.newUser = response.data;
+                console.log (this.newUser);
+
+                  if(this.newUser.admin == "1") {
+                    this.$router.push('/adminMasterPage');
+                  } else {
+                    this.$router.push('/');
+                  }
               }).catch(error => {
                 console.log(error);
               });
-              //console.log(this.newUser.id);
-      
-            /*
-          setTimeout(function(){ 
-            console.log("when timeout");
-            console.log(this.newUser); // ESTÁ UNDEFINED
-
-              if(this.newUser.admin == 1) {
-            console.log("yes admin");
-            console.log(this.newUser.admin);
-
-                this.$router.push('/adminMasterPage');
-              } else {
-            console.log("not admin");
-            console.log(this.newUser.admin);
-                this.$router.push('/');
-              }
-          }, 4000); 
-*/
-
-                this.$router.push('/');
 
       }).catch(loginError => {
         // Something went wrong!

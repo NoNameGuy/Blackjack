@@ -1,6 +1,6 @@
 <template>
     <table class="table table-striped">
-        <thead>blocked
+        <thead>
         <tr>
             <th><strong>Name</strong></th>
             <th><strong>Email</strong></th>
@@ -22,7 +22,10 @@
             </td>
         </tr>
         </tbody>
+    <a class="btn btn-primary" @click.prevent="home()">Home</a>
+        
     </table>
+
 <!--
     <div v-if="details">
         <user-details :details="details">User Details</user-details>
@@ -34,29 +37,47 @@
     import UserDetails from './adminUserDetails.vue';
 
     export default {
-        props: ['users'],
         data: function(){
             return {
+                users: {},
                 currentPassword: null,
                 changePasswordAdmin: false,
                 user: [],
                 details : false,
             }
         },
+        
         methods: {
+            home: function () {
+            this.$router.push('/adminMasterPage');
+        },
+            getUsers: function(){
+                axios.get('/api/users')
+                    .then(response=>{
+                        this.users = response.data.data;
+                        console.log(this.users);
+                    });
+            },
             blockUser: function(user){
-                axios.put('api/user/blocked/' + user.id)
-                    .then(
-                        console.log(this.users),
-                    );
+                console.log('userid', user.id);
+                axios.put('/api/user/blocked/' + user.id)
+                    .then(response => {
+                        this.getUsers();
+
+                        console.log('users',this.users);
+
+                    });
                 this.$emit('block-click', user);
             },
 
             unlockUser: function (user) {
-                axios.put('api/user/unblocked/' + user.id)
-                    .then(
-                        console.log(this.users),
-                    );
+                axios.put('/api/user/unblocked/' + user.id)
+                    .then(response => {
+                        this.getUsers();
+
+                        console.log(this.users);
+
+                    });
                 this.$emit('unlock-click', user);
             },
 
@@ -70,7 +91,7 @@
                 this.changePasswordAdmin = false;
             },
             userDetails: function (user) {
-              axios.get('api/users/' + user.id)
+              axios.get('/api/users/' + user.id)
               .then(response => {
                 console.log("userDetails UsersList");
                 this.user = response.data.data;
@@ -82,5 +103,8 @@
         components: {
           'user-details' : UserDetails,
         },
+        mounted () {
+            this.getUsers();
+        }
     }
 </script>

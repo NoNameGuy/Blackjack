@@ -56,6 +56,7 @@ class UserControllerAPI extends Controller
     }
 
     public function blockUser($id) {
+       // dd($id);
         $user = User::findOrFail($id);
         $user->blocked = 1;
         $data = [

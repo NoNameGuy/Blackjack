@@ -1,54 +1,33 @@
 <template>
     <div class="form-group">
-        <h1>Welcome Admin</h1>
-        <div class="form-group">
-            <a class="btn btn-primary" @click.prevent="usersList">Users</a> -
-            <a class="btn btn-primary" @click.prevent="resetPWAdmin">Reset Admin Password</a> -
-            <a class="btn btn-primary" @click.prevent="statistics">Statistics</a>
-            <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a>
-            <!--<a class="btn btn-primary" @click.prevent="imageList">Image</a> -
-            
-        -->
+
+
+        <div v-if="!logged_user.admin">
+            <strong>{{ message }} </strong>
         </div>
-        
-        <div v-if="userList">
-            <users-list :users="users" @block-click="blockUser" @unlock-click="unlockUser" @delete-click="deleteUser">Users List</users-list>
-            <div class="text-center">
-                <nav>
-                <!--
-                    <ul class="pagination">
-                        <li v-if="pagination.current_page > 1">
-                            <a href="#" aria-label="Previous"
-                               @click.prevent="changePage(pagination.current_page - 1)">
-                                <span aria-hidden="true">«</span>
-                            </a>
-                        </li>
-                        <li v-for="page in pagesNumber"
-                            v-bind:class="[ page == isActived ? 'active' : '']">
-                            <a href="#"
-                               @click.prevent="changePage(page)">@{{ page }}</a>
-                        </li>
-                        <li v-if="pagination.current_page < pagination.last_page">
-                            <a href="#" aria-label="Next"
-                               @click.prevent="changePage(pagination.current_page + 1)">
-                                <span aria-hidden="true">»</span>
-                            </a>
-                        </li>
-                    </ul>
-                    -->
-                </nav>
+
+
+        <div v-else>
+
+            <h1>Welcome Admin</h1>
+            <div class="form-group">
+                <a class="btn btn-primary" @click.prevent="usersList">Users</a> -
+                <a class="btn btn-primary" @click.prevent="resetPWAdmin">Reset Admin Password</a> -
+                <a class="btn btn-primary" @click.prevent="statistics">Statistics</a> -
+                <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a>
+            </div>
+            
+            <div v-if="userList">
+                <users-list :users="users" @block-click="blockUser" @unlock-click="unlockUser" @delete-click="deleteUser">Users List</users-list>
+                <div class="text-center">
+                </div>
             </div>
         </div>
-        <!--
-        <div v-if="imagesList">
-            <images-list :images="images">Images List</images-list>
-        </div>
-        -->
     </div>
+
 </template>
 <script type="text/javascript">
     import AdminUsersList from './adminUsersList.vue';
-    //import ImagesList from './imagesList.vue';
 
     export default {
         data: function(){
@@ -62,8 +41,7 @@
                 departments: [],
                 userList: false,
                 imagesList: false,
-                page : 1,
-                pagination: {},
+                logged_user: {},
             }
         },
         methods: {
@@ -126,6 +104,21 @@
             resetPWAdmin: function () {
               this.$router.push('/adminPassword');
             },
+            getLoggedUser: function () {
+             let token = localStorage.getItem('token');
+            //console.log("get Logged User");
+            axios.get('/api/user', { 
+                        headers: {'Content-Type' : 'application/json',
+                                  'Authorization' : 'Bearer ' + token }
+                  }).then(response => {
+                        this.logged_user = response.data;
+                        console.log('logged_user', this.logged_user);
+
+                  }).catch(error => {
+                    // não está autenticado
+                    console.log(error);
+                  });
+        }, // end function
         },
         components: {
             'users-list': AdminUsersList,
@@ -136,30 +129,16 @@
             isActived: function () {
                 return this.pagination.current_page;
             },
-            pagesNumber: function () {
-                if (!this.pagination.to) {
-                    return [];
-                }
-                let from = this.pagination.current_page - this.offset;
-                if (from < 1) {
-                    from = 1;
-                }
-                let to = from + (this.offset * 2);
-                if (to >= this.pagination.last_page) {
-                    to = this.pagination.last_page;
-                }
-                let pagesArray = [];
-                while (from <= to) {
-                    pagesArray.push(from);
-                    from++;
-                }
-                return pagesArray;
+            message() {
+                return "You are not alloew to navigate this page!";
             }
+            
         },
 
         mounted() {
             this.getUsers();
             //this.getImages();
+            this.getLoggedUser();
         }
 
     }

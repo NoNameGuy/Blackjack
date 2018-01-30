@@ -1,4 +1,4 @@
-<template >
+<template>
     <div class="container" v-if="isUserLogged">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
@@ -29,22 +29,25 @@ export default {
     },
     methods: {
 		logout: function() {
-			console.log('LOGOUT');
-			if (isUserLogged) {
+			// console.log('LOGOUT');
+			if (this.isUserLogged) {
 				 let head = {
 						 headers: {
 								 'Authorization': 'Bearer ' + this.token,
 						 },
-				 };
+				};
 				axios.post('/api/logout', null, head)
 				.then(response => {
 					window.localStorage.clear();
 					console.log("logout sucessfull");	
+                    this.$router.push('/login');
 				
-				this.$router.push('/login');
 				}).catch(error => {
 					console.log(error);
 				});
+
+                this.$router.push('/login');
+
 			}
 		},
 		
