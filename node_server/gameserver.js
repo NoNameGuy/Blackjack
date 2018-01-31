@@ -78,6 +78,7 @@ io.on('connection', function (socket) {
 		}
 		if (game.play(numPlayer, data.index)) {
 			io.to(game.gameID).emit('game_changed', game);
+			socket.emit()
 		} else {
 			socket.emit('invalid_play', {'type': 'Invalid_Play', 'game': game});
 			return;
@@ -125,7 +126,7 @@ io.on('connection', function (socket) {
 
 		socket.on('place_bet', function(data) {
 
-			
+
 
 		});
 

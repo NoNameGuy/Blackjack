@@ -11,9 +11,12 @@
 	        <tr v-for="game in games"  :key="game.gameID">
 	            <td>{{ game.gameID }}</td>
 	            <td>{{ game.player1 }}</td>
-	            <td>
-	                <a class="btn btn-xs btn-primary" v-on:click.prevent="join(game)">Join</a>
+	            <td v-if="gameIsFull(game)">
+	                <a class="btn btn-xs btn-danger">Game is Full</a>
 	            </td>
+							<td v-else>
+								<a class="btn btn-xs btn-danger" v-on:click.prevent="join(game)">Join</a>
+							</td>
 	        </tr>
 	    </tbody>
 	</table>
@@ -26,8 +29,11 @@
         methods: {
             join(game) {
             	this.$emit('join-click', game);
-            },		
-        },		
+            },
+						gameIsFull(game) {
+							return game.numPlayers >= 5;
+						}
+        },
 	}
 </script>
 

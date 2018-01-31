@@ -4,6 +4,7 @@ class BlackJackGame {
     constructor(game, owner) {
       this.numPlayers = 0;
       this.winner = 0;
+      this.winnerP = 0;
       this.arrayBaralho = [];
       this.arrayPontuacao = [];
       this.gameOwner = owner.id;
@@ -129,7 +130,10 @@ class BlackJackGame {
 
     }
 
-
+    betClick() {
+      // próxima posiç\ao da carta, em vez de ficar com um carta fica com o valor betClick
+      //
+    }
 
     play(playerID, index){ // index = posicao da carta pedida
       if (!this.gameStarted) {
@@ -144,25 +148,48 @@ class BlackJackGame {
         return;
       }
 
+      if (this.boardGame[playerID][index-1] == "bet"){
+        return;
+      }
+
+      //console.log('pontuacao player 1', this.arrayPontuacao[playerID-1]);
       if (this.arrayPontuacao[playerID-1] >= 22) {
+        console.log('player lost ID-Points', playerID + '-' + this.arrayPontuacao[playerID-1]);
+        return;
+      }
+
+
+
+
+
+
+      this.gameTurn++;
+
+
+      if(index >= 4 || this.arrayPontuacao[playerID-1] >= 22) { // jogo já terminou
+        //this.checkHighScore();
+        console.log("jogo terminou");
+        this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
+
+        var aux = this.arrayPontuacao.slice();
+        aux.sort(function(a, b){return b-a});
+
+        for (let i = 0; i < this.arrayPontuacao.length; i++) {
+          if (this.arrayPontuacao[i] == aux[0])
+            this.winner = i;
+            this.winnerP = aux[0];
+            console.log('winner', this.winner);
+            console.log('winnerP', this.winnerP);
+            break;
+        }
+
         return;
       }
 
       this.boardGame[playerID][index] = this.arrayBaralho[this.currentCard];
       console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
       this.currentCard++;
-
-      if(this.gameTurn > 4) { // jogo já terminou
-        //this.checkHighScore();
-        console.log("jogo terminou");
-        let maiorPontuacao = 100;
-        this.winner = maiorPontuacao;
-        return;
-      }
-
-
       this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
-      this.gameTurn++;
 
       return true;
     }

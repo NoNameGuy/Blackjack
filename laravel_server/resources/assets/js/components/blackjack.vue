@@ -60,7 +60,7 @@
                 } else if (errorObject.type == 'Invalid_Player') {
                     alert("Error: Player not valid for this game");
                 } else if (errorObject.type == 'Invalid_Play') {
-                    alert("Error: Move is not valid or it's not your turn");
+                    alert("Error: You lost");
                 } else {
                     alert("Error: " + errorObject.type);
                 }

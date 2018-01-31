@@ -47055,7 +47055,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         // ----------------------------------------------------------------------------------------
         // GAME LOGIC - END
-        // ----------------------------------------------------------------------------------------        
+        // ----------------------------------------------------------------------------------------
         playerName: function playerName(playerNumber) {
             console.log(playerNumber);
             console.log(this.player1User);
@@ -47477,7 +47477,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -47507,15 +47507,21 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 //
 //
 //
+//
+//
+//
 
 // Component code (not registered)
 module.exports = {
-    props: ['games'],
-    methods: {
-        join: function join(game) {
-            this.$emit('join-click', game);
-        }
-    }
+	props: ['games'],
+	methods: {
+		join: function join(game) {
+			this.$emit('join-click', game);
+		},
+		gameIsFull: function gameIsFull(game) {
+			return game.numPlayers >= 5;
+		}
+	}
 };
 
 /***/ }),
@@ -47537,21 +47543,27 @@ var render = function() {
           _vm._v(" "),
           _c("td", [_vm._v(_vm._s(game.player1))]),
           _vm._v(" "),
-          _c("td", [
-            _c(
-              "a",
-              {
-                staticClass: "btn btn-xs btn-primary",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.join(game)
-                  }
-                }
-              },
-              [_vm._v("Join")]
-            )
-          ])
+          _vm.gameIsFull(game)
+            ? _c("td", [
+                _c("a", { staticClass: "btn btn-xs btn-danger" }, [
+                  _vm._v("Game is Full")
+                ])
+              ])
+            : _c("td", [
+                _c(
+                  "a",
+                  {
+                    staticClass: "btn btn-xs btn-danger",
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.join(game)
+                      }
+                    }
+                  },
+                  [_vm._v("Join")]
+                )
+              ])
         ])
       })
     )
@@ -49707,7 +49719,7 @@ module.exports = {
 			axios.post('/api/logout', null, head).then(function (response) {
 				console.log(response);
 				window.localStorage.clear();
-				//console.log("logout sucessfull");	
+				//console.log("logout sucessfull");
 
 				axios.delete('/api/users/' + _this3.logged_user.id).then(function (response) {
 					_this3.logged_user = null;
