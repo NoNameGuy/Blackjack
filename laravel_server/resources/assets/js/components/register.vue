@@ -1,4 +1,3 @@
-php
 <template>
 <form @submit.prevent="register(user)">
 

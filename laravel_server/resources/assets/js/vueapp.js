@@ -27,6 +27,9 @@ const login = Vue.component('login', require('./components/login.vue'));
 const logout = Vue.component('logout', require('./components/logout.vue'));
 const register = Vue.component('register', require('./components/register.vue'));
 const userAccount = Vue.component('userAccount', require('./components/userAccount.vue'));
+const forgot = Vue.component('forgot', require('./components/forgot.vue'));
+
+
 
 const adminStatistics = Vue.component('statistics', require('./components/statistics.vue'));
 const adminLogin = Vue.component('adminLogin', require('./components/adminLogin.vue'));
@@ -52,6 +55,7 @@ const routes = [
   { path: '/playerStatistics', component: playerStatistics },
   { path: '/adminStatistics', component: adminStatistics },
   { path: '/userAccount', component: userAccount },
+  { path: '/forgot', component: forgot },
 ];
 
 const router = new VueRouter({

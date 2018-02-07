@@ -1,27 +1,24 @@
 <template>
   <form>
     <div class="text-left">
-        <div class="form-group">
-            <label for="email">Email: </label>
-            <input type="email" class="form-control" id="email" v-model="email">
-        </div>
+        
         <div class="form-group">
             <label for="password">Old PW:</label>
-            <input type="password" class="form-control" id="old_password" v-model="old_password">
+            <input type="password" class="form-control" id="old_password" v-model="old_password" required>
         </div>
 
         <div class="form-group">
             <label for="password">New PW:</label>
-            <input type="password" class="form-control" id="password" v-model="password">
+            <input required type="password" class="form-control" id="password" v-model="password">
         </div>
 
         <div class="form-group">
             <label for="confirm_password">Confirm PW:</label>
-            <input type="password" class="form-control" id="confirm_password" v-model="confirm_password">
+            <input required type="password" class="form-control" id="confirm_password" v-model="confirm_password">
         </div>
 
         <div class="text-center">
-            <a class="btn btn-primary" v-on:click.prevent="updatePW()">Mudar PW</a>
+            <a type="submit" class="btn btn-primary" v-on:click.prevent="updatePW()">Mudar PW</a>
         </div>
 
     </div>
@@ -32,40 +29,56 @@
 
     export default {
 
-        data: function(){
+        data: function() {
             return {
-              email : null,
+             
               old_password:null,
               password:null,
               confirm_password:null,
               updatePWError:null,
+              isUserLogged : false,
+        	  logged_user: {},
             }
         },
         methods: {
 
           updatePW: function () {
-            console.log(this.email);
-            axios.patch('/api/admin/resetPassAdmin/' + this.email, {
-              old_password: this.old_password,
-              password: this.password,
-              confirm_password: this.confirm_password
-            }).then(response => {
-              console.log(response);
-              this.$router.push('/adminMasterPage');
+            if (this.old_password.trim() != "" && this.password === this.confirm_password) {
+                axios.put('/api/admin/resetPassAdmin/' + this.logged_user.id, {
+                    old_password: this.old_password,
+                    password: this.password
+                }).then(response => {
+                    this.$router.push('/adminMasterPage');
 
-            }).catch(updatePWError => {
-              // this.email = null,
-              // this.old_password= null,
-              // this.password= null,
-              // this.confirm_password= null
+                }).catch(updatePWError => {
+                    this.old_password= null,
+                    this.password= null,
+                    this.confirm_password= null;
+                    this.$router.push('/resetPWAdmin');
+                });
+            } else {
+                this.$router.push('/resetPWAdmin');
+            }
+          },
 
-              console.log(updatePWError);
-              this.$router.push('/adminPassword');
+          getLoggedUser: function () {
+            this.token = localStorage.getItem('token');
+            //console.log("get Logged User");
+            axios.get('/api/user', { 
+                        headers: {'Content-Type' : 'application/json',
+                        		  'Authorization' : 'Bearer ' + this.token }
+                  }).then(response => {
+                        this.logged_user = response.data;
+                        //console.log (this.logged_user.id);
+                        this.isUserLogged = true;
+                        console.log(this.logged_user);
 
-
-            });
-
-          }
+                  }).catch(error => {
+                    // não está autenticado
+                    this.isUserLogged = false;
+                    console.log(error);
+                  });
+        }, // end function
 
         },
         components: {
@@ -73,7 +86,7 @@
         },
 
         mounted() {
-
+            this.getLoggedUser();
 
         },
     }

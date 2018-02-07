@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 use App\User;
 use App\StoreUserRequest;
 use Hash;
+use App\Mail\MailSender;
 
 class UserControllerAPI extends Controller
 {
@@ -55,24 +56,33 @@ class UserControllerAPI extends Controller
         return new UserResource($user);
     }
 
-    public function blockUser($id) {
-       // dd($id);
+    public function blockUser(Request $request, $id) {
+        $request->validate([
+            'reason_blocked' => 'required'
+        ]);
         $user = User::findOrFail($id);
         $user->blocked = 1;
-        $data = [
-            'blocked' => $user->blocked
-        ];
-        $user->update($data);
+        $user->update($request->all());
+        /* Send Email to notify user */
+        \Mail::to($user)->send(new MailSender('emails.block', $user));
+        
+        /* End notification */
         return new UserResource($user);
     }
 
-    public function unblockUser($id) {
+    public function unblockUser(Request $request, $id) {
+        $request->validate([
+            'reason_reactivated' => 'required'
+        ]);
         $user = User::findOrFail($id);
         $user->blocked = 0;
-        $data = [
-            'blocked' => $user->blocked
-        ];
-        $user->update($data);
+        $user->update($request->all());
+
+        /* Send Email to notify user */
+        \Mail::to($user)->send(new MailSender('emails.unblock', $user));
+        
+
+        /* End notification */
         return new UserResource($user);
     }
 
@@ -80,6 +90,11 @@ class UserControllerAPI extends Controller
     {
         $user = User::findOrFail($id);
         $user->delete();
+        /* Send Email to notify user */
+        
+        \Mail::to($user)->send(new MailSender('emails.delete', $user));
+        
+        /* End notification */
         return response()->json(null, 204);
     }
 
@@ -94,17 +109,57 @@ class UserControllerAPI extends Controller
         return response()->json($totalEmail == 0);
     }
 
-    public function resetPass(Request $request, $email)
+    public function resetPass(Request $request, $id)
     {
-
-        $user = User::findOrFail($email);
-
-        if (Hash::check($request->password, $user->password)) {
-            $user->password = Hash::make($request->password);
-            return response()->json(['message' => 'Current Password is correct'], 200);
+        $user = User::findOrFail($id);
+        if ($user != null) {
+            if(Hash::check($request->password, $user->password))
+            {
+                $user->password = Hash::make($request->password); 
+                $user->save();         
+                return response()->json(['message' => 'Current Password is correct'], 200);
+            }
+    /*
+            $newHash = Hash::make($request->password);
+            if ($newHash == $user->password) {
+                $user->password = $newHash;
+                return response()->json(['message' => 'Current Password is correct'], 200);
+            }
+            */
+            
+            return response()->json(['message' => 'Current Password is NOT correct'], 422);
         }
         
-        return response()->json(['message' => 'Current Password is NOT correct'], 422);
+        return response()->json(['message' => 'Not allowed'], 401);
 
     }
+
+    public function getAdmin(Request $request)
+    {
+        $admin = User::where('email', $request->email)->first();
+        if ($admin != null && $admin->admin == 1) {
+            return response()->json(['admin' => '1'], 200);
+        }
+        return response()->json(['admin' => '0'], 401);
+        
+    }
+
+    public function sendMail(Request $request) {
+        $admin = User::where('email', $request->email)->first();
+        if ($admin != null && $admin->admin == 1) {
+            \Mail::to($admin)->send(new MailSender('emails.adminReset'));
+            return response()->json(['admin' => '1'], 200);
+        }
+        return response()->json(['admin' => '0'], 401);
+    }
+
+    
+
+    /*public function getDefesa () {
+        $blockeds = User::where('blocked', 1)->count();
+
+        return response()->json(['isBlock' => $blockeds], 200);
+
+        //return new UserResource(User::where('blocked', 1)->count());
+    }*/
   }

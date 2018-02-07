@@ -24,12 +24,14 @@ Route::post('users', 'UserControllerAPI@store');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@delete');
 
+// Admin
 Route::put('user/blocked/{id}', 'UserControllerAPI@blockUser');
 Route::put('user/unblocked/{id}', 'UserControllerAPI@unblockUser');
-Route::patch('admin/resetPassAdmin/{email}', 'UserControllerAPI@resetPass');
+Route::put('admin/resetPassAdmin/{id}', 'UserControllerAPI@resetPass');
+Route::post('adminLogin', 'LoginControllerAPI@adminlogin');
+Route::get('adminEmail/{email}', 'UserControllerAPI@sendMail');
 
-
-
+// Games
 Route::get('games', 'GameControllerAPI@index');
 Route::get('games/lobby', 'GameControllerAPI@lobby');
 Route::get('games/status/{status}', 'GameControllerAPI@gamesStatus');
@@ -44,4 +46,7 @@ Route::get('games/victories', 'GameControllerAPI@getVictoriesDraws');
 Route::post('login', 'LoginControllerAPI@login');
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
 Route::post('register', 'UserControllerAPI@store');
-Route::post('adminLogin', 'LoginControllerAPI@adminlogin');
+
+
+
+//Route::get('defesa', 'UserControllerAPI@getDefesa');

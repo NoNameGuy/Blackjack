@@ -16,6 +16,12 @@
                 <a class="btn btn-primary" @click.prevent="statistics">Statistics</a> -
                 <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a>
             </div>
+
+            <!-- <div>
+                <h4 v-if="isVisible"><a @click.prevent="getBlockedUsers">obter total de users bloqueados</a></h4>
+                <h4 v-else> existem {{ defesa }} utilizadores bloqueados </h4>
+
+            </div> -->
             
             <div v-if="userList">
                 <users-list :users="users" @block-click="blockUser" @unlock-click="unlockUser" @delete-click="deleteUser">Users List</users-list>
@@ -42,6 +48,8 @@
                 userList: false,
                 imagesList: false,
                 logged_user: {},
+                isVisible : true,
+                defesa : 0,
             }
         },
         methods: {
@@ -104,6 +112,16 @@
             resetPWAdmin: function () {
               this.$router.push('/adminPassword');
             },
+            /*getBlockedUsers: function () {
+                if (this.logged_user != null) {
+                    axios.get('api/defesa')
+                        .then(response => {
+                            console.log('defesa', response.data.isBlock);
+                            this.defesa = response.data.isBlock;
+                            this.isVisible = false;
+                        });
+                }
+            },*/
             getLoggedUser: function () {
              let token = localStorage.getItem('token');
             //console.log("get Logged User");

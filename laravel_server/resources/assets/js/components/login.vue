@@ -17,6 +17,8 @@
           <a class="btn btn-primary" v-on:click.prevent="login()">Login</a>
           <br><br>
           <a class="btn btn-default" v-on:click.prevent="register()">Register</a>
+          <br><br>          
+          <a v-on:click.prevent="forgot()">Admin, forgot your password? <br>  HERE BITCH!</a> 
       </div>
   </form>
 
@@ -32,7 +34,7 @@ export default {
         email: null,
         password: null,
       },
-        loginError: false
+        loginError: false,
     };
   },
   methods: {
@@ -64,6 +66,9 @@ export default {
 
                   if(this.newUser.admin == "1") {
                     this.$router.push('/adminMasterPage');
+                  } else if (this.newUser.blocked == "1") {
+                    console.log("user bloqueado");
+                    this.$router.push('/login');
                   } else {
                     this.$router.push('/');
                   }
@@ -75,7 +80,11 @@ export default {
         // Something went wrong!
         console.log('Login Error: ' + loginError);
         this.loginError = true;
+        alert("Error: Email or password Invalid!");
       });
+    },
+    forgot() {
+      this.$router.push('/forgot');      
     },
     register() {
       this.$router.push('/register');

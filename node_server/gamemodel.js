@@ -16,6 +16,7 @@ class BlackJackGame {
       this.gameTurn = 1;
       this.currentCard = 0;
       this.boardGame;
+      this.bet = false;
     }
 
     startGame() {
@@ -132,6 +133,8 @@ class BlackJackGame {
 
     betClick() {
       // próxima posiç\ao da carta, em vez de ficar com um carta fica com o valor betClick
+      this.bet = true;
+      return
       //
     }
 
@@ -148,7 +151,7 @@ class BlackJackGame {
         return;
       }
 
-      if (this.boardGame[playerID][index-1] == "bet"){
+      if (this.bet){
         return;
       }
 
@@ -157,10 +160,6 @@ class BlackJackGame {
         console.log('player lost ID-Points', playerID + '-' + this.arrayPontuacao[playerID-1]);
         return;
       }
-
-
-
-
 
 
       this.gameTurn++;
@@ -186,8 +185,16 @@ class BlackJackGame {
         return;
       }
 
-      this.boardGame[playerID][index] = this.arrayBaralho[this.currentCard];
-      console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
+
+      /*for (let i = this.numPlayers; i>0; i--) {
+        this.boardGame[i][2] = this.arrayBaralho[this.currentCard];
+        this.incrementaPontuacao(i, this.boardGame[i][1]);
+        this.currentCard++;
+      }*/
+      //this.boardGame[playerID][index] = this.arrayBaralho[this.currentCard];
+      
+
+      //console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
       this.currentCard++;
       this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
 

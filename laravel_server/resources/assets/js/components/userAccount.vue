@@ -39,7 +39,7 @@
 		            name="email" id="inputEmail"
 		            placeholder="Email address"/>
 		    </div>
-		    <div class="form-group">
+		    <div v-if="!logged_user.admin" class="form-group">
 		        <label for="inputPassword">Password</label>
 		        <input
 		            type="password" class="form-control" v-model="logged_user.password"
@@ -166,6 +166,9 @@
 		},
 		mounted() {
 			this.getLoggedUser();
+			if (this.logged_user.admin) {
+				this.$router.push('/adminEdit');
+			}
 		}
 	}
 </script>

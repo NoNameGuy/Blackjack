@@ -21,6 +21,7 @@ class User extends Resource
             'nickname' => $this->nickname,
             'admin' => $this->admin,
             'blocked' => $this->blocked,
+            'reason_blocked' => $this->reason_blocked,
             'password' => $this->password,
             'total_points' => $this->total_points,
             'total_games_played' => $this->total_games_played,
