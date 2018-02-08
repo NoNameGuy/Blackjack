@@ -2,16 +2,16 @@
 
 return array(
     "driver" => "smtp",
-    "host" => "smtp.mailtrap.io",
-    "port" => 2525,
-    "from" => array(
-        "address" => "from@example.com",
-        "name" => "Example"
-    ),
-    "username" => "1f643aedbad8b6",
-    "password" => "b47c2801a14a10",
-    "sendmail" => "/usr/sbin/sendmail -bs",
-    "pretend" => false
+  "host" => "smtp.mailtrap.io",
+  "port" => 2525,
+  "from" => array(
+      "address" => "from@example.com",
+      "name" => "Example"
+  ),
+  "username" => "53c18acaf64b99",
+  "password" => "533db335670651",
+  "sendmail" => "/usr/sbin/sendmail -bs",
+  "pretend" => false
   );
 
 // return [

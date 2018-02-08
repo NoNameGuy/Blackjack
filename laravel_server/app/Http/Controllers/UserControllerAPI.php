@@ -147,7 +147,7 @@ class UserControllerAPI extends Controller
     public function sendMail(Request $request) {
         $admin = User::where('email', $request->email)->first();
         if ($admin != null && $admin->admin == 1) {
-            \Mail::to($admin)->send(new MailSender('emails.adminReset'));
+            \Mail::to($admin)->send(new MailSender('emails.adminReset', $admin));
             return response()->json(['admin' => '1'], 200);
         }
         return response()->json(['admin' => '0'], 401);
