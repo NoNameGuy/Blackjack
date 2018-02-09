@@ -27,7 +27,7 @@
             </tr>
             </tbody>
         </table>
-
+0
     </div>
 </template>
 
