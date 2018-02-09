@@ -28,6 +28,7 @@
 		props: ['games'],
         methods: {
             join(game) {
+							console.log('game all: ', game);
             	this.$emit('join-click', game);
             },
 						gameIsFull(game) {

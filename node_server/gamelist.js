@@ -27,19 +27,35 @@ class GameList {
     		return null;
     	}
 
+			console.log('gameID: ', gameID);
+			console.log('playerName: ', playerName);
+			console.log('socketID: ', socketID);
+
+			if (game.player1SocketID == null){
+				game.join(playnerName);
+				game.player1SocketID = socketID;
+				console.log('player1 joined', sockedID);
+			}
+
 			if (game.player1SocketID != socketID) {
 				game.join(playerName);
 				game.player2SocketID = socketID;
+				console.log('player2 joined', game.player2SocketID);
+
 			}
 
 			if (game.player2SocketID != socketID && game.player1SocketID != socketID) {
 				game.join(playerName);
 				game.player3SocketID = socketID;
+				console.log('player3 joined', game.player3SocketID);
+
 			}
 
 			if (game.player3SocketID != socketID && game.player2SocketID != socketID && game.player1SocketID != socketID) {
 				game.join(playerName);
 				game.player4SocketID = socketID;
+				console.log('player4 joined', game.player4SocketID);
+
 			}
 
     	return game;

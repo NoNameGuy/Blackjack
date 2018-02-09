@@ -87,39 +87,6 @@ class BlackJackGame {
 
       this.trunfoGame[0][0] = this.arrayBaralho[0];
 
-      // for (let j = 0; j <= 3; j++){
-      //   this.boardGame[j][0] = 'Player' + j;
-      //   for (let k = 0; k <= 4; k++){
-      //       //this.boardGame[0][0] = "semFace"; //FICA SEM FACE NA POSIÇÃO 0,0.
-      //   }  // cartas
-      // }  // players
-
-      //k - linhas
-      //j - Colunas
-
-
-      // // dá as cartas todas sem face
-      // for (let j = 1; j <= this.numPlayers; j++)  // players
-      //   for (let k = 2; k <= 4; k++)  // cartas
-      //     this.boardGame[j][k] = "Empty";
-      //
-      // for (let j = 1; j <= this.numPlayers; j++) {
-      //   for (var k = 1; k <= 2; k++) {
-      //     this.boardGame[j][k] = "semFace";
-      //   }
-      // }
-      //
-      //
-      // // vira as primeiras cartas para cima
-      // for (let i = this.numPlayers; i>0; i--) {
-      //   this.boardGame[i][1] = this.arrayBaralho[this.currentCard];
-      //   this.incrementaPontuacao(i, this.boardGame[i][1]);
-      //   this.currentCard++;
-      // }
-
-
-
-
       this.gameTurn = 2;
       this.gameStarted = true;
     }
