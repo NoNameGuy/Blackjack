@@ -15,6 +15,8 @@
                 <a class="btn btn-primary" @click.prevent="resetPWAdmin">Reset Admin Password</a> -
                 <a class="btn btn-primary" @click.prevent="statistics">Statistics</a> -
                 <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a>
+                <a class="btn btn-primary" @click.prevent="gerirBaralhos">Gerir Baralhos</a>
+                
             </div>
 
             <!-- <div>
@@ -67,8 +69,10 @@
                     .then(response => {
                         this.showSuccess = true;
                         this.successMessage = 'User Deleted';
+                    }).then(response => {
+                        this.getUsers();
+
                     });
-                this.getUsers();
             },
             getUsers: function(){
                 axios.get('api/users')
@@ -108,7 +112,9 @@
             playerStatistics: function() {
                 this.$router.push('/playerStatistics');
             },
-
+            gerirBaralhos: function() {
+                this.$router.push('/decksManagement');
+            },
             resetPWAdmin: function () {
               this.$router.push('/adminPassword');
             },

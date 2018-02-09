@@ -18,7 +18,6 @@ export default {
   data() {
     return {
       email : null,
-      body: "Olá eu sou um burro do caralho que ainda não fez DAD LOL"
     };
   }, // end data
   methods: {
@@ -31,9 +30,11 @@ export default {
             
             
             if (isAdmin) { // email é válido e pode-se mandar email
-            console.log('isAdmin2: OK');
-            console.log("Mandar esta filho da puta para página de login/nova password");
+              //enviar email
             }
+
+          }).then(response => {
+            this.$router.push('/adminMasterPage');
           }).catch(error => {
             console.log('error: ', error);
             alert("Error: Invalid Email/ Not allowed");

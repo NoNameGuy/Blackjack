@@ -138,7 +138,7 @@
             }, // end function
 
             home: function () {
-                this.$router.push('/adminMasterPage');
+                this.$router.push('/');
             }, // end function
 
             orderByPoints: function () {
@@ -160,16 +160,6 @@
             }, // end function
 
             orderByAVG: function () {
-                var byGames = this.players.slice(0);
-
-                    byGames.sort(function(a,b) {
-                        return b.total_games_played - a.total_games_played;
-                    });
-                    this.players_by_game = byGames.slice(0,5);
-
-            }, // end function
-
-            orderByAVG: function () {
                 var currentAvg = 0;
 
                 for( let i = 0; i < this.players.length; i++) {
@@ -179,7 +169,8 @@
                     else {
                         currentAvg = 0;
                     }
-                    this.byAvg.push({ avg : currentAvg, nickname : this.players[i].nickname });
+                    this.byAvg.push({ "avg" : currentAvg, "nickname" : this.players[i].nickname });
+                    currentAvg = 0;
                 }
 
                 var byAvgAux = this.byAvg.slice(0);
