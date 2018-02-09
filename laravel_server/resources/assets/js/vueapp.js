@@ -30,6 +30,8 @@ const userAccount = Vue.component('userAccount', require('./components/userAccou
 const forgot = Vue.component('forgot', require('./components/forgot.vue'));
 
 
+const sueca = Vue.component('sueca', require('./components/sueca.vue'));
+
 
 const adminStatistics = Vue.component('statistics', require('./components/statistics.vue'));
 const adminLogin = Vue.component('adminLogin', require('./components/adminLogin.vue'));
@@ -56,6 +58,11 @@ const routes = [
   { path: '/adminStatistics', component: adminStatistics },
   { path: '/userAccount', component: userAccount },
   { path: '/forgot', component: forgot },
+
+
+  { path: '/sueca', component: sueca },
+
+
 ];
 
 const router = new VueRouter({

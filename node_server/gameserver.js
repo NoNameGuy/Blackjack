@@ -19,7 +19,7 @@ var app = require('http').createServer();
 
 var io = require('socket.io')(app);
 
-var TicTacToeGame = require('./gamemodel.js');
+var BlackJackGame = require('./gamemodel.js');
 var GameList = require('./gamelist.js');
 
 app.listen(8080, function(){
@@ -46,6 +46,7 @@ io.on('connection', function (socket) {
     socket.on('join_game', function (data){
     	let game = games.joinGame(data.gameID, data.playerName, socket.id);
 		socket.join(game.gameID);
+		console.log("ENTROU ", data);
 		io.to(game.gameID).emit('my_active_games_changed');
 		io.emit('lobby_changed');
     });

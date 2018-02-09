@@ -6,12 +6,14 @@
     <router-link to="/users">Users</router-link> -
     <router-link to="/singletictactoe">SinglePlayer TicTacToe</router-link> -
     <router-link to="/multitictactoe">Multiplayer TicTacToe</router-link> -
-    <router-link to="/blackjack">BlackJack</router-link> - 
-    <router-link to="/login">Login</router-link> - 
-    <router-link to="/logout">Logout</router-link> - 
+    <router-link to="/blackjack">BlackJack</router-link> -
+    <router-link to="/login">Login</router-link> -
+    <router-link to="/logout">Logout</router-link> -
     <router-link to="/register">Register</router-link> -
     <router-link to="/userAccount">My Account</router-link> -
-    <router-link to="/adminMasterPage">Admin Page</router-link> 
+    <router-link to="/adminMasterPage">Admin Page</router-link> -
+
+    <router-link to="/sueca">Sueca</router-link>
 
 
 

@@ -16,10 +16,22 @@ class BlackJackGame {
       this.gameTurn = 1;
       this.currentCard = 0;
       this.boardGame;
+      this.playerGame;
+      this.trunfoGame;
       this.bet = false;
     }
 
     startGame() {
+
+//DESCOMENTAR!
+
+      // if (this.numPlayers != 4) {
+      //   return;
+      // }
+
+//END DESCOMENTAR!!
+
+
       //incializar arrayBaralho
       // randomize arrayBaralho
       this.inicializarArrayBaralho();
@@ -32,44 +44,78 @@ class BlackJackGame {
       // console.log(this.arrayPontuacao);
 
       // inicialize boardGame
-      this.boardGame = new Array(this.numPlayers+1);
+      this.boardGame = new Array(3);
+      this.playerGame = new Array(11);
+      this.trunfoGame = new Array(1);
 
-      // console.log("boardGame");
-      // console.log(this.boardGame.length);
-      for (var i = 0; i < this.numPlayers+1; i++) {
-        this.boardGame[i] = new Array(5);
+      for (var i = 0; i < 3; i++) {
+        this.boardGame[i] = new Array(3);
       }
 
-      for (let j = 0; j <= this.numPlayers; j++){
-        this.boardGame[j][0] = 'Player' + j;
-        for (let k = 0; k <= 4; k++){
-            this.boardGame[0][0] = "semFace";
-            this.boardGame[0][k] = 'Carta' + k;
-        }  // cartas
-      }  // players
+      for (var i = 0; i < 11; i++) {
+        this.playerGame[i] = new Array(1);
+      }
 
-//k - linhas
-//j - Colunas
+      for (var i = 0; i < 1; i++) {
+        this.trunfoGame[i] = new Array(1);
+      }
 
+      //COLOCAÇÃO SITOS PLAYER
+      this.boardGame[0][1] = 'Player1';
+      this.boardGame[1][2] = 'Player2';
+      this.boardGame[2][1] = 'Player3';
+      this.boardGame[1][0] = 'Player4';
 
-      // dá as cartas todas sem face
-      for (let j = 1; j <= this.numPlayers; j++)  // players
-        for (let k = 2; k <= 4; k++)  // cartas
-          this.boardGame[j][k] = "Empty";
-
-      for (let j = 1; j <= this.numPlayers; j++) {
-        for (var k = 1; k <= 2; k++) {
-          this.boardGame[j][k] = "semFace";
+      for (var j = 0; j < 3; j++) {
+        for (var k = 0; k < 3; k++) {
+          if (this.boardGame[j][k] != 'Player1'
+            && this.boardGame[j][k] != 'Player2'
+            && this.boardGame[j][k] != 'Player3'
+            && this.boardGame[j][k] != 'Player4') {
+            this.boardGame[j][k] = 'Empty';
+          }
         }
       }
 
+      //Distribuir Cards pro player1
 
-      // vira as primeiras cartas para cima
-      for (let i = this.numPlayers; i>0; i--) {
-        this.boardGame[i][1] = this.arrayBaralho[this.currentCard];
-        this.incrementaPontuacao(i, this.boardGame[i][1]);
+      for (let i = 1; i < this.playerGame.length; i++) {
+        this.playerGame[0][0] = 'Player1';
+        this.playerGame[i][0] = this.arrayBaralho[i-1];
         this.currentCard++;
       }
+
+      this.trunfoGame[0][0] = this.arrayBaralho[0];
+
+      // for (let j = 0; j <= 3; j++){
+      //   this.boardGame[j][0] = 'Player' + j;
+      //   for (let k = 0; k <= 4; k++){
+      //       //this.boardGame[0][0] = "semFace"; //FICA SEM FACE NA POSIÇÃO 0,0.
+      //   }  // cartas
+      // }  // players
+
+      //k - linhas
+      //j - Colunas
+
+
+      // // dá as cartas todas sem face
+      // for (let j = 1; j <= this.numPlayers; j++)  // players
+      //   for (let k = 2; k <= 4; k++)  // cartas
+      //     this.boardGame[j][k] = "Empty";
+      //
+      // for (let j = 1; j <= this.numPlayers; j++) {
+      //   for (var k = 1; k <= 2; k++) {
+      //     this.boardGame[j][k] = "semFace";
+      //   }
+      // }
+      //
+      //
+      // // vira as primeiras cartas para cima
+      // for (let i = this.numPlayers; i>0; i--) {
+      //   this.boardGame[i][1] = this.arrayBaralho[this.currentCard];
+      //   this.incrementaPontuacao(i, this.boardGame[i][1]);
+      //   this.currentCard++;
+      // }
 
 
 
@@ -85,10 +131,10 @@ class BlackJackGame {
     }
 
     inicializarArrayBaralho() {
-      let baralho = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8", "p9", "p10", "p11", "p12", "p13",
-                     "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8", "c9", "c10", "c11", "c12", "c13",
-                     "o1", "o2", "o3", "o4", "o5", "o6", "o7", "o8", "o9", "o10", "o11", "o12", "o13",
-                     "e1", "e2", "e3", "e4", "e5", "e6", "e7", "e8", "e9", "e10", "e11", "e12", "e13"
+      let baralho = ["p1", "p2", "p3", "p4", "p5", "p6", "p7", "p11", "p12", "p13",
+                     "c1", "c2", "c3", "c4", "c5", "c6", "c7", "c11", "c12", "c13",
+                     "o1", "o2", "o3", "o4", "o5", "o6", "o7", "o11", "o12", "o13",
+                     "e1", "e2", "e3", "e4", "e5", "e6", "e7", "e11", "e12", "e13"
                     ];
       this.arrayBaralho = this.shuffleArray(baralho);
     }
@@ -108,6 +154,9 @@ class BlackJackGame {
 
     join(playerID){
       if (this.hasPlayer(playerID)) {
+        return;
+      }
+      if (this.numPlayers>=4) {
         return;
       }
         this.numPlayers++;
@@ -192,7 +241,7 @@ class BlackJackGame {
         this.currentCard++;
       }*/
       //this.boardGame[playerID][index] = this.arrayBaralho[this.currentCard];
-      
+
 
       //console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
       this.currentCard++;

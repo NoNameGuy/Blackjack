@@ -1,6 +1,6 @@
 /*jshint esversion: 6 */
 
-var TicTacToeGame = require('./gamemodel.js');
+var BlackJackGame = require('./gamemodel.js');
 
 class GameList {
 	constructor() {
@@ -15,7 +15,7 @@ class GameList {
 
     createGame(playerName, socketID) {
     	this.contadorID = this.contadorID+1;
-    	var game = new TicTacToeGame(this.contadorID, playerName);
+    	var game = new BlackJackGame(this.contadorID, playerName);
     	game.player1SocketID = socketID;
     	this.games.set(game.gameID, game);
     	return game;
@@ -26,8 +26,22 @@ class GameList {
     	if (game===null) {
     		return null;
     	}
-    	game.join(playerName);
-    	game.player2SocketID = socketID;
+
+			if (game.player1SocketID != socketID) {
+				game.join(playerName);
+				game.player2SocketID = socketID;
+			}
+
+			if (game.player2SocketID != socketID && game.player1SocketID != socketID) {
+				game.join(playerName);
+				game.player3SocketID = socketID;
+			}
+
+			if (game.player3SocketID != socketID && game.player2SocketID != socketID && game.player1SocketID != socketID) {
+				game.join(playerName);
+				game.player4SocketID = socketID;
+			}
+
     	return game;
     }
 
@@ -40,7 +54,7 @@ class GameList {
     		game.player1SocketID = "";
     	} else if (game.player2SocketID == socketID) {
     		game.player2SocketID = "";
-    	} 
+    	}
     	if ((game.player1SocketID === "") && (game.player2SocketID === "")) {
     		this.games.delete(gameID);
     	}
@@ -68,7 +82,7 @@ class GameList {
 		}
 		return games;
     }
-    
+
 
 
     startGame(gameID) {
