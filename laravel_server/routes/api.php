@@ -48,5 +48,13 @@ Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
 Route::post('register', 'UserControllerAPI@store');
 
 
+// Decks
+Route::post('decks', 'DeckControllerAPI@store');
+Route::delete('decks/{id}', 'DeckControllerAPI@delete');
+Route::get('decks', 'DeckControllerAPI@getDecks');
+Route::put('decks/{id}', 'DeckControllerAPI@update');
+
+
+
 
 //Route::get('defesa', 'UserControllerAPI@getDefesa');

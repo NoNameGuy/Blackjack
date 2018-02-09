@@ -117,12 +117,14 @@
 							console.log("user deleted");	
 		                    
 		                });
-				});
+					}).then(resposne => {
+						this.$router.push('/login');
+					});
 						
 	            	
 
 
-	        	this.$router.push('/login');
+	        	
 	        },
 
 	        logoutUser: function() {

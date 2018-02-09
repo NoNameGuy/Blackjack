@@ -33,7 +33,8 @@ class UserControllerAPI extends Controller
             'name' => $request->name,
             'nickname' => $request->nickname,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => $request->password,
+            'activated' => 0,
         ];
         $user = new User();
         $user->fill($data);

@@ -37,6 +37,7 @@ const adminMasterPage = Vue.component('adminMasterPage', require('./components/a
 const adminUserDetails = Vue.component('adminUserDetails', require('./components/adminUserDetails.vue'));
 const adminPassword = Vue.component('resetPWAdmin', require('./components/resetPWAdmin.vue'));
 const playerStatistics = Vue.component('playerStatistics', require('./components/playerStatistics.vue'));
+const decksManagement = Vue.component('decksManagement', require('./components/decksManagement.vue'));
 
 
 const routes = [
@@ -56,6 +57,7 @@ const routes = [
   { path: '/adminStatistics', component: adminStatistics },
   { path: '/userAccount', component: userAccount },
   { path: '/forgot', component: forgot },
+  { path: '/decksManagement', component: decksManagement },
 ];
 
 const router = new VueRouter({

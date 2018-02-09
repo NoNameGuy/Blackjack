@@ -104,10 +104,11 @@
             deleteUser: function(user){
                 axios.delete('api/users/'+user.id)
                     .then(response => {
-                        this.showSuccess = true;
                         this.successMessage = 'User Deleted';
+                    }).then(response => {
+                        this.getUsers();
                     });
-                this.getUsers();
+                
             },
             changePassword: function () {
                 this.changePasswordAdmin = true;
@@ -121,7 +122,9 @@
                 console.log("userDetails UsersList");
                 this.user = response.data.data;
                 console.log(this.user.id);
-                this.$router.push('adminUserDetails/' + this.user.id);
+                
+              }).then(response => {
+                  this.$router.push('adminUserDetails/' + this.user.id);
               });
             },
             setReasonUnlock: function (user) {

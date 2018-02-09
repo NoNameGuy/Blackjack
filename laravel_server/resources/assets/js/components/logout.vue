@@ -39,14 +39,13 @@ export default {
 				axios.post('/api/logout', null, head)
 				.then(response => {
 					window.localStorage.clear();
-					console.log("logout sucessfull");	
+					console.log("logout sucessfull");					
+				}).then(response => {
                     this.$router.push('/login');
-				
 				}).catch(error => {
 					console.log(error);
 				});
 
-                this.$router.push('/login');
 
 			}
 		},

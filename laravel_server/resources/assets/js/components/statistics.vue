@@ -50,6 +50,7 @@
                     .then(response=>{
                         this.games = response.data.data;
                         this.totalGames = this.games.length;
+                    }).then(response=>{
                         this.average();
                         this.getPlayers();
                     });
@@ -74,7 +75,7 @@
                     }
                 }).catch (error => {
                     console.log(error);
-                })
+                });
             },
 
             home: function () {

@@ -87,7 +87,7 @@ class GameControllerAPI extends Controller
 
     public function getVictoriesDraws($id) { //user id
         if (DB::table('game_user')->count() == 0) {
-            return response()->json('winsDraws' : 0);
+            return response()->json(['winsDraws' => '0'], 200);
         }
         
         $user = User::findOrFail($id);
