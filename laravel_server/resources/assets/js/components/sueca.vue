@@ -102,6 +102,7 @@
                     alert('Cannot join a game because your name is the same as Player 1');
                     return;
                 }
+								console.log("SUECA VUE GAME ID: " + game.gameID);
                 this.$socket.emit('join_game', {gameID: game.gameID, playerName: this.currentPlayer });
             },
             play(game, index){

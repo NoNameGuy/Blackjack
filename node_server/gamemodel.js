@@ -1,36 +1,32 @@
 /*jshint esversion: 6 */
 
 class BlackJackGame {
-    constructor(game, owner) {
+    constructor(ID, owner) {
       this.numPlayers = 0;
       this.winner = 0;
       this.winnerP = 0;
       this.arrayBaralho = [];
       this.arrayPontuacao = [];
+      this.arraySockets = [];
       this.gameOwner = owner.id;
       this.arrayPlayers = []; // array populado quando feito o join
       this.join(owner.id);
       this.gameEnded = false;
       this.gameStarted = false;
-      this.gameID = game.id;
+      this.gameID = ID;
       this.gameTurn = 1;
       this.currentCard = 0;
       this.boardGame;
       this.playerGame;
       this.trunfoGame;
-      this.bet = false;
+      this.trunfoCard; // carta de trunfo
     }
 
     startGame() {
 
-//DESCOMENTAR!
-
       // if (this.numPlayers != 4) {
       //   return;
       // }
-
-//END DESCOMENTAR!!
-
 
       //incializar arrayBaralho
       // randomize arrayBaralho
@@ -45,29 +41,32 @@ class BlackJackGame {
 
       // inicialize boardGame
       this.boardGame = new Array(3);
-      this.playerGame = new Array(11);
+      this.playerGame = new Array(4);
       this.trunfoGame = new Array(1);
 
-      for (var i = 0; i < 3; i++) {
+      for (let i = 0; i < 3; i++) {
         this.boardGame[i] = new Array(3);
       }
 
-      for (var i = 0; i < 11; i++) {
-        this.playerGame[i] = new Array(1);
+      for (let i = 0; i < 4; i++) {
+        this.playerGame[i] = new Array(11);
       }
 
-      for (var i = 0; i < 1; i++) {
+      for (let i = 0; i < 1; i++) {
         this.trunfoGame[i] = new Array(1);
       }
 
+
+      /* preenchimento da boardGame com todos os componentes */
       //COLOCAÇÃO SITOS PLAYER
       this.boardGame[0][1] = 'Player1';
       this.boardGame[1][2] = 'Player2';
       this.boardGame[2][1] = 'Player3';
       this.boardGame[1][0] = 'Player4';
 
-      for (var j = 0; j < 3; j++) {
-        for (var k = 0; k < 3; k++) {
+      // popular board game (cartas jogadas)
+      for (let j = 0; j < 3; j++) {
+        for (let k = 0; k < 3; k++) {
           if (this.boardGame[j][k] != 'Player1'
             && this.boardGame[j][k] != 'Player2'
             && this.boardGame[j][k] != 'Player3'
@@ -76,14 +75,61 @@ class BlackJackGame {
           }
         }
       }
+      /* fim da população do boardGame */
 
-      //Distribuir Cards pro player1
 
-      for (let i = 1; i < this.playerGame.length; i++) {
-        this.playerGame[0][0] = 'Player1';
-        this.playerGame[i][0] = this.arrayBaralho[i-1];
-        this.currentCard++;
+      //Distribuir Cards pro players
+      // console.log("Sockets " + this.arraySockets);
+      // console.log("Player " + this.arrayPlayers);
+
+
+      // for (let i = 1; i < this.playerGame.length; i++) {
+      //   this.playerGame[0][0] = "Player1";
+      //   this.playerGame[i][0] = this.arrayBaralho[i-1];
+      //   this.currentCard++;
+      // }
+
+      // popular P1,P2,P3,P4
+      let xy= 0;
+      for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < this.playerGame.length; j++) {
+          xy=i+1;
+          this.playerGame[i][0] = "Player" + xy;
+        }
       }
+
+
+      // random 1º jogador
+
+      // let randomPlayer = Math.floor(Math.random() * 3); // queremos o zero :D
+      // console.log("randomPlayer", randomPlayer);
+      // let jaTenhoCartas = 0;
+      // console.log('trunfo baralho', this.arrayBaralho[0]);
+      // this.trunfoCard = this.arrayBaralho[0];
+      /* popular cartas no playerGame */
+      for (let k = 0; k < 4; k++){
+        // if(jaTenhoCartas != 5) {
+          for (var m = 1; m < 11; m++) {
+            this.playerGame[k][m] = this.arrayBaralho[this.currentCard];
+            this.currentCard++;
+          }
+          // jaTenhoCartas++;
+
+          // if (k == 3) {
+          //   k = 0;
+          // }
+        // }
+
+      } // fim do for do k
+
+//safe copy
+      // /* popular cartas no playerGame */
+      // for (let k = 0; k < 4; k++) {
+      //   for (var m = 1; m < 11; m++) {
+      //     this.playerGame[k][m] = this.arrayBaralho[this.currentCard];
+      //     this.currentCard++;
+      //   }
+      // }
 
       this.trunfoGame[0][0] = this.arrayBaralho[0];
 
@@ -123,7 +169,7 @@ class BlackJackGame {
       if (this.hasPlayer(playerID)) {
         return;
       }
-      if (this.numPlayers>=4) {
+      if (this.numPlayers >= 4) {
         return;
       }
         this.numPlayers++;
@@ -147,13 +193,6 @@ class BlackJackGame {
 
     }
 
-    betClick() {
-      // próxima posiç\ao da carta, em vez de ficar com um carta fica com o valor betClick
-      this.bet = true;
-      return
-      //
-    }
-
     play(playerID, index){ // index = posicao da carta pedida
       if (!this.gameStarted) {
         return;
@@ -162,57 +201,21 @@ class BlackJackGame {
       if (this.gameEnded) {
         return;
       }
-      // console.log(this.boardGame[1][index]);
-      if(this.boardGame[playerID][index] != "semFace" && this.boardGame[playerID][index] != "Empty") {
-        return;
+
+      if (playerID == 1) {
+
+        this.boardGame[0][1] = this.playerGame[playerID-1][index];
+      }else if (playerID == 2) {
+
+        this.boardGame[1][2] = this.playerGame[playerID-1][index];
+      }else if (playerID == 3) {
+
+        this.boardGame[2][1] = this.playerGame[playerID-1][index];
+      }else if (playerID == 4) {
+
+        this.boardGame[1][0] = this.playerGame[playerID-1][index];
       }
 
-      if (this.bet){
-        return;
-      }
-
-      //console.log('pontuacao player 1', this.arrayPontuacao[playerID-1]);
-      if (this.arrayPontuacao[playerID-1] >= 22) {
-        console.log('player lost ID-Points', playerID + '-' + this.arrayPontuacao[playerID-1]);
-        return;
-      }
-
-
-      this.gameTurn++;
-
-
-      if(index >= 4 || this.arrayPontuacao[playerID-1] >= 22) { // jogo já terminou
-        //this.checkHighScore();
-        console.log("jogo terminou");
-        this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
-
-        var aux = this.arrayPontuacao.slice();
-        aux.sort(function(a, b){return b-a});
-
-        for (let i = 0; i < this.arrayPontuacao.length; i++) {
-          if (this.arrayPontuacao[i] == aux[0])
-            this.winner = i;
-            this.winnerP = aux[0];
-            console.log('winner', this.winner);
-            console.log('winnerP', this.winnerP);
-            break;
-        }
-
-        return;
-      }
-
-
-      /*for (let i = this.numPlayers; i>0; i--) {
-        this.boardGame[i][2] = this.arrayBaralho[this.currentCard];
-        this.incrementaPontuacao(i, this.boardGame[i][1]);
-        this.currentCard++;
-      }*/
-      //this.boardGame[playerID][index] = this.arrayBaralho[this.currentCard];
-
-
-      //console.log(this.boardGame[playerID][index] + "boardGame na carta clicada");
-      this.currentCard++;
-      this.incrementaPontuacao(playerID, this.boardGame[playerID][index]);
 
       return true;
     }

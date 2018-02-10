@@ -27,12 +27,11 @@
 	module.exports={
 		props: ['games'],
         methods: {
-            join(game) {
-							console.log('game all: ', game);
+            join:function(game) {
             	this.$emit('join-click', game);
             },
 						gameIsFull(game) {
-							return game.numPlayers >= 5;
+							return game.numPlayers >= 4;
 						}
         },
 	}

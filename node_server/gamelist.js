@@ -31,33 +31,40 @@ class GameList {
 			console.log('playerName: ', playerName);
 			console.log('socketID: ', socketID);
 
-			if (game.player1SocketID == null){
-				game.join(playnerName);
-				game.player1SocketID = socketID;
-				console.log('player1 joined', sockedID);
-			}
 
 			if (game.player1SocketID != socketID) {
-				game.join(playerName);
-				game.player2SocketID = socketID;
-				console.log('player2 joined', game.player2SocketID);
+				if (game.player2SocketID == null) {
+					game.join(playerName);
+					game.player2SocketID = socketID;
+					console.log('player2 joined', game.player2SocketID);
+					console.log("___________________________________");
+
+					game.arraySockets.push(game.player1SocketID);
+					game.arraySockets.push(game.player2SocketID);
+
+					return game;
+				}
+				if (game.player3SocketID == null) {
+					game.join(playerName);
+					game.player3SocketID = socketID;
+					console.log('player3 joined', game.player3SocketID);
+					console.log("___________________________________");
+					game.arraySockets.push(game.player3SocketID);
+
+					return game;
+				}
+				if (game.player4SocketID == null) {
+					game.join(playerName);
+					game.player4SocketID = socketID;
+					console.log('player4 joined', game.player4SocketID);
+					console.log("___________________________________");
+					game.arraySockets.push(game.player4SocketID);
+					console.log("Array SOCKETS: " + game.arraySockets);
+
+					return game;
+				}
 
 			}
-
-			if (game.player2SocketID != socketID && game.player1SocketID != socketID) {
-				game.join(playerName);
-				game.player3SocketID = socketID;
-				console.log('player3 joined', game.player3SocketID);
-
-			}
-
-			if (game.player3SocketID != socketID && game.player2SocketID != socketID && game.player1SocketID != socketID) {
-				game.join(playerName);
-				game.player4SocketID = socketID;
-				console.log('player4 joined', game.player4SocketID);
-
-			}
-
     	return game;
     }
 
@@ -80,7 +87,8 @@ class GameList {
     getConnectedGamesOf(socketID) {
     	let games = [];
     	for (var [key, value] of this.games) {
-    		if ((value.player1SocketID == socketID) || (value.player2SocketID == socketID)) {
+    		if ((value.player1SocketID == socketID) || (value.player2SocketID == socketID) ||
+								(value.player3SocketID == socketID) || (value.player4SocketID == socketID)) {
     			games.push(value);
     		}
 		}
@@ -91,7 +99,8 @@ class GameList {
     	let games = [];
     	for (var [key, value] of this.games) {
     		if ((!value.gameStarted) && (!value.gameEnded))  {
-    			if ((value.player1SocketID != socketID) && (value.player2SocketID != socketID)) {
+    			if ((value.player1SocketID != socketID) && (value.player2SocketID != socketID) &&
+								(value.player3SocketID != socketID) && (value.player4SocketID != socketID)) {
     				games.push(value);
     			}
     		}
@@ -101,13 +110,14 @@ class GameList {
 
 
 
-    startGame(gameID) {
+    startGame(gameID, socketId) {
 
         let game = this.gameByID(gameID);
         if (game===null) {
             return null;
         }
-        game.startGame();
+				// console.log(game.player1SocketID);
+        game.startGame(gameID);
         return game;
 }
 }

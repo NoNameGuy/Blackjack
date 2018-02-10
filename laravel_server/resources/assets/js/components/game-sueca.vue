@@ -10,7 +10,8 @@
       	<strong>{{ message }} &nbsp;&nbsp;&nbsp;&nbsp;<a v-show="game.gameEnded" v-on:click.prevent="closeGame">Close Game</a></strong>
 			 </div>
 
-			 <p><button class="btn btn-xs btn-success" v-show="!game.gameStarted" v-on:click.prevent="startGame(game)">Start Game</button></p>
+			 <p><button class="btn btn-xs btn-success"
+				 v-show="!game.gameStarted" v-on:click.prevent="startGame(game)">Start Game</button></p>
 
 <!-- Cartas do player -->
 
@@ -18,7 +19,7 @@
 				<div class="playerGame">
 					<div class="line" v-for="(line, player) in game.playerGame">
 						<div v-for="(piece, index) in line">
-							<img class="img" v-bind:src="pieceImageURL(piece)">
+							<img class="img" v-bind:src="pieceImageURL(piece)"  v-on:click.prevent="hitMe(game, index)">
 						</div>
 					</div>
 				</div>
@@ -139,9 +140,6 @@
         },
         methods: {
 					hitMe(game, index){
-							// if (this.game.boardGame[index] == "Empty") {
-							// 		this.$parent.play(this.game, index);
-							// }
 						this.$socket.emit('play', {gameID: game.gameID, index: index});
 					},
             pieceImageURL (pieceNumber) {

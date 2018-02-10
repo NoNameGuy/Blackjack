@@ -1524,7 +1524,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(16);
-module.exports = __webpack_require__(141);
+module.exports = __webpack_require__(146);
 
 
 /***/ }),
@@ -1574,7 +1574,7 @@ var adminMasterPage = Vue.component('adminMasterPage', __webpack_require__(125))
 var adminUserDetails = Vue.component('adminUserDetails', __webpack_require__(14));
 var adminPassword = Vue.component('resetPWAdmin', __webpack_require__(135));
 var playerStatistics = Vue.component('playerStatistics', __webpack_require__(138));
-var decksManagement = Vue.component('decksManagement', __webpack_require__(151));
+var decksManagement = Vue.component('decksManagement', __webpack_require__(141));
 
 var routes = [{ path: '/', redirect: '/users' }, { path: '/users', component: user }, { path: '/singletictactoe', component: singleplayer_game }, { path: '/multitictactoe', component: multiplayerGame }, { path: '/blackjack', component: blackjack }, { path: '/login', component: login }, { path: '/logout', component: logout }, { path: '/register', component: register }, { path: '/adminLogin', component: adminLogin }, { path: '/adminMasterPage', component: adminMasterPage }, { path: '/adminUserDetails/:id', component: adminUserDetails }, { path: '/adminPassword', component: adminPassword }, { path: '/playerStatistics', component: playerStatistics }, { path: '/adminStatistics', component: adminStatistics }, { path: '/userAccount', component: userAccount }, { path: '/forgot', component: forgot }, { path: '/decksManagement', component: decksManagement }, { path: '/sueca', component: sueca }];
 
@@ -47523,7 +47523,7 @@ module.exports = {
 			this.$emit('join-click', game);
 		},
 		gameIsFull: function gameIsFull(game) {
-			return game.numPlayers >= 5;
+			return game.numPlayers >= 4;
 		}
 	}
 };
@@ -50368,7 +50368,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -50528,6 +50528,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 alert('Cannot join a game because your name is the same as Player 1');
                 return;
             }
+            console.log("SUECA VUE GAME ID: " + game.gameID);
             this.$socket.emit('join_game', { gameID: game.gameID, playerName: this.currentPlayer });
         },
         play: function play(game, index) {
@@ -50704,6 +50705,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['game', 'user'],
@@ -50777,9 +50779,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     methods: {
         hitMe: function hitMe(game, index) {
-            // if (this.game.boardGame[index] == "Empty") {
-            // 		this.$parent.play(this.game, index);
-            // }
             this.$socket.emit('play', { gameID: game.gameID, index: index });
         },
         pieceImageURL: function pieceImageURL(pieceNumber) {
@@ -50874,7 +50873,13 @@ var render = function() {
               return _c("div", [
                 _c("img", {
                   staticClass: "img",
-                  attrs: { src: _vm.pieceImageURL(piece) }
+                  attrs: { src: _vm.pieceImageURL(piece) },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.hitMe(_vm.game, index)
+                    }
+                  }
                 })
               ])
             })
@@ -53290,33 +53295,18 @@ if (false) {
 
 /***/ }),
 /* 141 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 142 */,
-/* 143 */,
-/* 144 */,
-/* 145 */,
-/* 146 */,
-/* 147 */,
-/* 148 */,
-/* 149 */,
-/* 150 */,
-/* 151 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(152)
+  __webpack_require__(142)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(154)
+var __vue_script__ = __webpack_require__(144)
 /* template */
-var __vue_template__ = __webpack_require__(155)
+var __vue_template__ = __webpack_require__(145)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53355,13 +53345,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 152 */
+/* 142 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(153);
+var content = __webpack_require__(143);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -53381,7 +53371,7 @@ if(false) {
 }
 
 /***/ }),
-/* 153 */
+/* 143 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -53395,7 +53385,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 
 /***/ }),
-/* 154 */
+/* 144 */
 /***/ (function(module, exports) {
 
 //
@@ -53583,7 +53573,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 155 */
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53988,6 +53978,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-407734f4", module.exports)
   }
 }
+
+/***/ }),
+/* 146 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

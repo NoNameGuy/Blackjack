@@ -46,7 +46,6 @@ io.on('connection', function (socket) {
     socket.on('join_game', function (data){
     	let game = games.joinGame(data.gameID, data.playerName, socket.id);
 		socket.join(game.gameID);
-		console.log("ENTROU ", data);
 		io.to(game.gameID).emit('my_active_games_changed');
 		io.emit('lobby_changed');
     });
@@ -58,7 +57,7 @@ io.on('connection', function (socket) {
 
     socket.on('play', function (data){
 			console.log('play', data);
-		let game = games.gameByID(data.gameID);
+		let game = games.gameByID(data.gameID, socket.id);
 		if (game === null) {
 			socket.emit('invalid_play', {'type': 'Invalid_Game', 'game': null});
 			return;
@@ -121,14 +120,9 @@ io.on('connection', function (socket) {
 			let gameID = data.gameID;
             games.startGame(gameID);
             io.to(data.gameID).emit('my_active_games_changed');
+						console.log("Game DATA: " + data);
             console.log('game started');
             io.emit('lobby_changed');
-		});
-
-		socket.on('place_bet', function(data) {
-
-
-
 		});
 
 });
