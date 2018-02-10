@@ -12,4 +12,9 @@ class Deck extends Model
         'active',
         'complete',
     ];
+
+
+    public function games(){
+        return $this->belongsToMany('App\Game');
+    }
 }

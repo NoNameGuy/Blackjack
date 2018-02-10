@@ -120,10 +120,10 @@
                         this.orderByGames();
                         this.orderByAVG();
                         this.getLoggedUser();
-                        //this.getUserVictories();
+                        this.getUserVictories();
                         // console.log(this.players);
                         console.log("hi im here");
-                        this.totalLoses = parseInt(this.logged_user.total_games_played) - this.totalVictoriesDraws;
+                        this.totalLoses = parseInt(this.logged_user.total_games_played) - parseInt(this.totalVictoriesDraws);
                     }
                 }).catch (error => {
                     console.log(error);
@@ -164,7 +164,10 @@
 
                 for( let i = 0; i < this.players.length; i++) {
                     if (this.players[i].total_games_played != 0) {
-                        currentAvg = this.players[i].total_points / this.players[i].total_games_played;
+                        if (this.players[i].total_points >= 0)
+                            currentAvg = this.players[i].total_points / this.players[i].total_games_played;
+                        else 
+                            currentAvg = 0;
                     }
                     else {
                         currentAvg = 0;

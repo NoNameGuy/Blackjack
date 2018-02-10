@@ -30,6 +30,7 @@ Route::put('user/unblocked/{id}', 'UserControllerAPI@unblockUser');
 Route::put('admin/resetPassAdmin/{id}', 'UserControllerAPI@resetPass');
 Route::post('adminLogin', 'LoginControllerAPI@adminlogin');
 Route::get('adminEmail/{email}', 'UserControllerAPI@sendMail');
+Route::put('admin/reset', 'UserControllerAPI@resetByEmail');
 
 // Games
 Route::get('games', 'GameControllerAPI@index');

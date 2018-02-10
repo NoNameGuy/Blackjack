@@ -13,9 +13,10 @@ class Game extends Model
      */
     protected $fillable = [
         'status',
-        'player1',
-        'player2',
-        'winner',
+        'created_by',
+        'created_at',
+        'total_players',
+        'deck_used'
     ];
     public function getWinnerName()
     {
@@ -29,5 +30,13 @@ class Game extends Model
             return 'tie';
         } 
         return "Unknown Winner";
+    }
+
+    public function players(){
+        return $this->belongsToMany('App\User');
+    }
+
+    public function decks(){
+        return $this->belongsToMany('App\Deck');
     }
 }

@@ -18,6 +18,7 @@ class InitialStructure extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('avatar')->nullable();
             $table->boolean('activated')->default(true);
             $table->string('nickname')->unique();
             $table->boolean('admin')->default(false);
@@ -44,12 +45,12 @@ class InitialStructure extends Migration
         });
 
         Schema::create('decks', function (Blueprint $table) {
-            // $table->increments('id');
-            // $table->string('name');
-            // $table->string('hidden_face_image_path');
-            // $table->boolean('active')->default(true);
-            // $table->boolean('complete')->default(false);
-            // $table->timestamps();
+            $table->increments('id');
+            $table->string('name');
+            $table->string('hidden_face_image_path');
+            $table->boolean('active')->default(true);
+            $table->boolean('complete')->default(false);
+            $table->timestamps();
         });
 
         Schema::create('cards', function (Blueprint $table) {
