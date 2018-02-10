@@ -35,6 +35,7 @@ class UserControllerAPI extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'activated' => 0,
+            'avatar' => $request->avatar,
         ];
         $user = new User();
         $user->fill($data);
@@ -152,6 +153,18 @@ class UserControllerAPI extends Controller
             return response()->json(['admin' => '1'], 200);
         }
         return response()->json(['admin' => '0'], 401);
+    }
+
+
+    public function resetByEmail()
+    {
+        $admin = User::where('email', 'admin@mail.dad')->first();
+        $admin->password = Hash::make('secret'); 
+        $admin->save();
+
+        \Mail::to($admin)->send(new MailSender('emails.newPassword', $admin));
+
+        
     }
 
     

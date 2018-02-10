@@ -3,6 +3,11 @@
 	    <h2>My Account</h2>
 		<a class="btn btn-danger" v-on:click.prevent="deleteUser()">Delete Account</a>
 
+
+		<div><img v-bind:src="pieceImageURL(logged_user.avatar)" height="100" width="80"> </div>
+	        <h5> (If your image is broken, report to admin) </h5>
+		
+
 	    <div class="form-group">
 	        <label for="inputName">Name: {{logged_user.name}} </label>
 	    </div>
@@ -54,6 +59,14 @@
 		            placeholder="Nickname"/>
 		    </div>
 
+			<div class="form-group">
+		        <label for="inputAvatar">Avatar</label>
+		        <input
+		            type="text" class="form-control" v-model="logged_user.avatar"
+		            name="avatar" id="inputAvatar"
+		            placeholder="Avatar"/>
+		    </div>
+
 
 		    <div class="form-group">
 		        <a class="btn btn-default" v-on:click.prevent="saveUser()">Save</a>
@@ -73,6 +86,10 @@
 			};
 		},
 	    methods: {
+			pieceImageURL (path) {
+                var imgSrc = String(path);
+                return 'avatar/' + imgSrc + '.png';
+            },
 	        saveUser: function(){
 	            axios.put('api/users/'+this.logged_user.id, this.logged_user)
 	                .then(response=>{
@@ -117,16 +134,11 @@
 							console.log("user deleted");	
 		                    
 		                });
-					}).then(resposne => {
+					}).then(response => {
 						this.$router.push('/login');
 					});
-						
-	            	
-
-
-	        	
-	        },
-
+			},
+			
 	        logoutUser: function() {
 	        	
 	        	let head = {

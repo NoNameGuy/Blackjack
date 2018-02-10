@@ -19,6 +19,7 @@ class User extends Resource
             'name' => $this->name,
             'email' => $this->email,
             'nickname' => $this->nickname,
+            'avatar' => $this->avatar,
             'activated' => $this->activated,
             'admin' => $this->admin,
             'blocked' => $this->blocked,

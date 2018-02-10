@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\Game as GameResource;
 use App\Game;
+use DateTime;
 
 class GameControllerAPI extends Controller
 {
@@ -31,15 +32,19 @@ class GameControllerAPI extends Controller
     public function store(Request $request)
     {
         $request->validate([
-                'player1' => 'required',
+            'total_players' => 'required',
+            // 'created_by' => 'required',
+            // 'deck_used'=> 'required',
+            // 'created_at'=> 'required',
             ]);
+
+        $request->created_by = DateTime::createFromFormat('Y-m-d H:i:s', $request->created_at);
         $game = new Game();
         $game->fill($request->all());
         // No matter what status and winner was defined on the client.
         // When creating a game it will always assume "pending" status
         // and winner will be null
         $game->status = 'pending';
-        $game->winner = null;
         $game->save();
         return response()->json(new GameResource($game), 201);
     }

@@ -25,6 +25,7 @@ class User extends Authenticatable
         'reason_blocked',
         'reason_reactivated',
         'activated',
+        'avatar',
     ];
 
     /**
@@ -35,5 +36,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    public function games(){
+        return $this->belongsToMany('App\Game');
+    }
 
 }

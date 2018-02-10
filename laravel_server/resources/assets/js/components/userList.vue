@@ -3,6 +3,7 @@
 		<table class="table table-striped">
 		    <thead>
 		        <tr>
+		            <th>Image</th>
 		            <th>Name</th>
 		            <th>Email</th>
 		            <th>Nickname</th>
@@ -11,6 +12,7 @@
 		    </thead>
 		    <tbody>
 		        <tr v-for="user in users"  :key="user.id" :class="{activerow: editingUser === user}">
+					<td><img v-bind:src="pieceImageURL(user.avatar)" height="100" width="60"> </td>
 		            <td>{{ user.name }}</td>
 		            <td>{{ user.email }}</td>
 		            <td>{{ user.nickname }}</td>
@@ -38,6 +40,12 @@
 			this.getLoggedUser();
 		},
         methods: {
+			pieceImageURL (path) {
+				var imgSrc = String(path);
+				if(imgSrc == "")
+					imgSrc = "null";
+                return 'avatar/' + imgSrc + '.png';
+            },
             editUser: function(user){
             	this.$router.push('/userAccount');
             },

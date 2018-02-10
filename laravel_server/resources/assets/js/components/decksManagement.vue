@@ -80,7 +80,7 @@
 			
 			<tr v-for="deck in decks"  :key="deck.id">
 				<td>{{ deck.name }}</td>
-				<td>{{ deck.hidden_face_image_path }}</td>
+				<td><img v-bind:src="pieceImageURL(deck.hidden_face_image_path)" height="100" width="60"> </td>
 				<td>{{ deck.active }}</td>
 				<td>{{ deck.complete }}</td>
 				<td>
@@ -174,6 +174,11 @@
                         console.log(this.decks);
                     });
 			},
+
+			pieceImageURL (path) {
+                var imgSrc = String(path);
+                return 'img/' + imgSrc + '.png';
+            },
 			
 		},
 		mounted() {

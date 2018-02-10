@@ -30,6 +30,14 @@
 	            placeholder="Nickname"/>
 	    </div>
 
+		<div class="form-group">
+			<label for="inputAvatar">Avatar</label>
+			<input
+				type="text" class="form-control" v-model="logged_user.avatar"
+				name="avatar" id="inputAvatar"
+				placeholder="Avatar"/>
+		</div>
+
 
 	    <div class="form-group">
 	        <a class="btn btn-default" v-on:click.prevent="saveUser()">Save</a>
