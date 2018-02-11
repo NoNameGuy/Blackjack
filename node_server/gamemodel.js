@@ -20,6 +20,10 @@ class BlackJackGame {
       this.playerGame;
       this.trunfoGame;
       this.trunfoCard; // carta de trunfo
+      this.baralhoPlayer1= [];
+      this.baralhoPlayer2= [];
+      this.baralhoPlayer3= [];
+      this.baralhoPlayer4= [];
     }
 
     startGame() {
@@ -101,35 +105,30 @@ class BlackJackGame {
 
       // random 1º jogador
 
-      // let randomPlayer = Math.floor(Math.random() * 3); // queremos o zero :D
+      let randomPlayer = Math.floor(Math.random() * 3); // queremos o zero :D
       // console.log("randomPlayer", randomPlayer);
-      // let jaTenhoCartas = 0;
+      let jaTenhoCartas = 0;
       // console.log('trunfo baralho', this.arrayBaralho[0]);
-      // this.trunfoCard = this.arrayBaralho[0];
+      this.trunfoCard = this.arrayBaralho[0];
       /* popular cartas no playerGame */
-      for (let k = 0; k < 4; k++){
-        // if(jaTenhoCartas != 5) {
+      for (let k = randomPlayer; k <=3 ; k++){
+        if(jaTenhoCartas != 4) {
           for (var m = 1; m < 11; m++) {
             this.playerGame[k][m] = this.arrayBaralho[this.currentCard];
             this.currentCard++;
           }
-          // jaTenhoCartas++;
+          jaTenhoCartas++;
 
-          // if (k == 3) {
-          //   k = 0;
-          // }
-        // }
+          if (k == 3) {
+            k = -1;
+          }
+        } else {
+          k = 4;
+        }
 
       } // fim do for do k
 
-//safe copy
-      // /* popular cartas no playerGame */
-      // for (let k = 0; k < 4; k++) {
-      //   for (var m = 1; m < 11; m++) {
-      //     this.playerGame[k][m] = this.arrayBaralho[this.currentCard];
-      //     this.currentCard++;
-      //   }
-      // }
+
 
       this.trunfoGame[0][0] = this.arrayBaralho[0];
 
