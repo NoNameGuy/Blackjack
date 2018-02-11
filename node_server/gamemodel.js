@@ -24,6 +24,10 @@ class BlackJackGame {
       this.baralhoPlayer2= [];
       this.baralhoPlayer3= [];
       this.baralhoPlayer4= [];
+      this.whosTurn;
+      this.pontuacaoEquipa1;
+      this.pontuacaoEquipa2;
+      this.firstPlayer; // variavle estatica
     }
 
     startGame() {
@@ -106,7 +110,9 @@ class BlackJackGame {
       // random 1º jogador
 
       let randomPlayer = Math.floor(Math.random() * 3); // queremos o zero :D
-      // console.log("randomPlayer", randomPlayer);
+      console.log("randomPlayer", randomPlayer);
+      this.whosTurn = randomPlayer+1;
+      this.firstPlayer = randomPlayer+1;
       let jaTenhoCartas = 0;
       // console.log('trunfo baralho', this.arrayBaralho[0]);
       this.trunfoCard = this.arrayBaralho[0];
@@ -201,30 +207,122 @@ class BlackJackGame {
         return;
       }
 
+
+
+      if (playerID != 1 && this.whosTurn != 0) {
+        if (playerID-1 == this.whosTurn+1) {
+          return;
+        }
+      }
+
+      if (this.playerGame[playerID-1][index] == "Empty") {
+        return;
+      }
+
       if (playerID == 1) {
 
         this.boardGame[0][1] = this.playerGame[playerID-1][index];
+
       }else if (playerID == 2) {
 
         this.boardGame[1][2] = this.playerGame[playerID-1][index];
+
       }else if (playerID == 3) {
 
         this.boardGame[2][1] = this.playerGame[playerID-1][index];
+
       }else if (playerID == 4) {
 
         this.boardGame[1][0] = this.playerGame[playerID-1][index];
+
+      }
+
+//VERIFICAÇÃO DE QUAL A 1ª CARTA JOGADA
+      if (this.whosTurn == this.firstPlayer) {
+        var firtCardPlayed = this.playerGame[playerID-1][index];
+        console.log('carta: ' + firtCardPlayed);
+      }
+
+      this.playerGame[playerID-1][index] = "Empty";
+
+
+      this.whosTurn++;
+
+      if (this.whosTurn == 4) {
+        this.whosTurn = 0;
       }
 
 
-      return true;
-    }
+      // verificar se o boardGame está cheio
+      if (this.boardGame[0][1] != "Player1" && this.boardGame[1][2] != "Player2" && this.boardGame[2][1] != "Player3" && this.boardGame[1][0] != "Player4")
+      {
+        // ver qual a equipa que vai receber pontuacoes
 
-    incrementaPontuacao(playerID, card) {
+        //validar se há trunfo
+
+        var arrayNaipe = [];
+        var arrayCartas = []; // array com o numero das cartas
+
+        let naipeTrunfo = this.trunfoCard.charAt(0);
+
+        let naipeP1 = this.boardGame[0][1].charAt(0);
+        let naipeP2 = this.boardGame[1][2].charAt(0);
+        let naipeP3 = this.boardGame[2][1].charAt(0);
+        let naipeP4 = this.boardGame[1][0].charAt(0);
+
+
+        let cartaP1 = this.boardGame[1][2].substr(1);
+        let cartaP2 = this.boardGame[1][2].substr(1);
+        let cartaP3 = this.boardGame[2][1].substr(1);
+        let cartaP4 = this.boardGame[1][0].substr(1);
+
+        var strongestCard;
+
+        arrayNaipe.push(naipeP1, naipeP2, naipeP3, naipeP4);
+        arrayCartas.push(cartaP1, cartaP2, cartaP3, cartaP4);
+
+
+        console.log('arrayNaipe: ', arrayNaipe);
+        console.log('arrayCartas: ', arrayCartas);
+        var pontuacaoRonda = 0;
+        var aux = 0;
+
+        var numberTrunfos = 0;
+        for (let i = 0; i < arrayNaipe.length; i++) {
+          if (naipeTrunfo == arrayNaipe[i]) {
+            numberTrunfos++;
+          }
+        }
+
+        if (1 == 1) {
+          // calcular pontuacao das 4 cartas
+          for (var i = 0; i < arrayCartas.length; i++) {
+            aux = this.incrementaPontuacao(arrayCartas[i]);
+            pontuacaoRonda+=aux;
+            aux = 0;
+          }
+
+
+          console.log('pontuacaoRonda: ', pontuacaoRonda);
+        } else {
+          // chamar a funcao do paulo
+        }
+
+        // validar qual o trunfo mais alto
+
+        // chekar o player que tem essa carta
+
+     }
+
+     return true;
+  }
+
+    incrementaPontuacao(card) {
+      console.log("funcao incrementa pontuacao ");
+
       let pont = 0;
 
-      let sCard = parseInt(this.removeFirstCharString(card));
-
-      switch(sCard) {
+      switch(card) {
         case 1:
           pont = 11;
           break;
@@ -233,22 +331,23 @@ class BlackJackGame {
         case 4:
         case 5:
         case 6:
+          pont = 0;
+          break;
         case 7:
-        case 8:
-        case 9:
-        case 10:
-          pont = sCard; // a pontuação vai ser igual ao valor da sCard
+          pont = 10; 
           break;
         case 11:
+          pont = 3;
+          break;
         case 12:
+          pont = 2;
+          break;
         case 13:
-          pont = 10;
+          pont = 4;
           break;
       }
-        // console.log(playerID-1);
-        // console.log("FDS " + this.arrayPontuacao[playerID-1]);
-        this.arrayPontuacao[playerID-1] += pont;
-        console.log(this.arrayPontuacao);
+
+      return pont;
 
     }
 }
