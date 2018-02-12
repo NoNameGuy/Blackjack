@@ -48,7 +48,11 @@ export default {
 
 
 			}
-		},
+        },
+
+        // FB.logout(function(response) {
+        //     // Person is now logged out
+        // });
 		
 		getLoggedUser: function () {
             this.token = localStorage.getItem('token');

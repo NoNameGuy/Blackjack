@@ -8,4 +8,9 @@ class VueController extends Controller
     {
         return view('vue.index');
     }
+
+    public function fbpage()
+    {
+        return view('fblogin');
+    }
 }

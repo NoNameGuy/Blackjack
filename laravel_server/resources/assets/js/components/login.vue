@@ -1,5 +1,7 @@
 <template >
   <div v-if="!isUserLogged">
+   
+
     <form @submit.prevent="login(user)">
         <div class="text-left">
             <div class="form-group">
@@ -18,7 +20,10 @@
             <br><br>
             <a class="btn btn-default" v-on:click.prevent="register()">Register</a>
             <br><br>          
-            <a v-on:click.prevent="forgot()">Admin, forgot your password? <br>  HERE BITCH!</a> 
+            <a v-on:click.prevent="forgot()">Admin, forgot your password? <br>  </a> 
+        
+            <!-- <div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div> -->
+        
         </div>
     </form>
 
@@ -74,7 +79,6 @@ export default {
                     
                       this.$router.push('/');
                   } else {
-                    console.log ("sou corno");
                     
                     window.localStorage.clear();
                     this.$router.push('/login');
@@ -117,7 +121,30 @@ export default {
         }, // end function
   }, 
   mounted () {
-    this.getLoggedUser();
+    // no load da pagina saber se existe algum user logado pelo fb
+    // FB.getLoginStatus(function(response) {
+    //   statusChangeCallback(response);
+
+    //   if (response.status = "connected") { // não tenho admin
+    //     this.getLoggedUser();
+    //     if (isUserLogged)
+    //       this.$router.push('/');  
+    //     else {
+
+    //     }
+
+    //   } else if( response.status = "not_authorized") { // não tenho admin
+    //     this.$router.push('/login');
+    //   } else if( response.status = "unknown") { // não tenho admin
+    //     this.$router.push('/register');
+    //   }
+
+
+    // });
+
+        this.getLoggedUser();
+    
+    
   }
 }
 </script>

@@ -142,7 +142,7 @@
                     // não está autenticado
                     console.log(error);
                   });
-        }, // end function
+            }, // end function
         },
         components: {
             'users-list': AdminUsersList,
@@ -154,7 +154,7 @@
                 return this.pagination.current_page;
             },
             message() {
-                return "You are not alloew to navigate this page!";
+                return "You are not alloed to navigate this page!";
             }
             
         },

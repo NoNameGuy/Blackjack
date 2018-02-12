@@ -24,6 +24,7 @@
 	    </div>
 
 
+
 	    <div class="form-group">
 	        <a class="btn btn-default" v-on:click.prevent="saveUser()">Save</a>
 	        <a class="btn btn-default" v-on:click.prevent="cancelEdit()">Cancel</a>
@@ -55,7 +56,8 @@
 	                	// without creating a new reference
 	                	Object.assign(this.user, response.data.data);
 	                });
-	        },
+			},
+			
 		}
 	}
 </script>

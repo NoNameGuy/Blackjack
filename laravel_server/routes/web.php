@@ -12,4 +12,5 @@
 */
 
 Route::get('/','VueController@index');
+Route::get('/fb','VueController@fbpage');
 

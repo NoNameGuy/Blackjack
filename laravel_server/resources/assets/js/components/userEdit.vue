@@ -30,13 +30,10 @@
 	            placeholder="Nickname"/>
 	    </div>
 
-		<div class="form-group">
-			<label for="inputAvatar">Avatar</label>
-			<input
-				type="text" class="form-control" v-model="logged_user.avatar"
-				name="avatar" id="inputAvatar"
-				placeholder="Avatar"/>
-		</div>
+		<input type="file" onchange="previewFile()"><br>
+
+		<img src="" height="200" alt="Image preview...">
+		
 
 
 	    <div class="form-group">
@@ -88,7 +85,22 @@
                         this.isUserLogged = false;
                         console.log(error);
                       });
-            }, // end function
+			}, // end function
+			previewFile() {
+				var preview = document.querySelector('img'); //selects the query named img
+				var file    = document.querySelector('input[type=file]').files[0]; //sames as here
+				var reader  = new FileReader();
+
+				reader.onloadend = function () {
+					preview.src = reader.result;
+				}
+
+				if (file) {
+					reader.readAsDataURL(file); //reads the data as a URL
+				} else {
+					preview.src = "rage.png";
+				}
+			}, // end img function
 		}
 	}
 </script>
