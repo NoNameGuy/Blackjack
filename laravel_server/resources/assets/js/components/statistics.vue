@@ -50,9 +50,12 @@
                     .then(response=>{
                         this.games = response.data.data;
                         this.totalGames = this.games.length;
+                        console.log("1");
                     }).then(response=>{
                         this.average();
                         this.getPlayers();
+                        console.log("2");
+                        
                     });
             },
             average: function () {
@@ -63,6 +66,8 @@
                         this.totalPlayers += parseInt(this.games[i].totalPlayers);
                     }
                     this.players_per_game = this.totalPlayers / this.games.length;
+                        console.log("3");
+                    
                 }
                 
             },
@@ -72,6 +77,8 @@
                     if (response.data.data.length != 0) {
                         this.players = response.data.data;
                         console.log(this.players);
+                        console.log("4");
+                        
                     }
                 }).catch (error => {
                     console.log(error);

@@ -44,21 +44,31 @@
 
           updatePW: function () {
             if (this.old_password.trim() != "" && this.password === this.confirm_password) {
-                axios.put('/api/admin/resetPassAdmin/' + this.logged_user.id, {
-                    old_password: this.old_password,
-                    password: this.password
-                }).then(response => {
-                    this.$router.push('/adminMasterPage');
+					axios.put('/api/admin/resetPassAdmin/' + this.logged_user.id, {
+						old_password: this.old_password,
+						password: this.password
+					}).then(response => {
+						alert(response.data.message);
 
-                }).catch(updatePWError => {
-                    this.old_password= null,
-                    this.password= null,
-                    this.confirm_password= null;
-                    this.$router.push('/resetPWAdmin');
-                });
-            } else {
-                this.$router.push('/resetPWAdmin');
-            }
+					this.old_password= null,
+					this.password= null,
+					this.confirm_password= null;
+
+					}).catch(error => {
+						this.old_password= null,
+						this.password= null,
+						this.confirm_password= null;
+						//error = response.data.message;
+						alert(error.response.data.message);
+						// alert(response.data.message);
+					});
+            	} else {
+					this.old_password= null,
+					this.password= null,
+					this.confirm_password= null;
+					alert('error: pass\'s diferentes');
+					
+				}
           },
 
           getLoggedUser: function () {

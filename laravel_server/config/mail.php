@@ -1,20 +1,20 @@
 <?php
 
-return array(
-    "driver" => "smtp",
-  "host" => "smtp.mailtrap.io",
-  "port" => 2525,
-  "from" => array(
-      "address" => "from@example.com",
-      "name" => "Example"
-  ),
-  "username" => "53c18acaf64b99",
-  "password" => "533db335670651",
-  "sendmail" => "/usr/sbin/sendmail -bs",
-  "pretend" => false
-  );
+// return array(
+//     "driver" => "smtp",
+//   "host" => "smtp.mailtrap.io",
+//   "port" => 2525,
+//   "from" => array(
+//       "address" => "from@example.com",
+//       "name" => "Example"
+//   ),
+//   "username" => "53c18acaf64b99",
+//   "password" => "533db335670651",
+//   "sendmail" => "/usr/sbin/sendmail -bs",
+//   "pretend" => false
+//   );
 
-// return [
+return [
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return array(
     |
     */
 
-    // 'driver' => env('MAIL_DRIVER', 'smtp'),
+    'driver' => env('MAIL_DRIVER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -43,7 +43,7 @@ return array(
     |
     */
 
-    // 'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
+    'host' => env('MAIL_HOST', 'smtp.mailgun.org'),
 
     /*
     |--------------------------------------------------------------------------
@@ -56,7 +56,7 @@ return array(
     |
     */
 
-    // 'port' => env('MAIL_PORT', 587),
+    'port' => env('MAIL_PORT', 587),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,10 +69,10 @@ return array(
     |
     */
 
-    // 'from' => [
-    //     'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-    //     'name' => env('MAIL_FROM_NAME', 'Example'),
-    // ],
+    'from' => [
+        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
+        'name' => env('MAIL_FROM_NAME', 'Example'),
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ return array(
     |
     */
 
-    // 'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
@@ -98,9 +98,9 @@ return array(
     |
     */
 
-    // 'username' => env('MAIL_USERNAME'),
+    'username' => env('MAIL_USERNAME'),
 
-    // 'password' => env('MAIL_PASSWORD'),
+    'password' => env('MAIL_PASSWORD'),
 
     /*
     |--------------------------------------------------------------------------
@@ -113,7 +113,7 @@ return array(
     |
     */
 
-    // 'sendmail' => '/usr/sbin/sendmail -bs',
+    'sendmail' => '/usr/sbin/sendmail -bs',
 
     /*
     |--------------------------------------------------------------------------
@@ -126,12 +126,12 @@ return array(
     |
     */
 
-//     'markdown' => [
-//         'theme' => 'default',
+    'markdown' => [
+        'theme' => 'default',
 
-//         'paths' => [
-//             resource_path('views/vendor/mail'),
-//         ],
-//     ],
+        'paths' => [
+            resource_path('views/vendor/mail'),
+        ],
+    ],
 
-// ]; 
+]; 

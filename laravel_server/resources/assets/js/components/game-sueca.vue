@@ -139,9 +139,9 @@
             }
         },
         methods: {
-					hitMe(game, index){
-						this.$socket.emit('play', {gameID: game.gameID, index: index});
-					},
+            hitMe(game, index){
+                this.$socket.emit('play', {gameID: game.gameID, index: index});
+            },
             pieceImageURL (pieceNumber) {
                 var imgSrc = String(pieceNumber);
                 return 'img/' + imgSrc + '.png';
@@ -151,6 +151,9 @@
             },
             startGame(game) {
                 this.$socket.emit('start_game', {gameID : game.gameID});
+            },
+            renunciaClick(game) {
+                this.$socket.emit('renuncia_click', {gameID : game.gameID});
             }
         }
     }

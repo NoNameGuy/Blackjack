@@ -18,6 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'id',
         'name',
         'email',
         'nickname',
@@ -40,6 +41,10 @@ class User extends Authenticatable
 
     public function games(){
         return $this->belongsToMany('App\Game');
+    }
+
+    public function findForPassport($identifier) {
+        return $this->orWhere('email', $identifier)->orWhere('nickname', $identifier)->first();
     }
 
 }

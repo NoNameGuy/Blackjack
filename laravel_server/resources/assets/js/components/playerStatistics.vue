@@ -205,7 +205,9 @@
                 axios.get('/api/games/victories', this.logged_user.id)
                     .then(response => {
                         this.totalVictoriesDraws = parseInt(response.data);
-                        console.log(this.totalVictoriesDraws);
+                        
+                    }).then( response => {
+                        console.log('vitocies + empates', this.totalVictoriesDraws);
                     });
             },// end function
         },

@@ -103,7 +103,7 @@ io.on('connection', function (socket) {
     socket.on('authentication', function (token){
         let config = {
             headers: {
-                'Authorization': 'Bearer ' + token}
+				'Authorization': 'Bearer ' + token}
             };
             axios.get(api_url+'/api/user', config).then(response =>{
                 this.user = response.data;
@@ -117,12 +117,18 @@ io.on('connection', function (socket) {
 
 
     socket.on('start_game', function (data){
-			let gameID = data.gameID;
-            games.startGame(gameID);
-            io.to(data.gameID).emit('my_active_games_changed');
-						console.log("Game DATA: " + data);
-            console.log('game started');
-            io.emit('lobby_changed');
-		});
+		let gameID = data.gameID;
+		games.startGame(gameID);
+		io.to(data.gameID).emit('my_active_games_changed');
+		console.log("Game DATA: " + data);
+		console.log('game started');
+		io.emit('lobby_changed');
+	});
+
+
+	socket.on('renuncia_click', function (data){
+		let gameID = data.gameID;
+		games.renunciaClick(gameID);
+	});
 
 });

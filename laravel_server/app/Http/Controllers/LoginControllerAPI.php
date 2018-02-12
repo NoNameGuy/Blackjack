@@ -17,8 +17,14 @@ class LoginControllerAPI extends Controller
 	public function login(Request $request)
 	{
         
-		
+		$user = User::orWhere('email', $request->email)->orWhere('nickname', $request->email)->first();
+        if($user == null){
+            return response()->json(['msg'=>'Utilizador/email não existe.'], 400);
+        }
 
+        if($user->blocked == 1) {
+            return response()->json(['msg'=>'Utilizador não activo.'], 400);
+        }
 
 		$http = new \GuzzleHttp\Client;
 		$response = $http->post(YOUR_SERVER_URL.'/oauth/token', [

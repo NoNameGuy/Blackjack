@@ -28,7 +28,7 @@
 
 	    </div>
 
-	    <div v-show="editingUser" class="jumbotron" >
+	    <form v-show="editingUser" class="jumbotron" >
 		    <h2>Edit User</h2>
 		    <div class="form-group">
 		        <label for="inputName">Name</label>
@@ -44,13 +44,7 @@
 		            name="email" id="inputEmail"
 		            placeholder="Email address"/>
 		    </div>
-		    <div v-if="!logged_user.admin" class="form-group">
-		        <label for="inputPassword">Password</label>
-		        <input
-		            type="password" class="form-control" v-model="logged_user.password"
-		            name="password" id="inputPassword"
-		            placeholder="Password"/>
-		    </div>
+		    
 		    <div class="form-group">
 		        <label for="inputNickname">Nickname</label>
 		        <input
@@ -71,12 +65,46 @@
 			<img src="" height="60" alt="Image preview...">
 
 
-
-		    <div class="form-group">
-		        <a class="btn btn-default" v-on:click.prevent="saveUser()">Save</a>
+			<div class="form-group">
+		        <a class="btn btn-primary" v-on:click.prevent="saveUser()">Save</a>
 		        <a class="btn btn-default" v-on:click.prevent="cancelEdit()">Cancel</a>
 		    </div>
-		</div>
+	    </form>
+
+
+		<form v-show="editingUser" >
+			<div class="form-group">
+		        <label for="inputPassword">Old Password</label>
+		        <input
+		            type="password" class="form-control" v-model="old_password"
+		            name="password" id="inputOldPassword"
+		            placeholder="Password"/>
+		    </div>
+
+
+			<div class="form-group">
+		        <label for="inputPassword">New Password</label>
+		        <input
+		            type="password" class="form-control" v-model="password"
+		            name="password" id="inputNewPassword"
+		            placeholder="Password"/>
+		    </div>
+
+
+			<div class="form-group">
+		        <label for="inputPassword">Confirm Password</label>
+		        <input
+		            type="password" class="form-control" v-model="confirm_password"
+		            name="password" id="inputConfirmPassword"
+		            placeholder="Password"/>
+		    </div>
+
+
+		    <div class="form-group">
+		        <a class="btn btn-primary" v-on:click.prevent="saveUserPW()">Save</a>
+		        <a class="btn btn-default" v-on:click.prevent="cancelEdit()">Cancel</a>
+		    </div>
+		</form>
 	</div>
 </template>
 
@@ -88,20 +116,50 @@
 				logged_user : {},
 				isUserLogged : false,
 				editingUser : false,
+				old_password : null,
+				password: null,
+				confirm_password : null,
 			};
 		},
 	    methods: {
 			pieceImageURL (path) {
                 var imgSrc = String(path);
                 return 'avatar/' + imgSrc + '.png';
-            },
+			},
+			saveUserPW: function() {
+				if (this.old_password.trim() != "" && this.password === this.confirm_password) {
+					axios.put('/api/admin/resetPassAdmin/' + this.logged_user.id, {
+						old_password: this.old_password,
+						password: this.password
+					}).then(response => {
+						alert(response.data.message);
+
+					this.old_password= null,
+					this.password= null,
+					this.confirm_password= null;
+
+					}).catch(error => {
+						this.old_password= null,
+						this.password= null,
+						this.confirm_password= null;
+						//error = response.data.message;
+						alert(error.response.data.message);
+						// alert(response.data.message);
+					});
+            	} else {
+					this.old_password= null,
+					this.password= null,
+					this.confirm_password= null;
+					alert('error: pass\'s diferentes');
+					
+				}
+			},
 	        saveUser: function(){
 	            axios.put('api/users/'+this.logged_user.id, this.logged_user)
 	                .then(response=>{
 	                	// Copy object properties from response.data.data to this.user
 	                	// without creating a new reference
 	                	Object.assign(this.logged_user, response.data.data);
-	                	this.editingUser = false;
 	                	
 	                });
 	        },
@@ -121,27 +179,29 @@
 	        },
 
 	        deleteUser: function() {
-
-	            let head = {
-					 headers: {
-							 'Authorization': 'Bearer ' + localStorage.getItem('token'),
-					 		},
-			 		};
-					axios.post('/api/logout', null, head)
-					.then(response => {
-						console.log(response);
-						window.localStorage.clear();
-						//console.log("logout sucessfull");	
-					
-						axios.delete('/api/users/'+this.logged_user.id)
-		                .then(response => {
-		                    this.logged_user = null;
-							console.log("user deleted");	
-		                    
-		                });
-					}).then(response => {
-						this.$router.push('/login');
-					});
+				if (window.confirm("Tem a certeza?")) {
+					let head = {
+						headers: {
+								'Authorization': 'Bearer ' + localStorage.getItem('token'),
+								},
+						};
+						axios.post('/api/logout', null, head)
+						.then(response => {
+							console.log(response);
+							window.localStorage.clear();
+							//console.log("logout sucessfull");	
+						
+							axios.delete('/api/users/'+this.logged_user.id)
+							.then(response => {
+								this.logged_user = null;
+								console.log("user deleted");	
+								
+							});
+						}).then(response => {
+							this.$router.push('/login');
+						});
+					}
+	            
 			},
 			previewFile: function() {
 				var preview = document.querySelector('img'); //selects the query named img

@@ -43,7 +43,7 @@ const decksManagement = Vue.component('decksManagement', require('./components/d
 
 
 const routes = [
-  { path: '/', redirect: '/users' },
+  { path: '/', redirect: '/login' },
   { path: '/users', component: user },
   { path: '/singletictactoe', component: singleplayer_game },
   { path: '/multitictactoe', component: multiplayerGame },

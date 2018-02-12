@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Support\Facades\DB;
 
 class MailSender extends Mailable
 {
@@ -13,6 +14,7 @@ class MailSender extends Mailable
 
     public $sendThisView;
     public $data;
+    public $config;
     /**
      * Create a new message instance.
      *
@@ -22,6 +24,9 @@ class MailSender extends Mailable
     {
         $this->sendThisView = $view;
         $this->data = $data;
+
+
+        $this->config = DB::table('config')->first();
     }
 
     /**
@@ -31,6 +36,8 @@ class MailSender extends Mailable
      */
     public function build()
     {
-        return $this->view($this->sendThisView)->with('data', $this->data);
+
+        return $this->from($this->config->platform_email)
+                    ->view($this->sendThisView)->with('data', $this->data);
     }
 }

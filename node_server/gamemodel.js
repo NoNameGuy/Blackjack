@@ -29,6 +29,7 @@ class BlackJackGame {
       this.pontuacaoP2P4 = 0;
       this.firstPlayer; // variavle estatica
       this.firtCardPlayed;
+      this.roundNumber = 0;
     }
 
     startGame() {
@@ -235,6 +236,8 @@ class BlackJackGame {
 
       }
 
+      this.roundNumber++;
+
       //VERIFICAÇÃO DE QUAL A 1ª CARTA JOGADA
       if (this.whosTurn == this.firstPlayer) {
         this.firtCardPlayed = this.playerGame[playerID-1][index];
@@ -252,234 +255,256 @@ class BlackJackGame {
 
 
       // verificar se o boardGame está cheio
-      if (this.boardGame[0][1] != "Player1" && this.boardGame[1][2] != "Player2" && this.boardGame[2][1] != "Player3" && this.boardGame[1][0] != "Player4")
-      {
-        // ver qual a equipa que vai receber pontuacoes
+      this.checkRound();
+      
+      if (this.roundNumber == 10) { //jogo terminou
+        this.gameEnded == true;
 
-        //validar se há trunfo
+        /*
+        if (houve renuncia) ???
+        */
 
-        var arrayNaipe = [];
-        var arrayCartas = []; // array com o numero das cartas
-        var arrayNaipeCarta = [];
-
-        let naipeTrunfo = this.trunfoCard.charAt(0);
-
-        let naipeP1 = this.boardGame[0][1].charAt(0);
-        let naipeP2 = this.boardGame[1][2].charAt(0);
-        let naipeP3 = this.boardGame[2][1].charAt(0);
-        let naipeP4 = this.boardGame[1][0].charAt(0);
-
-
-        let cartaP1 = this.boardGame[0][1].substr(1);
-        let cartaP2 = this.boardGame[1][2].substr(1);
-        let cartaP3 = this.boardGame[2][1].substr(1);
-        let cartaP4 = this.boardGame[1][0].substr(1);
-
-        var strongestCard;
-
-        arrayNaipe.push(naipeP1, naipeP2, naipeP3, naipeP4); // naipes
-        arrayCartas.push(cartaP1, cartaP2, cartaP3, cartaP4); // numero das cartas
-        arrayNaipeCarta.push(this.boardGame[0][1], 
-                              this.boardGame[1][2], 
-                              this.boardGame[2][1], 
-                              this.boardGame[1][0]); // cartas e naipes
-
-        // console.log('arrayNaipe: ', arrayNaipe);
-        // console.log('arrayCartas: ', arrayCartas);
-        var pontuacaoRonda = 0;
-        var aux = 0;
-
-        var numberTrunfos = 0;
-        var cartasTrunfo = []; // todos os trunfos (numeros) jogados na ronda
-        
-        // Numero de trunfos jogados na ronda
-        for (let i = 0; i < arrayNaipe.length; i++) {
-          if (naipeTrunfo == arrayNaipe[i]) {
-            cartasTrunfo.push(arrayCartas[i]);
-            
-            numberTrunfos++;
-          }
+        if (this.pontuacaoP1P3 > this.pontuacaoP2P4) {
+          // player 1 e player 3 ganham 2 pontos
+        } else if (this.pontuacaoP1P3 < this.pontuacaoP2P4) {
+          // player 2 e 4 recebem 2 pontos
+        } else {
+          // cada player recebe 1 ponto
         }
-
-        // calcular pontuacao das 4 cartas
-        for (var i = 0; i < arrayCartas.length; i++) {
-          aux = this.incrementaPontuacao(arrayCartas[i]);
-          pontuacaoRonda+=aux;
-          aux = 0;
-        }
-
-        console.log('pontuacaoRonda: ', pontuacaoRonda);
-
-          // Caso só haja um trunfo na ronda
-        if (numberTrunfos == 1) {
-          console.log(" ======= Ronda com apenas 1 trunfo");
-          // Somar pontuacao
-          if (this.boardGame[0][1] == cartasTrunfo[0] || this.boardGame[2][1] == cartasTrunfo[0])
-            {
-              this.pontuacaoP1P3 += pontuacaoRonda;
-              if(this.boardGame[0][1] == cartasTrunfo[0]) { // Player 1 
-                this.whosTurn = 0;
-              } else { // Player 3
-                this.whosTurn = 2;
-              }
-            }
-          else{
-            this.pontuacaoP2P4 += pontuacaoRonda;
-            if(this.boardGame[1][2] == cartasTrunfo[0]) { // Player 2 
-              this.whosTurn = 1;
-            } else { // Player 4
-              this.whosTurn = 3;
-            }
-          }
-          console.log("Pontuacao Equipa P1+P3: ", this.pontuacaoP1P3);
-          console.log("Pontuacao Equipa P2+P4: ", this.pontuacaoP2P4);
-            
-        } 
-
-          // Caso haja mais que um trunfo!
-
-          var highestTrunfo;
-        if (numberTrunfos > 1) {
-          console.log(" ======= Ronda com "+numberTrunfos+" trunfo");
-          
-          // Saber qual o trunfo mais alto da ronda
-          highestTrunfo = this.getHighestTrunfo(cartasTrunfo);
-          
-          // Somar pontuacao
-          if (this.boardGame[0][1] == highestTrunfo || this.boardGame[2][1] == highestTrunfo)
-            {
-              this.pontuacaoP1P3 += pontuacaoRonda;
-
-              if(this.boardGame[0][1] == cartasTrunfo[0]) { // Player 1 
-                this.whosTurn = 0;
-              } else { // Player 3
-                this.whosTurn = 2;
-              }
-            }
-          else {
-            this.pontuacaoP2P4 += pontuacaoRonda;
-            if(this.boardGame[1][2] == cartasTrunfo[0]) { // Player 2 
-              this.whosTurn = 1;
-            } else { // Player 4
-              this.whosTurn = 3;
-            }
-          }
-          console.log("Pontuacao Equipa P1+P3: ", this.pontuacaoP1P3);
-          console.log("Pontuacao Equipa P2+P4: ", this.pontuacaoP2P4);
-
-        }
-
-        // caso não haja trunfo em jogo, saber qual a mais alta do naipe puxado
-        var highCardSemTrunfo;
-        if (numberTrunfos == 0) {
-          console.log(" ======= Ronda com nenhum trunfo");
-          
-          for (let y = 0; y < arrayNaipeCarta.length; y++) {
-            if (this.firtCardPlayed.charAt(0) == arrayNaipe[y]) {
-              highCardSemTrunfo = this.getHighestTrunfo(arrayNaipe);
-            }
-          }
-
-          // Somar pontuacao
-          if (this.boardGame[0][1] == highCardSemTrunfo || this.boardGame[2][1] == highCardSemTrunfo)
-            {
-              this.pontuacaoP1P3 += pontuacaoRonda;
-              if(this.boardGame[0][1] == cartasTrunfo[0]) { // Player 1
-                this.whosTurn = 0;
-              } else { // Player 3
-                this.whosTurn = 2;
-              }
-            }
-          else{
-            this.pontuacaoP2P4 += pontuacaoRonda;
-            if(this.boardGame[1][2] == cartasTrunfo[0]) { // Player 2 
-              this.whosTurn = 1;
-            } else { // Player 4
-              this.whosTurn = 3;
-            }
-          }
-            
-          console.log("Pontuacao Equipa P1+P3: ", this.pontuacaoP1P3);
-          console.log("Pontuacao Equipa P2+P4: ", this.pontuacaoP2P4);
-        
-        }
-
-
-        this.resetBoardGame(); // limpa o boardGame para nova rodada
-
-     } // End IF game is complete
+      }
 
      return true;
   } // end play function
 
+  checkRound() {
+    if (this.boardGame[0][1] != "Player1" && this.boardGame[1][2] != "Player2" && this.boardGame[2][1] != "Player3" && this.boardGame[1][0] != "Player4")
+    {
+      // ver qual a equipa que vai receber pontuacoes
+
+      //validar se há trunfo
+
+      var arrayNaipe = [];
+      var arrayCartas = []; // array com o numero das cartas
+      var arrayNaipeCarta = [];
+
+      let naipeTrunfo = this.trunfoCard.charAt(0);
+
+      let naipeP1 = this.boardGame[0][1].charAt(0);
+      let naipeP2 = this.boardGame[1][2].charAt(0);
+      let naipeP3 = this.boardGame[2][1].charAt(0);
+      let naipeP4 = this.boardGame[1][0].charAt(0);
 
 
-    resetBoardGame () {
-      this.boardGame[0][1] = 'Player1';
-      this.boardGame[1][2] = 'Player2';
-      this.boardGame[2][1] = 'Player3';
-      this.boardGame[1][0] = 'Player4';
-    }
+      let cartaP1 = this.boardGame[0][1].substr(1);
+      let cartaP2 = this.boardGame[1][2].substr(1);
+      let cartaP3 = this.boardGame[2][1].substr(1);
+      let cartaP4 = this.boardGame[1][0].substr(1);
 
-    getHighestTrunfo(cartasTrunfo) {
-      var highestTrunfoAux;
-      for(let a = 0; a < cartasTrunfo.length; a++) {
-        if (cartasTrunfo[a] == 1) { // As
-          highestTrunfoAux = cartasTrunfo[a];
-          a = cartasTrunfo.length;
-        } else if (cartasTrunfo[a] == 7) { // 7
-          highestTrunfoAux = cartasTrunfo[a];
-        } else if (cartasTrunfo[a] == 13) { // Rei
-          highestTrunfoAux = cartasTrunfo[a];
-        } else if (cartasTrunfo[a] == 12) { // Dama/Rainha
-          highestTrunfoAux = cartasTrunfo[a];
-        } else if (cartasTrunfo[a] == 11) { // Valete
-          highestTrunfoAux = cartasTrunfo[a];
-        } else if (cartasTrunfo[a] == 6) { // 6
-          highestTrunfoAux = cartasTrunfo[a];
-        }else if (cartasTrunfo[a] == 5) { // 5
-          highestTrunfoAux = cartasTrunfo[a];
-        }else if (cartasTrunfo[a] == 4) { // 4
-          highestTrunfoAux = cartasTrunfo[a];
-        }else if (cartasTrunfo[a] == 3) { // 3
-          highestTrunfoAux = cartasTrunfo[a]; 
-        }else if (cartasTrunfo[a] == 2) { // 2
-          highestTrunfoAux = cartasTrunfo[a];
+      var strongestCard;
+
+      arrayNaipe.push(naipeP1, naipeP2, naipeP3, naipeP4); // naipes
+      arrayCartas.push(cartaP1, cartaP2, cartaP3, cartaP4); // numero das cartas
+      arrayNaipeCarta.push(this.boardGame[0][1], 
+                            this.boardGame[1][2], 
+                            this.boardGame[2][1], 
+                            this.boardGame[1][0]); // cartas e naipes
+
+      // console.log('arrayNaipe: ', arrayNaipe);
+      // console.log('arrayCartas: ', arrayCartas);
+      var pontuacaoRonda = 0;
+      var aux = 0;
+
+      var numberTrunfos = 0;
+      var cartasTrunfo = []; // todos os trunfos (numeros) jogados na ronda
+      
+      // Numero de trunfos jogados na ronda
+      for (let i = 0; i < arrayNaipe.length; i++) {
+        if (naipeTrunfo == arrayNaipe[i]) {
+          cartasTrunfo.push(arrayCartas[i]);
+          
+          numberTrunfos++;
         }
       }
-      return highestTrunfoAux;
-    }
 
-    incrementaPontuacao(card) {
-
-      let pont = 0;
-
-      switch(card) {
-        case "1":
-          pont = 11;
-          break;
-        case "2":
-        case "3":
-        case "4":
-        case "5":
-        case "6":
-          pont = 0;
-          break;
-        case "7":
-          pont = 10; 
-          break;
-        case "11":
-          pont = 3;
-          break;
-        case "12":
-          pont = 2;
-          break;
-        case "13":
-          pont = 4;
-          break;
+      // calcular pontuacao das 4 cartas
+      for (var i = 0; i < arrayCartas.length; i++) {
+        aux = this.incrementaPontuacao(arrayCartas[i]);
+        pontuacaoRonda+=aux;
+        aux = 0;
       }
-      return pont;
 
+      console.log('pontuacaoRonda: ', pontuacaoRonda);
+
+        // Caso só haja um trunfo na ronda
+      if (numberTrunfos == 1) {
+        console.log(" ======= Ronda com apenas 1 trunfo");
+        // Somar pontuacao
+        if (this.boardGame[0][1] == cartasTrunfo[0] || this.boardGame[2][1] == cartasTrunfo[0])
+          {
+            this.pontuacaoP1P3 += pontuacaoRonda;
+            if(this.boardGame[0][1] == cartasTrunfo[0]) { // Player 1 
+              this.whosTurn = 0;
+            } else { // Player 3
+              this.whosTurn = 2;
+            }
+          }
+        else{
+          this.pontuacaoP2P4 += pontuacaoRonda;
+          if(this.boardGame[1][2] == cartasTrunfo[0]) { // Player 2 
+            this.whosTurn = 1;
+          } else { // Player 4
+            this.whosTurn = 3;
+          }
+        }
+        console.log("Pontuacao Equipa P1+P3: ", this.pontuacaoP1P3);
+        console.log("Pontuacao Equipa P2+P4: ", this.pontuacaoP2P4);
+          
+      } 
+
+        // Caso haja mais que um trunfo!
+
+        var highestTrunfo;
+      if (numberTrunfos > 1) {
+        console.log(" ======= Ronda com "+numberTrunfos+" trunfo");
+        
+        // Saber qual o trunfo mais alto da ronda
+        highestTrunfo = this.getHighestTrunfo(cartasTrunfo);
+        
+        // Somar pontuacao
+        if (this.boardGame[0][1] == highestTrunfo || this.boardGame[2][1] == highestTrunfo)
+          {
+            this.pontuacaoP1P3 += pontuacaoRonda;
+
+            if(this.boardGame[0][1] == cartasTrunfo[0]) { // Player 1 
+              this.whosTurn = 0;
+            } else { // Player 3
+              this.whosTurn = 2;
+            }
+          }
+        else {
+          this.pontuacaoP2P4 += pontuacaoRonda;
+          if(this.boardGame[1][2] == cartasTrunfo[0]) { // Player 2 
+            this.whosTurn = 1;
+          } else { // Player 4
+            this.whosTurn = 3;
+          }
+        }
+        console.log("Pontuacao Equipa P1+P3: ", this.pontuacaoP1P3);
+        console.log("Pontuacao Equipa P2+P4: ", this.pontuacaoP2P4);
+
+      }
+
+      // caso não haja trunfo em jogo, saber qual a mais alta do naipe puxado
+      var highCardSemTrunfo;
+      if (numberTrunfos == 0) {
+        console.log(" ======= Ronda com nenhum trunfo");
+        
+        for (let y = 0; y < arrayNaipeCarta.length; y++) {
+          if (this.firtCardPlayed.charAt(0) == arrayNaipe[y]) {
+            highCardSemTrunfo = this.getHighestTrunfo(arrayNaipe);
+          }
+        }
+
+        // Somar pontuacao
+        if (this.boardGame[0][1] == highCardSemTrunfo || this.boardGame[2][1] == highCardSemTrunfo)
+          {
+            this.pontuacaoP1P3 += pontuacaoRonda;
+            if(this.boardGame[0][1] == cartasTrunfo[0]) { // Player 1
+              this.whosTurn = 0;
+            } else { // Player 3
+              this.whosTurn = 2;
+            }
+          }
+        else{
+          this.pontuacaoP2P4 += pontuacaoRonda;
+          if(this.boardGame[1][2] == cartasTrunfo[0]) { // Player 2 
+            this.whosTurn = 1;
+          } else { // Player 4
+            this.whosTurn = 3;
+          }
+        }
+          
+        console.log("Pontuacao Equipa P1+P3: ", this.pontuacaoP1P3);
+        console.log("Pontuacao Equipa P2+P4: ", this.pontuacaoP2P4);
+      
+      }
+
+
+      this.resetBoardGame(); // limpa o boardGame para nova rodada
+
+   } // End IF game is complete
+  }
+
+  resetBoardGame () {
+    this.boardGame[0][1] = 'Player1';
+    this.boardGame[1][2] = 'Player2';
+    this.boardGame[2][1] = 'Player3';
+    this.boardGame[1][0] = 'Player4';
+  }
+
+  getHighestTrunfo(cartasTrunfo) {
+    var highestTrunfoAux;
+    for(let a = 0; a < cartasTrunfo.length; a++) {
+      if (cartasTrunfo[a] == 1) { // As
+        highestTrunfoAux = cartasTrunfo[a];
+        a = cartasTrunfo.length;
+      } else if (cartasTrunfo[a] == 7) { // 7
+        highestTrunfoAux = cartasTrunfo[a];
+      } else if (cartasTrunfo[a] == 13) { // Rei
+        highestTrunfoAux = cartasTrunfo[a];
+      } else if (cartasTrunfo[a] == 12) { // Dama/Rainha
+        highestTrunfoAux = cartasTrunfo[a];
+      } else if (cartasTrunfo[a] == 11) { // Valete
+        highestTrunfoAux = cartasTrunfo[a];
+      } else if (cartasTrunfo[a] == 6) { // 6
+        highestTrunfoAux = cartasTrunfo[a];
+      }else if (cartasTrunfo[a] == 5) { // 5
+        highestTrunfoAux = cartasTrunfo[a];
+      }else if (cartasTrunfo[a] == 4) { // 4
+        highestTrunfoAux = cartasTrunfo[a];
+      }else if (cartasTrunfo[a] == 3) { // 3
+        highestTrunfoAux = cartasTrunfo[a]; 
+      }else if (cartasTrunfo[a] == 2) { // 2
+        highestTrunfoAux = cartasTrunfo[a];
+      }
     }
+    return highestTrunfoAux;
+  }
+
+  incrementaPontuacao(card) {
+
+    let pont = 0;
+
+    switch(card) {
+      case "1":
+        pont = 11;
+        break;
+      case "2":
+      case "3":
+      case "4":
+      case "5":
+      case "6":
+        pont = 0;
+        break;
+      case "7":
+        pont = 10; 
+        break;
+      case "11":
+        pont = 3;
+        break;
+      case "12":
+        pont = 2;
+        break;
+      case "13":
+        pont = 4;
+        break;
+    }
+    return pont;
+
+  }
+
+  renunciaClick() {
+    
+  }
 }
 module.exports = BlackJackGame;

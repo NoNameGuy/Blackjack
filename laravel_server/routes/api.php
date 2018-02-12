@@ -23,6 +23,7 @@ Route::get('users/{id}', 'UserControllerAPI@getUser');
 Route::post('users', 'UserControllerAPI@store');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@delete');
+Route::put('registerLink/{user}', 'UserControllerAPI@changeActivation');
 
 // Admin
 Route::put('user/blocked/{id}', 'UserControllerAPI@blockUser');

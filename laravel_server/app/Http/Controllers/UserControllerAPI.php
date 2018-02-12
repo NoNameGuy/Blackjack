@@ -35,12 +35,12 @@ class UserControllerAPI extends Controller
             'email' => $request->email,
             'password' => $request->password,
             'activated' => 0,
-            'avatar' => $request->avatar,
         ];
         $user = new User();
         $user->fill($data);
         $user->password = Hash::make($user->password);
         $user->save();
+        \Mail::to($user)->send(new MailSender('emails.register', $user));        
         return response()->json(['message' => 'registration success'], 200);
 
         //return response()->json(new UserResource($user), 201);
@@ -119,15 +119,9 @@ class UserControllerAPI extends Controller
             {
                 $user->password = Hash::make($request->password); 
                 $user->save();         
-                return response()->json(['message' => 'Current Password is correct'], 200);
+                return response()->json(['message' => 'Current Password Changed Successfully'], 200);
             }
-    /*
-            $newHash = Hash::make($request->password);
-            if ($newHash == $user->password) {
-                $user->password = $newHash;
-                return response()->json(['message' => 'Current Password is correct'], 200);
-            }
-            */
+
             
             return response()->json(['message' => 'Current Password is NOT correct'], 422);
         }
@@ -165,6 +159,13 @@ class UserControllerAPI extends Controller
         \Mail::to($admin)->send(new MailSender('emails.newPassword', $admin));
 
         
+    }
+
+    public function registerLink($user)
+    {
+        $user = User::findOrFail($user->id);
+        $user->activated = 1;
+        $user->save();
     }
 
     

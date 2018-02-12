@@ -20,7 +20,7 @@
             <br><br>
             <a class="btn btn-default" v-on:click.prevent="register()">Register</a>
             <br><br>          
-            <a v-on:click.prevent="forgot()">Admin, forgot your password? <br>  </a> 
+            <a v-on:click.prevent="forgot()">Forgot your password? <br>  </a> 
         
             <!-- <div class="fb-login-button" data-size="medium" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="true"></div> -->
         
@@ -71,17 +71,18 @@ export default {
                 // console.log (this.newUser);
                   if (this.newUser.activated == "1" && this.newUser.blocked != "1") { // conta ativada faz login
                     if (this.newUser.admin == "1") {
-                    console.log ("sou admin");
+                      console.log ("sou admin");
                       
                       this.$router.push('/adminMasterPage');
-                    } else
-                    console.log ("sou user normal");
-                    
-                      this.$router.push('/');
+                    } else {
+                        console.log ("sou user normal");
+                      
+                        this.$router.push('/sueca');
+                      }
                   } else {
                     
                     window.localStorage.clear();
-                    this.$router.push('/login');
+                    this.$router.push('/');
                   }
                   
               }).catch(error => {
