@@ -12,6 +12,7 @@ use App\User;
 use App\StoreUserRequest;
 use Hash;
 use App\Mail\MailSender;
+use Intervention\Image\Facades\Image;
 
 class UserControllerAPI extends Controller
 {
@@ -168,6 +169,29 @@ class UserControllerAPI extends Controller
         $user->save();
     }
 
+
+    public function updateAvatar(Request $request)
+    {
+        
+        $request->validate([
+            'avatar' => 'required',
+        ]);
+
+        $user = User::where('id', $request->user_id)->first();
+
+
+            $base64avatar = $request->get('avatar');
+            
+            if($user->avatar == 'null.png'){
+                $user->avatar = $user->id . '.png';
+                $user->touch();
+            }
+            $avatarImg = Image::make($base64avatar);
+            $avatarImg->resize(200, 200)->save('img/avatar/' . $user->id . '.png');
+
+            return response()->json(['msg' => 'Avatar changed!'],200);
+
+    }
     
 
     /*public function getDefesa () {

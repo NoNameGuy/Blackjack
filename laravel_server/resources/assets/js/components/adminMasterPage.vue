@@ -14,9 +14,16 @@
                 <a class="btn btn-primary" @click.prevent="usersList">Users</a> -
                 <a class="btn btn-primary" @click.prevent="resetPWAdmin">Reset Admin Password</a> -
                 <a class="btn btn-primary" @click.prevent="statistics">Statistics</a> -
-                <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a>
+                <a class="btn btn-primary" @click.prevent="playerStatistics">Players Statistics</a> -
                 <a class="btn btn-primary" @click.prevent="gerirBaralhos">Gerir Baralhos</a>
                 
+                <!-- este router link faz a mesma coisa que um botão que está em cima -->
+                <router-link class="btn btn-primary" :to="{path: '/platformEmailSettings' }">
+				    Platform Email Settings
+			    </router-link>
+
+
+
             </div>
 
             <!-- <div>

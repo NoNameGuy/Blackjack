@@ -10,7 +10,7 @@ use App\User;
 define('YOUR_SERVER_URL', 'http://blackjack.test');
 // Check "oauth_clients" table for next 2 values:
 define('CLIENT_ID', '2');
-define('CLIENT_SECRET','RBxHT1i6BijacQE0NTJDTXxx4oneLqbL6Xa3VmTU');
+define('CLIENT_SECRET','3t1q9g0uC0oaGjDNyDOOZNCRnnKV8QS5cdVYBrG1');
 
 class LoginControllerAPI extends Controller
 {

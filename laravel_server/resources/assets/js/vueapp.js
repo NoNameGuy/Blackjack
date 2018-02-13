@@ -41,6 +41,7 @@ const adminPassword = Vue.component('resetPWAdmin', require('./components/resetP
 const playerStatistics = Vue.component('playerStatistics', require('./components/playerStatistics.vue'));
 const decksManagement = Vue.component('decksManagement', require('./components/decksManagement.vue'));
 
+const platformEmailSettings = Vue.component('platformEmailSettings', require('./components/platformEmailSettings.vue'));
 
 const routes = [
   { path: '/', redirect: '/login' },
@@ -61,6 +62,7 @@ const routes = [
   { path: '/forgot', component: forgot },
   { path: '/decksManagement', component: decksManagement },
   { path: '/sueca', component: sueca },
+  { path: '/platformEmailSettings', component: platformEmailSettings },
 
 ];
 

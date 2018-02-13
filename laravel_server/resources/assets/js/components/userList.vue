@@ -44,7 +44,7 @@
 				var imgSrc = String(path);
 				if(imgSrc == "")
 					imgSrc = "null";
-                return 'avatar/' + imgSrc + '.png';
+                return '/img/avatar/' + imgSrc;
             },
             editUser: function(user){
             	this.$router.push('/userAccount');

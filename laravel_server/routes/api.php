@@ -24,6 +24,8 @@ Route::post('users', 'UserControllerAPI@store');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@delete');
 Route::put('registerLink/{user}', 'UserControllerAPI@changeActivation');
+Route::post('updateAvatar', 'UserControllerAPI@updateAvatar');
+
 
 // Admin
 Route::put('user/blocked/{id}', 'UserControllerAPI@blockUser');
@@ -32,6 +34,11 @@ Route::put('admin/resetPassAdmin/{id}', 'UserControllerAPI@resetPass');
 Route::post('adminLogin', 'LoginControllerAPI@adminlogin');
 Route::get('adminEmail/{email}', 'UserControllerAPI@sendMail');
 Route::put('admin/reset', 'UserControllerAPI@resetByEmail');
+
+// Platform
+Route::get('getPlatformEmailSettings', 'ConfigControllerAPI@getPlatformEmailSettings');
+Route::post('changePlatformEmail','ConfigControllerAPI@changePlatformEmail');
+
 
 // Games
 Route::get('games', 'GameControllerAPI@index');

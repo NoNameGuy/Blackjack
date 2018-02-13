@@ -53,22 +53,28 @@
 		            placeholder="Nickname"/>
 		    </div>
 
-			<div class="form-group">
-		        <label for="inputAvatar">Avatar</label>
-		        <input
-		            type="text" class="form-control" v-model="logged_user.avatar"
-		            name="avatar" id="inputAvatar"
-		            placeholder="Avatar"/>
-		    </div>
-
-			<input type="file"  onchange="previewFile()"><br>
-			<img src="" height="60" alt="Image preview...">
-
 
 			<div class="form-group">
 		        <a class="btn btn-primary" v-on:click.prevent="saveUser()">Save</a>
 		        <a class="btn btn-default" v-on:click.prevent="cancelEdit()">Cancel</a>
 		    </div>
+
+		</form>
+
+		<form>
+			<div class="col-md-2">
+				<input type="file" v-on:change="onFileChange" class="form-control">
+			</div>
+			<div class="col-md-2">
+				<img :src="avatar" class="img-responsive">
+			</div>
+			<div class="col-md-2">
+				<button class="btn btn-success btn-block" v-model="avatar" v-on:click.prevent="uploadAvatar(avatar)">
+					Save Imagem
+				</button>
+			</div>
+
+
 	    </form>
 
 
@@ -119,12 +125,43 @@
 				old_password : null,
 				password: null,
 				confirm_password : null,
+				avatar: null,
+				success: null,
 			};
 		},
 	    methods: {
+			onFileChange: function(e) {
+                let files = e.target.files || e.dataTransfer.files;
+                if (!files.length)
+                    return;
+                this.createAvatar(files[0]);
+            },
+            createAvatar: function (file) {
+                let reader = new FileReader();
+                let vm = this;
+                reader.onload = (e) => {
+                    vm.avatar = e.target.result;
+                    console.log("O PATH NAO ESTA VAZIO ", vm.avatar);
+                };
+                reader.readAsDataURL(file);
+            },
+            uploadAvatar: function(avatar){
+                
+                axios.post('/api/updateAvatar', {avatar: this.avatar, user_id: this.logged_user.id})
+                    .then(response => {
+						this.success = response.data.msg;
+						if(window.confirm("Imagem alterada com sucesso!"))
+							location.reload();
+                    }).then(response => {
+						this.pieceImageURL(this.logged_user.id);
+					});
+            },
+
+
+
 			pieceImageURL (path) {
                 var imgSrc = String(path);
-                return 'avatar/' + imgSrc + '.png';
+                return 'img/avatar/' + imgSrc;
 			},
 			saveUserPW: function() {
 				if (this.old_password.trim() != "" && this.password === this.confirm_password) {
